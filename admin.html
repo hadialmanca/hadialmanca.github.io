@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root{
     --green-deep:#1E3B2F;
@@ -61,6 +62,7 @@
   .panel{background:var(--paper); color:var(--ink); border-radius:18px; padding:clamp(18px,2vw,32px); margin-bottom:24px; box-shadow:0 10px 0 var(--paper-shadow);}
   .panel-head{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:16px;}
   .panel h3{font-family:'Baloo 2',sans-serif; color:var(--green-mid); margin:0; font-size:clamp(18px,1.6vw,24px);}
+  .panel-note{font-size:13px; color:var(--muted); margin-top:-8px; margin-bottom:14px;}
 
   .stat-cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-bottom:24px;}
   .stat-card{
@@ -82,6 +84,7 @@
   }
   .refresh-btn{background:var(--leaf); color:#fff;}
   .export-btn{background:var(--mustard); color:var(--green-deep);}
+  .small-btn{padding:6px 12px; font-size:13px; border-radius:8px;}
 
   table{width:100%; border-collapse:collapse; font-size:15px;}
   th, td{padding:12px 14px; text-align:left; border-bottom:1px solid #EFE3C4; white-space:nowrap;}
@@ -100,13 +103,60 @@
   .loading{text-align:center; color:var(--muted); padding:36px; font-size:16px;}
   footer{text-align:center; margin-top:34px; font-size:13px; color:#9FB8A6;}
 
-  .student-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:14px;}
+  .detail-row td{white-space:normal; background:#FBF3E1 !important; font-size:13.5px; color:var(--muted); padding:10px 14px;}
+  .detail-row .ww-tag{display:inline-block; background:#F3E8CB; border:1px solid #E3A93A55; color:var(--ink); padding:2px 9px; border-radius:8px; margin:2px 4px 2px 0; font-size:12.5px;}
+  .detail-btn{background:none; border:1.5px solid var(--green-mid); color:var(--green-mid); border-radius:8px; padding:4px 10px; font-size:12.5px; cursor:pointer; font-weight:700;}
+
+  .student-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(270px,1fr)); gap:14px;}
   .student-card{
     background:#FFFDF8; border:1.5px solid #EFE3C4; border-radius:14px; padding:16px;
   }
-  .student-card .s-name{font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; color:var(--green-mid); margin-bottom:6px;}
+  .student-card .s-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .student-card .s-name{font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; color:var(--green-mid); margin-bottom:2px;}
   .student-card .s-row{display:flex; justify-content:space-between; font-size:13.5px; color:var(--muted); margin-top:3px;}
   .student-card .s-row b{color:var(--ink);}
+  .group-select{font-size:12px; padding:3px 6px; border-radius:6px; border:1px solid #DCCB9E; background:#fff; max-width:100px;}
+  .sparkline{margin:8px 0 4px; display:block;}
+  .missing-thema{font-size:12px; color:var(--tomato); margin-top:6px;}
+  .karne-btn{
+    margin-top:10px; width:100%; background:var(--green-mid); color:#fff; border:none;
+    border-radius:9px; padding:8px; font-weight:700; cursor:pointer; font-size:13px; font-family:'Karla',sans-serif;
+  }
+
+  .wrongword-list{display:flex; flex-wrap:wrap; gap:6px;}
+  .wrongword-chip{
+    background:#FBF3E1; border:1.5px solid var(--tomato); color:var(--tomato);
+    padding:5px 12px; border-radius:999px; font-size:13px; font-weight:600;
+  }
+  .wrongword-chip .cnt{background:var(--tomato); color:#fff; border-radius:999px; padding:1px 7px; font-size:11px; margin-left:6px;}
+
+  /* MODAL */
+  #karne-modal-bg{
+    position:fixed; inset:0; background:rgba(15,30,25,0.85); z-index:60;
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  #karne-modal{
+    background:var(--paper); border-radius:20px; max-width:440px; width:100%;
+    max-height:90vh; overflow-y:auto; padding:6px;
+  }
+  #karne-card{
+    background:linear-gradient(160deg, #FBF3E1, #F3E8CB);
+    border-radius:16px; padding:26px 22px; color:var(--ink); text-align:center;
+  }
+  #karne-card .basket{font-size:38px;}
+  #karne-card h2{font-family:'Baloo 2',sans-serif; color:var(--green-mid); margin:6px 0 2px; font-size:22px;}
+  #karne-card .k-sub{font-size:13px; color:var(--muted); margin-bottom:14px;}
+  .k-stat-row{display:flex; gap:10px; justify-content:center; margin:14px 0;}
+  .k-stat{background:#fff; border-radius:12px; padding:12px 14px; flex:1; box-shadow:0 4px 0 var(--paper-shadow);}
+  .k-stat .num{font-family:'Baloo 2',sans-serif; font-weight:800; font-size:24px; color:var(--tomato);}
+  .k-stat .lbl{font-size:11px; color:var(--muted);}
+  .k-section-title{font-family:'Baloo 2',sans-serif; color:var(--green-mid); font-size:14px; margin:16px 0 8px; text-align:left;}
+  .modal-actions{display:flex; gap:10px; padding:16px 6px 6px;}
+  .modal-actions button, .modal-actions a{
+    flex:1; text-align:center; border:none; border-radius:10px; padding:11px; font-weight:700;
+    cursor:pointer; font-family:'Karla',sans-serif; font-size:13.5px; text-decoration:none;
+  }
+  .modal-close{position:sticky; top:6px; float:right; background:none; border:none; font-size:20px; cursor:pointer; color:var(--muted); margin:4px 8px 0 0;}
 
   @media (max-width:640px){
     table{font-size:13px;}
@@ -138,8 +188,21 @@
 
   <div class="panel">
     <div class="panel-head">
-      <h3>👤 Öğrenci Özeti</h3>
+      <h3>🏆 Sınıfın En Çok Zorlandığı Kelimeler</h3>
     </div>
+    <div class="panel-note">Tüm öğrencilerin yanlış yaptığı kelimeler birleştirildi — ders tekrarında öncelik verilebilecek kelimeler.</div>
+    <div class="wrongword-list" id="top-wrongwords"></div>
+    <div id="top-wrongwords-empty" class="empty-msg" style="display:none;">Henüz yanlış kelime kaydı yok.</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h3>👤 Öğrenci Özeti</h3>
+      <select id="group-filter" style="padding:9px 12px;border-radius:9px;border:1.5px solid #DCCB9E;font-size:14px;">
+        <option value="">Tüm gruplar</option>
+      </select>
+    </div>
+    <div class="panel-note">Her kartta ilerleme grafiği, kaçırılan temalar ve grup etiketi var. "Karne Oluştur" ile veliyle paylaşılabilecek bir özet açılır.</div>
     <div class="student-grid" id="student-grid"></div>
     <div id="student-empty" class="empty-msg" style="display:none;">Henüz öğrenci kaydı yok.</div>
   </div>
@@ -169,6 +232,7 @@
             <th data-key="score">Doğru/Toplam <span class="arrow"></span></th>
             <th data-key="pct">Puan <span class="arrow"></span></th>
             <th data-key="grade">Değerlendirme <span class="arrow"></span></th>
+            <th>Detay</th>
           </tr>
         </thead>
         <tbody id="results-tbody"></tbody>
@@ -191,7 +255,40 @@
     <div id="cards-empty" class="empty-msg" style="display:none;">Henüz kart tamamlama kaydı yok.</div>
   </div>
 
+  <div class="panel">
+    <h3>📧 Haftalık Özet E-postası</h3>
+    <div class="panel-note">
+      Backend'e (Code.gs) "sendWeeklySummary" fonksiyonu eklendi. Bunun otomatik çalışması için Apps Script editöründe soldaki saat ⏰ ikonuna (Tetikleyiciler/Triggers) tıklayıp "Tetikleyici Ekle" ile fonksiyon: <b>sendWeeklySummary</b>, olay kaynağı: <b>Zamana dayalı</b>, tür: <b>Haftalık zamanlayıcı</b> seçerek bir tetikleyici oluşturman yeterli — böylece her hafta otomatik olarak o haftanın özetini Google e-postana gönderir.
+    </div>
+  </div>
+
   <footer>Hadi Almanca — Kelime Sepeti Admin Panel • youtube.com/@hadialmanca</footer>
+</div>
+
+<!-- KARNE MODAL -->
+<div id="karne-modal-bg">
+  <div id="karne-modal">
+    <button class="modal-close" id="karne-close">✕</button>
+    <div id="karne-card">
+      <div class="basket">🧺</div>
+      <h2 id="k-name">—</h2>
+      <div class="k-sub">Hadi Almanca — Kelime Sepeti Karnesi</div>
+      <div class="k-stat-row">
+        <div class="k-stat"><div class="num" id="k-count">0</div><div class="lbl">Çözülen Quiz</div></div>
+        <div class="k-stat"><div class="num" id="k-avg">%0</div><div class="lbl">Ortalama Puan</div></div>
+        <div class="k-stat"><div class="num" id="k-themas">0</div><div class="lbl">Tema</div></div>
+      </div>
+      <svg id="k-sparkline" class="sparkline" width="100%" height="60" viewBox="0 0 300 60" preserveAspectRatio="none"></svg>
+      <div class="k-section-title">📌 Hâlâ Zorlandığı Kelimeler</div>
+      <div class="wrongword-list" id="k-wrongwords"></div>
+      <div class="k-section-title" id="k-missing-title" style="display:none;">⚠️ Henüz Çalışmadığı Temalar</div>
+      <div id="k-missing" style="font-size:13px; color:var(--tomato); text-align:left;"></div>
+    </div>
+    <div class="modal-actions">
+      <button id="karne-download" style="background:var(--mustard); color:var(--green-deep);">🖼️ PNG İndir</button>
+      <a id="karne-whatsapp" href="#" target="_blank" style="background:#25D366; color:#fff;">📤 WhatsApp</a>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -231,6 +328,13 @@ function escapeHtml(s){
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
+// "sitzen (oturmak)" gibi girdileri, parantez içinde virgül olsa bile doğru ayırır
+function parseWrongWords(str){
+  if (!str) return [];
+  const matches = String(str).match(/[^,()]+\([^)]*\)/g) || [];
+  return matches.map(s => s.trim()).filter(Boolean);
+}
+
 const GRADE_COLORS = {
   "Pekiyi 🏆": "#2E7D46", "İyi 👍": "#5C8C52", "Orta 🙂": "#E3A93A",
   "Geçer 📘": "#D98C2B", "Tekrar Çalış 💪": "#C1442C"
@@ -238,20 +342,24 @@ const GRADE_COLORS = {
 
 let allResults = [];
 let allCards = [];
+let studentGroups = {};
 let sortKey = "timestamp";
 let sortDir = "desc";
 
 async function loadAll(){
   $("#results-loading").style.display = "block";
-  const [resResults, resCards] = await Promise.all([
+  const [resResults, resCards, resGroups] = await Promise.all([
     apiCall("getAllResults", {}),
-    apiCall("getAllCardCompletions", {})
+    apiCall("getAllCardCompletions", {}),
+    apiCall("getStudentGroups", {})
   ]);
   allResults = (resResults && resResults.records) ? resResults.records : [];
   allCards = (resCards && resCards.records) ? resCards.records : [];
+  studentGroups = (resGroups && resGroups.groups) ? resGroups.groups : {};
   $("#results-loading").style.display = "none";
   populateFilters();
   renderStats();
+  renderTopWrongWords();
   renderStudents();
   renderResults();
   renderCards();
@@ -264,6 +372,10 @@ function populateFilters(){
   const quizzes = [...new Set(allResults.map(r => r.quizSet).filter(q => q !== "" && q !== undefined))].sort();
   themaSel.innerHTML = '<option value="">Tüm temalar</option>' + themas.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
   quizSel.innerHTML = '<option value="">Tüm quizler</option>' + quizzes.map(q => `<option value="${escapeHtml(q)}">Quiz ${escapeHtml(q)}</option>`).join("");
+
+  const groupSel = $("#group-filter");
+  const groups = [...new Set(Object.values(studentGroups).filter(Boolean))].sort();
+  groupSel.innerHTML = '<option value="">Tüm gruplar</option>' + groups.map(g => `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join("") + '<option value="__none__">Grupsuz</option>';
 }
 
 function renderStats(){
@@ -278,6 +390,45 @@ function renderStats(){
   `;
 }
 
+function renderTopWrongWords(){
+  const freq = {};
+  allResults.forEach(r=>{
+    parseWrongWords(r.wrongWords).forEach(w=>{
+      freq[w] = (freq[w]||0) + 1;
+    });
+  });
+  const sorted = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const el = $("#top-wrongwords");
+  if (!sorted.length){
+    el.innerHTML = "";
+    $("#top-wrongwords-empty").style.display = "block";
+    return;
+  }
+  $("#top-wrongwords-empty").style.display = "none";
+  el.innerHTML = sorted.map(([w,c]) => `<span class="wrongword-chip">${escapeHtml(w)}<span class="cnt">${c}</span></span>`).join("");
+}
+
+function studentAggregate(name){
+  const recs = allResults.filter(r => String(r.name).trim() === name);
+  const avg = Math.round(recs.reduce((s,r)=>s+Number(r.pct||0),0) / recs.length) || 0;
+  const sorted = recs.slice().sort((a,b)=> new Date(a.timestamp) - new Date(b.timestamp));
+  const last = sorted[sorted.length-1];
+  const themas = new Set(recs.map(r=>r.thema).filter(Boolean));
+  const allThemas = new Set(allResults.map(r=>r.thema).filter(Boolean));
+  const missingThemas = [...allThemas].filter(t => !themas.has(t));
+
+  const wrongFreq = {};
+  recs.forEach(r=>{
+    parseWrongWords(r.wrongWords).forEach(w=>{ wrongFreq[w] = (wrongFreq[w]||0)+1; });
+  });
+  const wrongList = Object.entries(wrongFreq).sort((a,b)=>b[1]-a[1]);
+
+  return {
+    name, recs, avg, last, themas, missingThemas, wrongList,
+    sparkPcts: sorted.slice(-10).map(r=>Number(r.pct||0))
+  };
+}
+
 function renderStudents(){
   const grid = $("#student-grid");
   if (!allResults.length){
@@ -287,37 +438,85 @@ function renderStudents(){
   }
   $("#student-empty").style.display = "none";
 
-  const byName = {};
-  allResults.forEach(r=>{
-    const key = String(r.name).trim();
-    if (!byName[key]) byName[key] = [];
-    byName[key].push(r);
-  });
+  const groupFilterVal = $("#group-filter").value;
+  const names = [...new Set(allResults.map(r=>String(r.name).trim()))].sort();
 
-  const cards = Object.keys(byName).sort().map(name=>{
-    const recs = byName[name];
-    const avg = Math.round(recs.reduce((s,r)=>s+Number(r.pct||0),0) / recs.length);
-    const last = recs.slice().sort((a,b)=> new Date(b.timestamp) - new Date(a.timestamp))[0];
-    const themas = new Set(recs.map(r=>r.thema).filter(Boolean));
+  const cards = names.map(name=>{
+    const g = studentGroups[name] || "";
+    if (groupFilterVal === "__none__" && g) return "";
+    if (groupFilterVal && groupFilterVal !== "__none__" && g !== groupFilterVal) return "";
+
+    const agg = studentAggregate(name);
+    const spark = sparklineSvg(agg.sparkPcts, 220, 40);
+    const missingHtml = agg.missingThemas.length
+      ? `<div class="missing-thema">⚠️ Çalışmadı: ${agg.missingThemas.map(escapeHtml).join(", ")}</div>` : "";
+
     return `<div class="student-card">
-      <div class="s-name">${escapeHtml(name)}</div>
-      <div class="s-row"><span>Çözülen quiz</span><b>${recs.length}</b></div>
-      <div class="s-row"><span>Ortalama puan</span><b>%${avg}</b></div>
-      <div class="s-row"><span>Tema sayısı</span><b>${themas.size}</b></div>
-      <div class="s-row"><span>Son aktivite</span><b>${escapeHtml(last.date || "—")}</b></div>
+      <div class="s-top">
+        <div>
+          <div class="s-name">${escapeHtml(name)}</div>
+        </div>
+        <select class="group-select" data-name="${escapeHtml(name)}">
+          <option value="">Grup yok</option>
+          <option value="A Grubu">A Grubu</option>
+          <option value="B Grubu">B Grubu</option>
+          <option value="C Grubu">C Grubu</option>
+        </select>
+      </div>
+      <div class="s-row"><span>Çözülen quiz</span><b>${agg.recs.length}</b></div>
+      <div class="s-row"><span>Ortalama puan</span><b>%${agg.avg}</b></div>
+      <div class="s-row"><span>Tema sayısı</span><b>${agg.themas.size}</b></div>
+      <div class="s-row"><span>Son aktivite</span><b>${escapeHtml(agg.last ? agg.last.date : "—")}</b></div>
+      ${spark}
+      ${missingHtml}
+      <button class="karne-btn" data-name="${escapeHtml(name)}">🎓 Karne Oluştur</button>
     </div>`;
+  }).join("");
+  grid.innerHTML = cards;
+
+  document.querySelectorAll(".group-select").forEach(sel=>{
+    const name = sel.dataset.name;
+    sel.value = studentGroups[name] || "";
+    sel.addEventListener("change", async ()=>{
+      studentGroups[name] = sel.value;
+      await apiCall("setStudentGroup", { name: name, group: sel.value });
+      populateFilters();
+    });
   });
-  grid.innerHTML = cards.join("");
+  document.querySelectorAll(".karne-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=> openKarne(btn.dataset.name));
+  });
+}
+
+function sparklineSvg(pcts, w, h){
+  if (!pcts.length) return "";
+  const max = 100, min = 0;
+  const step = pcts.length > 1 ? w / (pcts.length - 1) : 0;
+  const points = pcts.map((p,i)=>{
+    const x = i * step;
+    const y = h - ((p - min) / (max - min)) * h;
+    return x.toFixed(1) + "," + y.toFixed(1);
+  }).join(" ");
+  const lastColor = pcts[pcts.length-1] >= 70 ? "#2E7D46" : (pcts[pcts.length-1] >= 50 ? "#E3A93A" : "#C1442C");
+  return `<svg class="sparkline" width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polyline points="${points}" fill="none" stroke="${lastColor}" stroke-width="2.5"/>
+  </svg>`;
 }
 
 function filteredResults(){
   const nameQ = $("#filter-name").value.trim().toLowerCase();
   const themaQ = $("#filter-thema").value;
   const quizQ = $("#filter-quiz").value;
+  const groupQ = $("#group-filter").value;
   let list = allResults.filter(r=>{
     if (nameQ && !String(r.name).toLowerCase().includes(nameQ)) return false;
     if (themaQ && String(r.thema) !== themaQ) return false;
     if (quizQ && String(r.quizSet) !== quizQ) return false;
+    if (groupQ){
+      const g = studentGroups[String(r.name).trim()] || "";
+      if (groupQ === "__none__" && g) return false;
+      if (groupQ !== "__none__" && g !== groupQ) return false;
+    }
     return true;
   });
   list.sort((a,b)=>{
@@ -343,8 +542,10 @@ function renderResults(){
     return;
   }
   $("#results-empty").style.display = "none";
-  tbody.innerHTML = list.map(r=>{
+  tbody.innerHTML = list.map((r,i)=>{
     const color = GRADE_COLORS[r.grade] || "#5A6B63";
+    const wrongWords = parseWrongWords(r.wrongWords);
+    const rowId = "res-" + i;
     return `<tr>
       <td>${escapeHtml(r.name)}</td>
       <td>${escapeHtml(r.thema || "—")}</td>
@@ -356,8 +557,23 @@ function renderResults(){
       <td>${escapeHtml(r.score)}/${escapeHtml(r.total)}</td>
       <td><b>${escapeHtml(r.pct)}</b>/100</td>
       <td><span class="grade-pill" style="background:${color}22; color:${color}; border:1.5px solid ${color};">${escapeHtml(r.grade)}</span></td>
+      <td><button class="detail-btn" data-target="${rowId}">${wrongWords.length ? wrongWords.length + " yanlış" : "Detay"}</button></td>
+    </tr>
+    <tr class="detail-row" id="${rowId}" style="display:none;">
+      <td colspan="11">
+        ${wrongWords.length
+          ? wrongWords.map(w=>`<span class="ww-tag">${escapeHtml(w)}</span>`).join("")
+          : "Bu quizde yanlış yapılan kelime kaydı yok (ya da hiç yanlış yapılmadı 🎉)."}
+      </td>
     </tr>`;
   }).join("");
+
+  document.querySelectorAll(".detail-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const row = document.getElementById(btn.dataset.target);
+      row.style.display = row.style.display === "none" ? "table-row" : "none";
+    });
+  });
 }
 
 function renderCards(){
@@ -379,9 +595,9 @@ function renderCards(){
 
 function exportCsv(){
   const list = filteredResults();
-  const headers = ["İsim","Tema","Tarih","Saat","Quiz","Yön","Deneme","Doğru","Toplam","Puan","Değerlendirme"];
+  const headers = ["İsim","Tema","Tarih","Saat","Quiz","Yön","Deneme","Doğru","Toplam","Puan","Değerlendirme","Yanlış Kelimeler"];
   const rows = list.map(r => [
-    r.name, r.thema, r.date, r.time, r.quizSet, r.direction, r.attemptNo || 1, r.score, r.total, r.pct, r.grade
+    r.name, r.thema, r.date, r.time, r.quizSet, r.direction, r.attemptNo || 1, r.score, r.total, r.pct, r.grade, r.wrongWords || ""
   ]);
   const csv = [headers, ...rows].map(row =>
     row.map(v => `"${String(v==null?"":v).replace(/"/g,'""')}"`).join(",")
@@ -394,6 +610,69 @@ function exportCsv(){
   a.click();
   URL.revokeObjectURL(url);
 }
+
+// ---------- KARNE MODAL ----------
+function openKarne(name){
+  const agg = studentAggregate(name);
+  $("#k-name").textContent = name;
+  $("#k-count").textContent = agg.recs.length;
+  $("#k-avg").textContent = "%" + agg.avg;
+  $("#k-themas").textContent = agg.themas.size;
+
+  const svgHtml = sparklineBigSvg(agg.sparkPcts);
+  $("#k-sparkline").outerHTML = svgHtml;
+
+  const topWrong = agg.wrongList.slice(0,8);
+  $("#k-wrongwords").innerHTML = topWrong.length
+    ? topWrong.map(([w,c]) => `<span class="wrongword-chip">${escapeHtml(w)}${c>1 ? `<span class="cnt">${c}x</span>` : ""}</span>`).join("")
+    : `<span style="font-size:13px;color:var(--muted);">Harika! Belirgin bir zayıf kelime yok 🎉</span>`;
+
+  if (agg.missingThemas.length){
+    $("#k-missing-title").style.display = "block";
+    $("#k-missing").innerHTML = agg.missingThemas.map(escapeHtml).join(", ");
+  } else {
+    $("#k-missing-title").style.display = "none";
+    $("#k-missing").innerHTML = "";
+  }
+
+  const waText = `📚 *Hadi Almanca - Kelime Sepeti Karnesi*\n\n👤 ${name}\n✅ Çözülen quiz: ${agg.recs.length}\n⭐ Ortalama puan: %${agg.avg}\n📖 Çalışılan tema: ${agg.themas.size}` +
+    (topWrong.length ? `\n\n📌 Hâlâ zorlandığı kelimeler: ${topWrong.map(w=>w[0]).join(", ")}` : "") +
+    `\n\nHadi Almanca — youtube.com/@hadialmanca`;
+  $("#karne-whatsapp").href = "https://wa.me/?text=" + encodeURIComponent(waText);
+
+  $("#karne-modal-bg").style.display = "flex";
+}
+
+function sparklineBigSvg(pcts){
+  const w = 300, h = 60;
+  if (!pcts.length){
+    return `<svg id="k-sparkline" class="sparkline" width="100%" height="${h}" viewBox="0 0 ${w} ${h}"></svg>`;
+  }
+  const step = pcts.length > 1 ? w / (pcts.length - 1) : 0;
+  const points = pcts.map((p,i)=>{
+    const x = i * step;
+    const y = h - (p/100) * h;
+    return x.toFixed(1) + "," + y.toFixed(1);
+  }).join(" ");
+  const dots = pcts.map((p,i)=>{
+    const x = i * step;
+    const y = h - (p/100) * h;
+    return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="#C1442C"/>`;
+  }).join("");
+  return `<svg id="k-sparkline" class="sparkline" width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polyline points="${points}" fill="none" stroke="#2F5D45" stroke-width="2.5"/>${dots}
+  </svg>`;
+}
+
+$("#karne-close").addEventListener("click", ()=> $("#karne-modal-bg").style.display = "none");
+$("#karne-modal-bg").addEventListener("click", (e)=>{ if (e.target.id === "karne-modal-bg") $("#karne-modal-bg").style.display = "none"; });
+$("#karne-download").addEventListener("click", async ()=>{
+  const canvas = await html2canvas($("#karne-card"), { backgroundColor: "#FBF3E1", scale: 2 });
+  const link = document.createElement("a");
+  link.download = "karne_" + $("#k-name").textContent.replace(/\s+/g,"_") + ".png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+});
 
 document.querySelectorAll("#results-table th[data-key]").forEach(th=>{
   th.addEventListener("click", ()=>{
@@ -413,6 +692,7 @@ document.querySelectorAll("#results-table th[data-key]").forEach(th=>{
 $("#filter-name").addEventListener("input", renderResults);
 $("#filter-thema").addEventListener("change", renderResults);
 $("#filter-quiz").addEventListener("change", renderResults);
+$("#group-filter").addEventListener("change", ()=>{ renderStudents(); renderResults(); });
 $("#refresh-btn").addEventListener("click", loadAll);
 $("#export-btn").addEventListener("click", exportCsv);
 </script>
