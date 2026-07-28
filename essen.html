@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Hadi Almanca Kelime Sepeti – Essen · Trinken · Einkaufen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#1E3B2F;
+    --green-mid:#2F5D45;
+    --paper:#FBF3E1;
+    --paper-shadow:#E9DCBB;
+    --mustard:#E3A93A;
+    --tomato:#C1442C;
+    --leaf:#5C8C52;
+    --ink:#26332B;
+    --muted:#6b7568;
+    /* gender colors */
+    --der-blue:#2E5FA3;
+    --die-red:#C0392B;
+    --das-green:#1E8449;
+    --plural-orange:#D9791C;
+    --neutral-grey:#5A6B63;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Karla',sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,0.05), transparent 40%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 40px),
+      var(--green-deep);
+    color:var(--paper);
+    min-height:100vh;
+    padding:20px 14px 50px;
+    font-size:16px;
+  }
+  .wrap{max-width:800px;margin:0 auto;}
+
+  /* ---- IDENTITY GATE ---- */
+  #identity-gate{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(15,30,25,0.96);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .gate-box{
+    background:var(--paper); color:var(--ink);
+    border-radius:20px; padding:34px 28px; max-width:380px; width:100%;
+    text-align:center;
+    box-shadow:0 16px 0 var(--paper-shadow);
+  }
+  .gate-box h2{
+    font-family:'Baloo 2',sans-serif; color:var(--green-mid); margin:8px 0 6px; font-size:24px;
+  }
+  .gate-box p{font-size:14px; color:var(--muted); margin:0 0 20px;}
+  .gate-field{text-align:left; margin-bottom:14px;}
+  .gate-field label{font-size:13px; font-weight:700; color:var(--green-mid); display:block; margin-bottom:5px;}
+  .gate-field input{
+    width:100%; padding:10px 12px; border-radius:10px; border:2px solid #DCCB9E;
+    font-size:15px; font-family:'Karla',sans-serif;
+  }
+  .gate-submit{
+    width:100%; margin-top:8px;
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
+    padding:12px; border-radius:12px; border:none;
+    background:var(--mustard); color:var(--green-deep); cursor:pointer;
+  }
+  .gate-note{font-size:11.5px; color:#9a9a8a; margin-top:14px; line-height:1.4;}
+
+  header{text-align:center;margin-bottom:14px;}
+  .basket{font-size:38px;line-height:1;}
+  h1{
+    font-family:'Baloo 2',sans-serif; font-weight:800;
+    font-size:clamp(24px,5vw,36px); margin:6px 0 4px; color:var(--mustard);
+  }
+  .subtitle{font-size:15px;color:#CFE3D4;font-style:italic;}
+  .topic-line{font-size:16px;font-weight:700;color:var(--mustard);margin-top:6px;}
+  .student-line{
+    margin-top:10px; font-size:13.5px; color:#CFE3D4;
+    display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+  }
+  .student-line button{
+    background:none;border:none;color:var(--mustard);text-decoration:underline;
+    font-size:12.5px;cursor:pointer;padding:0;
+  }
+  .topic-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .tag{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);padding:5px 13px;border-radius:999px;font-size:13px;color:var(--paper);}
+
+  nav.tabs{display:flex;justify-content:center;gap:10px;margin:24px 0 20px;flex-wrap:wrap;}
+  .tab-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:17px;
+    padding:11px 24px;border-radius:12px;border:2px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.04);color:var(--paper);cursor:pointer;
+  }
+  .tab-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+  section{display:none;}
+  section.active{display:block;}
+
+  /* legend */
+  .gender-legend{
+    display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+    margin-bottom:18px; font-size:12.5px; color:#CFE3D4;
+  }
+  .legend-chip{display:flex; align-items:center; gap:5px;}
+  .legend-dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+
+  .direction-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 16px;}
+  .dir-btn{
+    font-family:'Karla',sans-serif;font-weight:700;font-size:13.5px;
+    padding:8px 15px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.22);
+    background:rgba(255,255,255,0.05);color:var(--paper);cursor:pointer;
+  }
+  .dir-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+
+  .progress-row{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:460px;margin:0 auto 14px;font-size:14px;color:#CFE3D4;
+  }
+  .progress-bar{flex:1;height:7px;background:rgba(255,255,255,0.12);border-radius:4px;margin:0 10px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--mustard);width:0%;transition:width .3s ease;}
+
+  /* ---- FLASHCARD ---- */
+  .card-stage{perspective:1400px;max-width:460px;margin:0 auto;height:560px;}
+  .card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.3,1.1);cursor:pointer;}
+  .card.flipped{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;
+    background:var(--paper);color:var(--ink);display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-start;padding:26px 24px;text-align:center;
+    box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);
+    border:1px dashed rgba(38,51,43,0.25);
+    overflow-y:auto;
+  }
+  .face.front{justify-content:center;}
+  .face.back{transform:rotateY(180deg);}
+  .card-number{
+    position:absolute; top:12px; left:14px;
+    background:var(--green-deep); color:var(--mustard);
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:13px;
+    padding:3px 10px; border-radius:999px;
+  }
+  .audio-btn{
+    position:absolute; top:10px; right:12px;
+    background:var(--mustard); color:var(--green-deep);
+    border:none; border-radius:50%; width:38px; height:38px;
+    font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+  }
+  .audio-btn:active{transform:scale(0.92);}
+  .gender-badge{
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    padding:3px 11px; border-radius:999px; color:#fff; margin-bottom:10px; margin-top:30px;
+  }
+  .eyebrow{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700;}
+  .de-word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(28px,7vw,38px);}
+  .tr-word{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:30px;color:var(--tomato);margin-bottom:12px;}
+  .example{font-size:16.5px;line-height:1.55;color:var(--ink);}
+  .example b{color:#000; font-weight:800;}
+  .example-tr{font-size:15.5px; color:var(--muted); font-style:italic; margin-top:6px;}
+  .exam-qa-box{
+    margin-top:16px; padding-top:14px; border-top:2px dashed #DCCB9E;
+    width:100%; text-align:left;
+  }
+  .exam-qa-warning{
+    font-size:12.5px; font-weight:800; color:var(--tomato); text-transform:uppercase;
+    letter-spacing:0.5px; margin-bottom:9px; text-align:center;
+  }
+  .exam-qa-line{font-size:16px; color:var(--ink); margin-bottom:3px; line-height:1.45;}
+  .exam-qa-line b{color:var(--green-mid);}
+  .exam-qa-tr{font-size:14.5px; color:var(--muted); font-style:italic; margin-bottom:10px;}
+  .hint{margin-top:12px;font-size:12.5px;color:var(--muted);}
+
+  .controls-row{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .btn{font-family:'Karla',sans-serif;font-weight:700;font-size:15px;padding:11px 20px;border-radius:10px;border:none;cursor:pointer;transition:transform .12s ease, filter .15s ease;}
+  .btn:hover{transform:translateY(-2px); filter:brightness(1.08);}
+  .btn:active{transform:translateY(0);}
+  .btn-nav{background:rgba(255,255,255,0.12);color:var(--paper);}
+  .btn-know{background:var(--leaf);color:white;}
+  .btn-unsure{background:var(--tomato);color:white;}
+  .btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:var(--paper);}
+
+  .stat-row{display:flex;justify-content:center;gap:22px;margin-top:18px;font-size:14px;color:#CFE3D4;}
+  .stat-row b{color:var(--mustard);}
+
+  .mastery-panel .progress-row{max-width:460px;margin:16px auto 8px;}
+  .grade-badge{display:inline-block;margin-top:6px;padding:7px 20px;border-radius:999px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;}
+
+  /* ---- QUIZ ---- */
+  .quiz-select{max-width:460px;margin:0 auto;text-align:center;}
+  .quiz-select-label{font-size:14.5px;color:#CFE3D4;margin-bottom:14px;}
+  .quiz-set-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .quiz-set-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:21px;padding:22px 10px;
+    border-radius:14px;border:2px solid var(--mustard);background:var(--paper);color:var(--green-mid);
+    cursor:pointer;box-shadow:0 8px 0 var(--paper-shadow);
+  }
+  .quiz-select-hint{margin-top:16px;font-size:12.5px;color:#9FB8A6;font-style:italic;}
+  .back-link{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;padding:0;}
+
+  .quiz-card{background:var(--paper);color:var(--ink);border-radius:18px;max-width:480px;margin:0 auto;padding:30px 26px;box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);}
+  .quiz-top{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:700;flex-wrap:wrap; gap:6px;}
+  .quiz-live-score{color:var(--leaf); font-weight:800;}
+  .quiz-question{text-align:center;margin-bottom:22px;}
+  .quiz-question .word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:32px;color:var(--green-mid);}
+  .options{display:flex;flex-direction:column;gap:11px;}
+  .option{text-align:left;padding:13px 17px;border-radius:11px;border:2px solid #E3D6B4;background:#FFFDF8;font-size:16px;font-weight:500;cursor:pointer;transition:all .15s ease;color:var(--ink);}
+  .option:hover{border-color:var(--mustard);}
+  .option.correct{background:#DCEEDA;border-color:var(--leaf);color:#274423;font-weight:700;}
+  .option.wrong{background:#F6DCD6;border-color:var(--tomato);color:#6B231A;font-weight:700;}
+  .option[disabled]{cursor:default;}
+  .quiz-feedback{margin-top:16px;text-align:center;min-height:22px;font-weight:700;font-size:15px;}
+  .quiz-feedback.correct{color:var(--leaf);}
+  .quiz-feedback.wrong{color:var(--tomato);}
+  .quiz-next{display:flex;justify-content:center;margin-top:16px;}
+
+  .result-card{text-align:center; position:relative;}
+  .result-max-badge{
+    position:absolute; top:-14px; right:-10px;
+    background:var(--green-deep); color:var(--mustard);
+    font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px;
+  }
+  .result-card .big-score{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:56px;color:var(--tomato);margin:8px 0;}
+  .points-row{display:flex;justify-content:center;gap:26px;margin:10px 0 4px;font-size:15px;color:var(--muted);}
+  .points-row b{font-size:16px;}
+  .review-list{text-align:left;margin-top:18px;max-height:220px;overflow-y:auto;border-top:1px dashed #D8C79A;padding-top:12px;}
+  .review-item{display:flex;justify-content:space-between;font-size:14.5px;padding:6px 4px;border-bottom:1px solid #F0E6CC;}
+  .review-item b{color:var(--green-mid);}
+  .whatsapp-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:#25D366; color:#fff; font-weight:700; font-family:'Karla',sans-serif;
+    font-size:14.5px; padding:11px 20px; border-radius:10px; border:none; cursor:pointer; margin-top:6px;
+    text-decoration:none;
+  }
+  .resume-banner{
+    max-width:460px; margin:0 auto 14px; background:rgba(227,169,58,0.15);
+    border:1.5px solid var(--mustard); border-radius:12px; padding:12px 16px;
+    text-align:center; font-size:14px; color:var(--mustard);
+  }
+  .resume-banner button{margin-left:8px;}
+
+  footer{text-align:center;margin-top:40px;font-size:12.5px;color:#9FB8A6;}
+  .storage-note{
+    max-width:460px; margin:16px auto 0; font-size:11.5px; color:#7c9992;
+    text-align:center; line-height:1.5; font-style:italic;
+  }
+
+  @media (prefers-reduced-motion: reduce){.card{transition:none;} .btn,.option{transition:none;}}
+</style>
+</head>
+<body>
+
+<div id="identity-gate">
+  <div class="gate-box">
+    <div style="font-size:34px;">🧺</div>
+    <h2>Hoş Geldin!</h2>
+    <p>Kelime çalışmasına başlamadan önce adını ve tarihi gir.</p>
+    <div class="gate-field">
+      <label for="gate-name">Adın / Nickname</label>
+      <input type="text" id="gate-name" placeholder="örn. Ahmet Y.">
+    </div>
+    <div class="gate-field">
+      <label for="gate-date">Tarih</label>
+      <input type="date" id="gate-date">
+    </div>
+    <button class="gate-submit" id="gate-submit">Başla →</button>
+    <div class="gate-note">Adın ve tarihin, öğretmenine quiz sonuçlarını ve ilerlemeni kaydetmek için kullanılıyor. Böylece kaldığın yerden devam edebilir ve geçmiş sonuçlarını görebilirsin.</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="basket">🧺</div>
+    <h1>Hadi Almanca Kelime Sepeti</h1>
+    <div class="subtitle">Goethe A1 Kelime Çalışması</div>
+    <div class="topic-line">Konu: Essen · Trinken · Einkaufen · Lebensmittel</div>
+    <div class="student-line" id="student-line"></div>
+    <div class="topic-tags">
+      <span class="tag">135 kelime</span>
+      <span class="tag">Goethe · Telc · Cornelsen</span>
+      <span class="tag">Kartlar + Quiz</span>
+    </div>
+  </header>
+
+  <div class="gender-legend">
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--der-blue);"></span>der</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--die-red);"></span>die</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--das-green);"></span>das</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--plural-orange);"></span>die (çoğul)</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--neutral-grey);"></span>fiil / sıfat</span>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="flash">🃏 Kartlar</button>
+    <button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+  </nav>
+
+  <!-- FLASHCARDS -->
+  <section id="flash" class="active">
+    <div class="direction-row" id="fc-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca göster</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe göster</button>
+    </div>
+    <div class="progress-row">
+      <span id="fc-count">1 / 135</span>
+      <div class="progress-bar"><div class="progress-fill" id="fc-progress"></div></div>
+      <span id="fc-mode-label">Tüm kartlar</span>
+    </div>
+
+    <div class="card-stage">
+      <div class="card" id="flip-card">
+        <div class="face front">
+          <div class="card-number" id="fc-number-front">#1</div>
+          <button class="audio-btn" id="audio-btn-front" title="Kelimeyi artikeliyle dinle (der/die/das + kelime)">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-front"></div>
+          <div class="eyebrow" id="fc-front-label">Almanca</div>
+          <div class="de-word" id="fc-de"></div>
+          <div class="hint">Çevirmek için karta dokun</div>
+        </div>
+        <div class="face back">
+          <div class="card-number" id="fc-number-back">#1</div>
+          <button class="audio-btn" id="audio-btn-back" title="Örnek cümleyi (Almanca) dinle">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-back"></div>
+          <div class="eyebrow" id="fc-back-label">Türkçe</div>
+          <div class="tr-word" id="fc-tr"></div>
+          <div class="example" id="fc-ex"></div>
+          <div class="example-tr" id="fc-ex-tr"></div>
+          <div class="exam-qa-box" id="fc-examqa">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q"></span></div>
+            <div class="exam-qa-tr">(<span id="fc-qa-q-tr"></span>)</div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a"></span></div>
+            <div class="exam-qa-tr">(<span id="fc-qa-a-tr"></span>)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <button class="btn btn-nav" id="fc-prev">← Önceki</button>
+      <button class="btn btn-unsure" id="fc-unsure">🔁 Tekrar Gerekli</button>
+      <button class="btn btn-know" id="fc-know">✔ Biliyorum</button>
+      <button class="btn btn-nav" id="fc-next">Sonraki →</button>
+    </div>
+    <div class="controls-row">
+      <button class="btn btn-ghost" id="fc-shuffle">🔀 Karıştır</button>
+      <button class="btn btn-ghost" id="fc-review">🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)</button>
+      <button class="btn btn-ghost" id="fc-reset">↺ Sıfırla</button>
+    </div>
+
+    <div class="stat-row">
+      <span>✔ Biliyorum: <b id="stat-know">0</b></span>
+      <span>🔁 Tekrar: <b id="stat-unsure">0</b></span>
+    </div>
+
+    <div class="mastery-panel">
+      <div class="progress-row" style="max-width:460px; margin:16px auto 8px;">
+        <span>Değerlendirilen</span>
+        <div class="progress-bar"><div class="progress-fill" id="mastery-progress" style="background:var(--leaf);"></div></div>
+        <span id="mastery-count">0/135</span>
+      </div>
+      <div style="text-align:center;">
+        <div class="grade-badge" id="mastery-badge" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz">
+    <div class="direction-row" id="quiz-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca sorulsun</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe sorulsun</button>
+      <button class="dir-btn" data-dir="mixed">🔀 Karışık</button>
+    </div>
+    <div class="quiz-select" id="quiz-select">
+      <div class="quiz-select-label">Bir quiz seçin (her biri 25 soru)</div>
+      <div class="quiz-set-grid">
+        <button class="quiz-set-btn" data-set="0">Quiz 1</button>
+        <button class="quiz-set-btn" data-set="1">Quiz 2</button>
+        <button class="quiz-set-btn" data-set="2">Quiz 3</button>
+        <button class="quiz-set-btn" data-set="3">Quiz 4</button>
+      </div>
+      <div class="quiz-select-hint">Türkçede de neredeyse aynı olan kelimeler (Joghurt, Keks, Kasse vb.) quizlere dahil edilmedi.</div>
+    </div>
+    <div class="quiz-card" id="quiz-area" style="display:none;"></div>
+    <div class="storage-note" id="storage-note"></div>
+  </section>
+
+  <footer>Hadi Almanca — DTZ / Telc / ÖSD Sınav Hazırlık • youtube.com/@hadialmanca</footer>
+</div>
+
+<script>
+const WORDS = [["essen","yemek yemek","Was gibt es zu essen?","Yemek için ne var?",""],["das Essen","yemek","Das Essen schmeckt sehr gut.","Yemeğin tadı çok güzel.","n"],["trinken","içmek","Möchtest du etwas trinken?","Bir şey içmek ister misin?",""],["das Frühstück","kahvaltı","Möchtest du ein Ei zum Frühstück?","Kahvaltıda yumurta ister misin?","n"],["frühstücken","kahvaltı etmek","Ich frühstücke jeden Morgen um sieben Uhr.","Her sabah saat yedide kahvaltı ederim.",""],["das Brot","ekmek","Ich esse gern Brot mit Käse.","Peynirli ekmek yemeyi severim.","n"],["das Brötchen","küçük ekmek","Ich kaufe frische Brötchen beim Bäcker.","Fırından taze küçük ekmekler alıyorum.","n"],["die Butter","tereyağı","Für mich bitte ein Brötchen mit Butter und Käse.","Benim için tereyağlı ve peynirli bir ekmek lütfen.","f"],["das Ei","yumurta","Möchtest du ein Ei zum Frühstück?","Kahvaltıda yumurta ister misin?","n"],["der Kaffee","kahve","Zum Frühstück trinke ich immer Kaffee.","Kahvaltıda her zaman kahve içerim.","m"],["der Tee","çay","Am Nachmittag trinke ich gern eine Tasse Tee.","Öğleden sonra bir fincan çay içmeyi severim.","m"],["das Bier","bira","Noch ein Bier bitte.","Bir bira daha lütfen.","n"],["der Wein","şarap","Ich trinke abends gern ein Glas Wein.","Akşamları bir kadeh şarap içmeyi severim.","m"],["das Wasser","su","Ein Glas Wasser, bitte.","Bir bardak su lütfen.","n"],["der Saft","meyve suyu","Der Saft ist frisch und kalt.","Meyve suyu taze ve soğuk.","m"],["das Getränk","içecek","Welches Getränk möchten Sie?","Hangi içeceği istersiniz?","n"],["das Fleisch","et","Ich esse gern Fisch. Fleisch mag ich nicht.","Balık yemeyi severim. Eti sevmem.","n"],["der Fisch","balık","Ich esse gern Fisch. Fleisch mag ich nicht.","Balık yemeyi severim. Eti sevmem.","m"],["der Schinken","pastırma","Ich möchte gern ein Schinkenbrot.","Pastırmalı bir sandviç istiyorum.","m"],["das Hähnchen","tavuk","Ein Hähnchen mit Pommes bitte!","Patates kızartmalı bir tavuk lütfen!","n"],["die Pommes frites","patates kızartması","Die Kinder essen Hähnchen mit Pommes frites.","Çocuklar tavuğu patates kızartmasıyla yiyor.","p"],["die Kartoffel","patates","Für Pommes frites braucht man Kartoffeln.","Patates kızartması için patatese ihtiyaç vardır.","f"],["das Gemüse","sebze","Gemüse brauchen wir auch noch.","Sebzeye de ihtiyacımız var.","n"],["das Obst","meyve","Im Sommer ist das Obst billig.","Yazın meyve ucuzdur.","n"],["der Apfel","elma","Ich esse jeden Tag einen Apfel.","Her gün bir elma yerim.","m"],["die Banane","muz","Die Banane ist süß und gesund.","Muz tatlı ve sağlıklıdır.","f"],["die Birne","armut","Die Birne schmeckt sehr süß.","Armudun tadı çok tatlı.","f"],["die Tomate","domates","Ich brauche zwei Tomaten für den Salat.","Salata için iki domatese ihtiyacım var.","f"],["der Kuchen","pasta / kek","Ich nehme ein Stück Kuchen.","Bir dilim kek alıyorum.","m"],["der Salat","salata","Wie schmeckt dir der Salat?","Salatanın tadı nasıl?","m"],["das Salz","tuz","Herr Ober, kann ich bitte Salz haben?","Garson, biraz tuz alabilir miyim lütfen?","n"],["das Öl","sıvı yağ","Für den Salat brauche ich etwas Öl.","Salata için biraz sıvı yağa ihtiyacım var.","n"],["die Milch","süt","Die Milch steht im Kühlschrank.","Süt buzdolabında duruyor.","f"],["die Lebensmittel","gıda maddeleri","Lebensmittel bekommen Sie im Supermarkt.","Gıda maddelerini süpermarketten alabilirsiniz.","p"],["die Mahlzeiten","öğünler","Ich esse drei Mahlzeiten am Tag.","Günde üç öğün yemek yerim.","p"],["die Speisen","yemekler","Die Speisen in diesem Restaurant sind lecker.","Bu restorandaki yemekler lezzetli.","p"],["schmecken","tadı olmak","Schmeckt das gut?","Bunun tadı güzel mi?",""],["bitter","acı","Der Kaffee schmeckt bitter.","Kahvenin tadı acı.",""],["der Appetit","iştah","Guten Appetit!","Afiyet olsun!","m"],["das Café","kafe","Sollen wir uns im Café treffen?","Kafede mi buluşalım?","n"],["das Restaurant","restoran","Wir essen heute Abend im Restaurant.","Bu akşam restoranda yemek yiyoruz.","n"],["das Lokal","lokal","In unserer Straße gibt es ein neues Lokal.","Sokağımızda yeni bir lokal var.","n"],["die Speisekarte","menü","Bringen Sie mir die Speisekarte, bitte.","Bana menüyü getirir misiniz lütfen.","f"],["bestellen","sipariş etmek","Wir möchten bestellen, bitte.","Sipariş vermek istiyoruz lütfen.",""],["grillen","ızgara yapmak","Heute grillen wir im Garten.","Bugün bahçede mangal yapıyoruz.",""],["kochen","pişirmek","Herr Georgi kann gut kochen.","Bay Georgi iyi yemek yapabiliyor.",""],["einkaufen","alışveriş yapmak","Ich muss noch für morgen einkaufen.","Yarın için daha alışveriş yapmalıyım.",""],["das Geschäft","mağaza","Die Geschäfte schließen um 18.30 Uhr.","Mağazalar saat 18.30'da kapanıyor.","n"],["der Laden","dükkân","Der Laden an der Ecke hat gute Preise.","Köşedeki dükkânın fiyatları iyi.","m"],["die Bäckerei","fırın","Ich geh mal schnell zur Bäckerei.","Çabucak fırına gidiyorum.","f"],["der Kiosk","büfe","Am Kiosk bekommen Sie Getränke, Zigaretten und Zeitungen.","Büfeden içecek, sigara ve gazete alabilirsiniz.","m"],["kaufen","satın almak","Ich kaufe frisches Obst und Gemüse.","Taze meyve ve sebze satın alıyorum.",""],["verkaufen","satmak","Der Bäcker verkauft frisches Brot.","Fırıncı taze ekmek satıyor.",""],["der Verkäufer","satıcı","Der Verkäufer ist sehr freundlich.","Satıcı çok nazik.","m"],["der Preis","fiyat","Der Preis für die Jacke ist hoch.","Ceketin fiyatı yüksek.","m"],["kosten","-e mal olmak","Wie viel kostet das?","Bunun fiyatı ne kadar?",""],["billig","ucuz","Die Jacke kostet nur 10 Euro! Die ist aber billig!","Ceket sadece 10 Euro! Gerçekten ucuz!",""],["teuer","pahalı","Das ist mir zu teuer.","Bu bana çok pahalı geliyor.",""],["günstig","uygun","Dort gibt es günstige Angebote.","Orada uygun fiyatlı teklifler var.",""],["das Angebot","indirim","Heute sind Sportschuhe im Angebot.","Bugün spor ayakkabıları indirimde.","n"],["anbieten","teklif etmek","Was darf ich Ihnen anbieten?","Size ne ikram edebilirim?",""],["bezahlen / zahlen","ödeme yapmak","Wo muss ich bezahlen?","Nerede ödeme yapmam gerekiyor?",""],["bar","peşin / nakit","Muss ich bar zahlen oder geht's auch mit Karte?","Nakit mi ödemeliyim yoksa kartla da olur mu?",""],["die (Kredit-)Karte","(kredi) kartı","Kann ich mit Karte bezahlen?","Kartla ödeme yapabilir miyim?","f"],["die Kasse","kasa","Zahlen Sie bitte an der Kasse.","Lütfen kasada ödeyiniz.","f"],["die Rechnung","hesap","Die Rechnung, bitte.","Hesap lütfen.","f"],["das Geld","para","Hast du noch Geld?","Hâlâ paran var mı?","n"],["der Kunde","müşteri","Der Kunde möchte an der Kasse bezahlen.","Müşteri kasada ödeme yapmak istiyor.","m"],["die Gebrauchsartikel","tüketim malları","Im Supermarkt gibt es viele Gebrauchsartikel.","Süpermarkette birçok tüketim malı var.","p"],["der Apfelsaft","elma suyu","Ich trinke gern Apfelsaft.","Elma suyu içmeyi severim.","m"],["die Babynahrung","bebek maması","Wo finde ich Babynahrung?","Bebek mamasını nerede bulabilirim?","f"],["der Becher","kap / kupa","Ich kaufe einen Becher Joghurt.","Bir kap yoğurt alıyorum.","m"],["das Bistro","bistro","Wir essen im Bistro zu Mittag.","Bistroda öğle yemeği yiyoruz.","n"],["die Blaubeere","yaban mersini","Die Blaubeeren sind süß.","Yaban mersinleri tatlı.","f"],["die Bohne","fasulye","Ich koche heute Bohnen.","Bugün fasulye pişiriyorum.","f"],["brauchen","ihtiyaç duymak","Ich brauche noch Milch und Brot.","Daha süt ve ekmeğe ihtiyacım var.",""],["der Cent","sent","Das kostet neunzig Cent.","Bu doksan sent tutuyor.","m"],["die Cola","kola","Eine Cola, bitte!","Bir kola lütfen!","f"],["der Couscous","kuskus","Ich esse gern Couscous.","Kuskus yemeyi severim.","m"],["die Dose","teneke kutu / konserve","Eine Dose Tomaten, bitte.","Bir kutu domates lütfen.","f"],["der Einkaufszettel","alışveriş listesi","Ich schreibe einen Einkaufszettel.","Bir alışveriş listesi yazıyorum.","m"],["die Erbse","bezelye","Die Erbsen sind frisch.","Bezelyeler taze.","f"],["die Erdbeere","çilek","Im Sommer esse ich viele Erdbeeren.","Yazın çok çilek yerim.","f"],["frisch","taze","Das Brot ist heute frisch.","Ekmek bugün taze.",""],["das Glas","bardak / kavanoz","Ein Glas Marmelade, bitte.","Bir kavanoz reçel lütfen.","n"],["das Gramm","gram","Ich möchte 200 Gramm Käse.","200 gram peynir istiyorum.","n"],["die Himbeere","ahududu","Die Himbeeren kosten drei Euro.","Ahududular üç Euro.","f"],["der Honig","bal","Ich esse Brot mit Honig.","Ballı ekmek yerim.","m"],["der Joghurt","yoğurt","Ich frühstücke Joghurt mit Obst.","Kahvaltıda meyveli yoğurt yerim.","m"],["der Käse","peynir","Ich möchte ein Kilo Käse.","Bir kilo peynir istiyorum.","m"],["der Keks","bisküvi / kurabiye","Die Kinder essen gern Kekse.","Çocuklar bisküvi yemeyi sever.","m"],["die Kichererbse","nohut","Kichererbsen sind gesund.","Nohut sağlıklıdır.","f"],["das Kilo","kilo","Ein Kilo Äpfel, bitte.","Bir kilo elma lütfen.","n"],["die Kirsche","kiraz","Die Kirschen sind rot und süß.","Kirazlar kırmızı ve tatlı.","f"],["die Kiwi","kivi","Eine Kiwi hat viel Vitamin C.","Bir kivide çok C vitamini var.","f"],["das Lammfleisch","kuzu eti","Wir essen heute Lammfleisch.","Bugün kuzu eti yiyoruz.","n"],["die Limonade","limonata","Eine Limonade, bitte.","Bir limonata lütfen.","f"],["der Liter","litre","Ich kaufe einen Liter Milch.","Bir litre süt alıyorum.","m"],["die Mandarine","mandalina","Die Mandarinen sind süß.","Mandalinalar tatlı.","f"],["die Mango","mango","Ich mag Mango sehr.","Mangoyu çok severim.","f"],["der Markt","pazar / market","Samstags gehe ich auf den Markt.","Cumartesileri pazara giderim.","m"],["die Marmelade","reçel","Zum Frühstück esse ich Brot mit Marmelade.","Kahvaltıda reçelli ekmek yerim.","f"],["das Mehl","un","Für den Kuchen brauche ich Mehl.","Kek için una ihtiyacım var.","n"],["die Melone","kavun / karpuz","Im Sommer esse ich gern Melone.","Yazın kavun yemeyi severim.","f"],["das Milchprodukt","süt ürünü","Käse und Joghurt sind Milchprodukte.","Peynir ve yoğurt süt ürünüdür.","n"],["die Möhre","havuç","Die Möhren sind gesund.","Havuçlar sağlıklıdır.","f"],["die Nudel","makarna","Die Kinder essen gern Nudeln.","Çocuklar makarna yemeyi sever.","f"],["der Obstsalat","meyve salatası","Ich mache einen Obstsalat.","Bir meyve salatası yapıyorum.","m"],["das Olivenöl","zeytinyağı","Der Salat schmeckt gut mit Olivenöl.","Salata zeytinyağıyla güzel oluyor.","n"],["die Orange","portakal","Die Orange ist süß und saftig.","Portakal tatlı ve sulu.","f"],["die Packung","paket","Eine Packung Reis, bitte.","Bir paket pirinç lütfen.","f"],["die Paprika","biber","Ich brauche noch eine Paprika.","Bir bibere daha ihtiyacım var.","f"],["das Pfund","yarım kilo (500 gr)","Ein Pfund Tomaten, bitte.","Yarım kilo domates lütfen.","n"],["der Pilz","mantar","Die Pilze sind frisch.","Mantarlar taze.","m"],["der Pudding","puding","Zum Nachtisch gibt es Pudding.","Tatlı olarak puding var.","m"],["der Reis","pirinç","Wir essen heute Reis mit Gemüse.","Bugün sebzeli pirinç yiyoruz.","m"],["das Rindfleisch","sığır eti","Ich esse selten Rindfleisch.","Nadiren sığır eti yerim.","n"],["die Sahne","krema","Der Kuchen hat viel Sahne.","Kekte çok krema var.","f"],["die Schokolade","çikolata","Ich mag Schokolade sehr.","Çikolatayı çok severim.","f"],["das Schweinefleisch","domuz eti","Ich esse kein Schweinefleisch.","Domuz eti yemem.","n"],["das Stück","parça / dilim","Ein Stück Kuchen, bitte.","Bir dilim kek lütfen.","n"],["die Tasse","fincan","Eine Tasse Kaffee, bitte.","Bir fincan kahve lütfen.","f"],["der Tipp","bahşiş","Der Tipp war fünf Euro.","Bahşiş beş Euro'ydu.","m"],["die Traube","üzüm","Die Trauben sind süß.","Üzümler tatlı.","f"],["die Zitrone","limon","Der Tee schmeckt gut mit Zitrone.","Çay limonla güzel oluyor.","f"],["der Zucker","şeker","Ich trinke Kaffee ohne Zucker.","Kahveyi şekersiz içerim.","m"],["die Zwiebel","soğan","Ich brauche eine Zwiebel für die Suppe.","Çorba için bir soğana ihtiyacım var.","f"],["Hunger haben","acıkmak","Ich habe Hunger. Wann gibt es Essen?","Acıktım. Yemek ne zaman hazır?",""],["Durst haben","susamak","Ich habe Durst. Gibt es Wasser?","Susadım. Su var mı?",""],["das Mittagessen","öğle yemeği","Was gibt es zum Mittagessen?","Öğle yemeğinde ne var?","n"],["das Abendessen","akşam yemeği","Das Abendessen ist um sieben Uhr.","Akşam yemeği saat yedide.","n"],["die Suppe","çorba","Die Suppe schmeckt sehr gut.","Çorbanın tadı çok güzel.","f"],["der Supermarkt","süpermarket","Ich kaufe im Supermarkt ein.","Süpermarketten alışveriş yapıyorum.","m"],["geöffnet","açık (belirli saatler arası)","Der Supermarkt ist von 8 bis 20 Uhr geöffnet.","Süpermarket 8'den 20'ye kadar açık.",""],["der Euro","Euro (para birimi)","Das kostet zwei Euro.","Bu iki Euro tutuyor.","m"]];
+
+const EXAM_QA = [["Was möchten Sie essen?","Ne yemek istersiniz?","Ich möchte eine Suppe essen.","Bir çorba yemek istiyorum."],["Schmeckt Ihnen das Essen?","Yemek hoşunuza gidiyor mu?","Ja, es schmeckt sehr gut.","Evet, tadı çok güzel."],["Was trinken Sie am liebsten?","En çok neyi içmeyi seversiniz?","Ich trinke am liebsten Tee.","En çok çay içmeyi severim."],["Was essen Sie zum Frühstück?","Kahvaltıda ne yersiniz?","Ich esse Brot und Käse zum Frühstück.","Kahvaltıda ekmek ve peynir yerim."],["Frühstücken Sie zu Hause?","Evde mi kahvaltı edersiniz?","Ja, ich frühstücke immer zu Hause.","Evet, her zaman evde kahvaltı ederim."],["Essen Sie gern Brot?","Ekmek yemeyi sever misiniz?","Ja, ich esse jeden Tag Brot.","Evet, her gün ekmek yerim."],["Kaufen Sie frische Brötchen?","Taze küçük ekmekler alır mısınız?","Ja, jeden Morgen beim Bäcker.","Evet, her sabah fırından."],["Möchten Sie Butter zum Brot?","Ekmeğe tereyağı ister misiniz?","Ja, gern, danke.","Evet, lütfen, teşekkürler."],["Essen Sie gern Eier?","Yumurta yemeyi sever misiniz?","Ja, ich esse jeden Morgen ein Ei.","Evet, her sabah bir yumurta yerim."],["Trinken Sie Kaffee am Morgen?","Sabahları kahve içer misiniz?","Ja, ich trinke immer Kaffee am Morgen.","Evet, sabahları her zaman kahve içerim."],["Trinken Sie lieber Tee oder Kaffee?","Çayı mı kahveyi mi tercih edersiniz?","Ich trinke lieber Tee.","Çayı tercih ederim."],["Trinken Sie gern Bier?","Bira içmeyi sever misiniz?","Nein, ich trinke lieber Wasser.","Hayır, su içmeyi tercih ederim."],["Trinken Sie abends ein Glas Wein?","Akşamları bir kadeh şarap içer misiniz?","Ja, manchmal ein Glas Rotwein.","Evet, bazen bir kadeh kırmızı şarap."],["Können Sie mir ein Glas Wasser geben?","Bana bir bardak su verebilir misiniz?","Ja, natürlich, kein Problem.","Evet, tabii ki, sorun değil."],["Trinken Sie gern Saft?","Meyve suyu içmeyi sever misiniz?","Ja, am liebsten Orangensaft.","Evet, en çok portakal suyu."],["Was ist Ihr Lieblingsgetränk?","En sevdiğiniz içecek nedir?","Mein Lieblingsgetränk ist Tee.","En sevdiğim içecek çay."],["Essen Sie Fleisch?","Et yer misiniz?","Nein, ich esse kein Fleisch.","Hayır, et yemem."],["Mögen Sie Fisch?","Balığı sever misiniz?","Ja, ich esse gern Fisch.","Evet, balık yemeyi severim."],["Möchten Sie ein Schinkenbrot?","Pastırmalı sandviç ister misiniz?","Nein danke, ich esse keinen Schinken.","Hayır teşekkürler, pastırma yemem."],["Essen Sie gern Hähnchen?","Tavuk yemeyi sever misiniz?","Ja, am liebsten mit Pommes.","Evet, en çok patates kızartmasıyla."],["Möchten Sie Pommes frites dazu?","Yanında patates kızartması ister misiniz?","Ja, gern, mit Ketchup bitte.","Evet, lütfen, ketçaplı olsun."],["Kaufen Sie oft Kartoffeln?","Sık sık patates alır mısınız?","Ja, ich brauche sie fast jede Woche.","Evet, neredeyse her hafta ihtiyacım oluyor."],["Essen Sie viel Gemüse?","Çok sebze yer misiniz?","Ja, ich esse jeden Tag Gemüse.","Evet, her gün sebze yerim."],["Kaufen Sie oft Obst?","Sık sık meyve alır mısınız?","Ja, ich kaufe jeden Tag Obst.","Evet, her gün meyve alırım."],["Können Sie mir bitte einen Apfel bringen?","Bana bir elma getirebilir misiniz lütfen?","Ja, einen Moment bitte.","Evet, bir dakika lütfen."],["Mögen Sie Bananen?","Muzu sever misiniz?","Ja, ich esse sie sehr gern.","Evet, yemeyi çok severim."],["Kaufen Sie auch Birnen?","Armut da alır mısınız?","Ja, ein Kilo bitte.","Evet, bir kilo lütfen."],["Brauchen Sie Tomaten für den Salat?","Salata için domatese ihtiyacınız var mı?","Ja, zwei Tomaten bitte.","Evet, iki domates lütfen."],["Mögen Sie Kuchen?","Pastayı sever misiniz?","Ja, besonders Schokoladenkuchen.","Evet, özellikle çikolatalı pastayı."],["Möchten Sie einen Salat dazu?","Yanında salata ister misiniz?","Ja, gern, mit Öl und Essig.","Evet, lütfen, yağ ve sirkeli olsun."],["Können Sie mir bitte das Salz geben?","Bana tuzu verebilir misiniz lütfen?","Ja, hier bitte.","Evet, buyurun."],["Brauchen Sie noch Öl?","Daha yağa ihtiyacınız var mı?","Ja, für den Salat.","Evet, salata için."],["Trinken Sie Milch zum Frühstück?","Kahvaltıda süt içer misiniz?","Ja, jeden Morgen ein Glas Milch.","Evet, her sabah bir bardak süt."],["Wo kaufen Sie Lebensmittel?","Gıda maddelerini nereden alırsınız?","Im Supermarkt in meiner Straße.","Sokağımdaki süpermarketten."],["Wie viele Mahlzeiten essen Sie am Tag?","Günde kaç öğün yersiniz?","Ich esse drei Mahlzeiten am Tag.","Günde üç öğün yerim."],["Mögen Sie die Speisen hier?","Buradaki yemekleri beğeniyor musunuz?","Ja, sie schmecken sehr gut.","Evet, tatları çok güzel."],["Schmeckt Ihnen das Essen?","Yemek hoşunuza gidiyor mu?","Ja, es schmeckt ausgezeichnet.","Evet, tadı mükemmel."],["Trinken Sie den Kaffee bitter?","Kahveyi acı mı içersiniz?","Nein, ich trinke ihn mit Zucker.","Hayır, şekerli içerim."],["Haben Sie Appetit auf etwas Süßes?","Tatlı bir şeye iştahınız var mı?","Ja, ich möchte ein Stück Kuchen.","Evet, bir dilim pasta istiyorum."],["Treffen Sie Freunde im Café?","Arkadaşlarınızla kafede mi buluşursunuz?","Ja, jeden Samstag.","Evet, her cumartesi."],["Essen Sie oft im Restaurant?","Sık sık restoranda mı yersiniz?","Ja, einmal in der Woche.","Evet, haftada bir kere."],["Kennen Sie ein gutes Lokal hier?","Buralarda iyi bir lokal biliyor musunuz?","Ja, es gibt eins um die Ecke.","Evet, köşede bir tane var."],["Können Sie mir die Speisekarte bringen?","Bana menüyü getirebilir misiniz?","Ja, einen Moment bitte.","Evet, bir dakika lütfen."],["Möchten Sie schon bestellen?","Sipariş vermek ister misiniz?","Ja, ich hätte gern einen Salat.","Evet, bir salata istiyorum."],["Grillen Sie gern im Sommer?","Yazın mangal yapmayı sever misiniz?","Ja, sehr gern, mit Freunden.","Evet, çok severim, arkadaşlarla."],["Kochen Sie gern?","Yemek yapmayı sever misiniz?","Ja, ich koche jeden Abend.","Evet, her akşam yemek yaparım."],["Wann gehen Sie einkaufen?","Ne zaman alışverişe gidersiniz?","Ich gehe samstags einkaufen.","Cumartesileri alışverişe giderim."],["Wann schließen die Geschäfte?","Mağazalar ne zaman kapanır?","Meistens um achtzehn Uhr.","Genellikle saat on sekizde."],["Gibt es hier einen guten Laden?","Burada iyi bir dükkân var mı?","Ja, direkt an der Ecke.","Evet, tam köşede."],["Gehen Sie oft zur Bäckerei?","Sık sık fırına gider misiniz?","Ja, jeden Morgen.","Evet, her sabah."],["Wo kann ich eine Zeitung kaufen?","Nereden gazete alabilirim?","Sie können eine Zeitung am Kiosk kaufen.","Gazeteyi büfeden alabilirsiniz."],["Was kaufst du am Samstag?","Cumartesi ne alırsın?","Ich kaufe Obst und Gemüse.","Meyve ve sebze alırım."],["Was verkauft der Bäcker?","Fırıncı ne satıyor?","Er verkauft frisches Brot.","Taze ekmek satıyor."],["Ist der Verkäufer freundlich?","Satıcı güler yüzlü mü?","Ja, sehr freundlich.","Evet, çok güler yüzlü."],["Wie ist der Preis für die Jacke?","Ceketin fiyatı nasıl?","Der Preis ist ziemlich hoch.","Fiyatı oldukça yüksek."],["Wie viel kostet das?","Bu ne kadar tutuyor?","Das kostet zehn Euro.","Bu on Euro tutuyor."],["Ist dieses Brot billig?","Bu ekmek ucuz mu?","Ja, es kostet nur einen Euro.","Evet, sadece bir Euro."],["Ist das Restaurant teuer?","Bu restoran pahalı mı?","Ja, ziemlich teuer.","Evet, oldukça pahalı."],["Sind die Angebote günstig?","İndirimler uygun mu?","Ja, sehr günstig diese Woche.","Evet, bu hafta çok uygun."],["Gibt es heute ein Angebot?","Bugün bir indirim var mı?","Ja, die Schuhe sind im Angebot.","Evet, ayakkabılar indirimde."],["Was darf ich Ihnen anbieten?","Size ne ikram edebilirim?","Einen Kaffee, bitte.","Bir kahve, lütfen."],["Wo muss ich bezahlen?","Nerede ödeme yapmam gerekiyor?","An der Kasse, bitte.","Kasada, lütfen."],["Zahlen Sie bar oder mit Karte?","Nakit mi kartla mı ödersiniz?","Ich zahle bar.","Nakit ödüyorum."],["Kann ich mit Karte bezahlen?","Kartla ödeyebilir miyim?","Ja, natürlich.","Evet, tabii ki."],["Wo ist die Kasse?","Kasa nerede?","Die Kasse ist dort hinten.","Kasa şurada arkada."],["Können Sie mir die Rechnung bringen?","Bana hesabı getirebilir misiniz?","Ja, sofort.","Evet, hemen."],["Haben Sie genug Geld dabei?","Yanınızda yeterli para var mı?","Ja, ich habe genug Geld.","Evet, yeterli param var."],["Ist der Kunde zufrieden?","Müşteri memnun mu?","Ja, er ist sehr zufrieden.","Evet, çok memnun."],["Gibt es hier viele Gebrauchsartikel?","Burada çok tüketim malı var mı?","Ja, ein großes Angebot.","Evet, geniş bir çeşit var."],["Trinken Sie gern Apfelsaft?","Elma suyu içmeyi sever misiniz?","Ja, sehr gern.","Evet, çok severim."],["Wo finde ich Babynahrung?","Bebek mamasını nerede bulabilirim?","Im zweiten Regal links.","Soldaki ikinci rafta."],["Möchten Sie einen Becher Joghurt?","Bir kap yoğurt ister misiniz?","Ja, gern.","Evet, lütfen."],["Isst du gern im Bistro?","Bistroda yemeyi sever misin?","Ja, das Essen dort ist lecker.","Evet, oradaki yemekler lezzetli."],["Mögen Sie Blaubeeren?","Yaban mersinini sever misiniz?","Ja, sie sind sehr süß.","Evet, çok tatlılar."],["Kochen Sie oft Bohnen?","Sık sık fasulye pişirir misiniz?","Ja, einmal in der Woche.","Evet, haftada bir kere."],["Was brauchen Sie noch?","Daha neye ihtiyacınız var?","Ich brauche noch Milch und Brot.","Daha süt ve ekmeğe ihtiyacım var."],["Wie viel Cent kostet das?","Bu kaç sent tutuyor?","Das kostet neunzig Cent.","Bu doksan sent tutuyor."],["Möchten Sie eine Cola?","Bir kola ister misiniz?","Ja, gern, mit Eis bitte.","Evet, lütfen, buzlu olsun."],["Haben Sie schon Couscous probiert?","Daha önce kuskus denediniz mi?","Ja, ich esse ihn sehr gern.","Evet, yemeyi çok severim."],["Können Sie mir eine Dose Tomaten bringen?","Bana bir kutu domates getirebilir misiniz?","Ja, einen Moment bitte.","Evet, bir dakika lütfen."],["Schreiben Sie immer einen Einkaufszettel?","Her zaman alışveriş listesi yazar mısınız?","Ja, sonst vergesse ich etwas.","Evet, yoksa bir şey unutuyorum."],["Mögen Sie Erbsen?","Bezelyeyi sever misiniz?","Ja, besonders im Sommer.","Evet, özellikle yazın."],["Isst du gern Erdbeeren?","Çilek yemeyi sever misin?","Ja, im Sommer sehr gern.","Evet, yazın çok severim."],["Ist das Brot noch frisch?","Ekmek hâlâ taze mi?","Ja, es ist heute frisch.","Evet, bugün taze."],["Möchten Sie ein Glas Wasser?","Bir bardak su ister misiniz?","Ja, gern, danke.","Evet, lütfen, teşekkürler."],["Wie viel Gramm möchten Sie?","Kaç gram istersiniz?","Zweihundert Gramm, bitte.","İki yüz gram, lütfen."],["Was kosten die Himbeeren?","Ahududular ne kadar?","Sie kosten drei Euro.","Üç Euro tutuyorlar."],["Essen Sie Brot mit Honig?","Ballı ekmek yer misiniz?","Ja, sehr gern.","Evet, çok severim."],["Frühstücken Sie Joghurt?","Kahvaltıda yoğurt yer misiniz?","Ja, mit frischem Obst.","Evet, taze meyveyle."],["Möchten Sie ein Kilo Käse?","Bir kilo peynir ister misiniz?","Nein, nur ein halbes Kilo bitte.","Hayır, sadece yarım kilo lütfen."],["Mögen Kinder Kekse?","Çocuklar bisküviyi sever mi?","Ja, sie essen sie sehr gern.","Evet, yemeyi çok severler."],["Sind Kichererbsen gesund?","Nohut sağlıklı mı?","Ja, sehr gesund.","Evet, çok sağlıklı."],["Wie viele Kilo Äpfel möchten Sie?","Kaç kilo elma istersiniz?","Ein Kilo, bitte.","Bir kilo, lütfen."],["Mögen Sie Kirschen?","Kirazı sever misiniz?","Ja, sie sind rot und süß.","Evet, kırmızı ve tatlılar."],["Isst du gern Kiwis?","Kivi yemeyi sever misin?","Ja, sie haben viel Vitamin C.","Evet, çok C vitamini var."],["Essen Sie Lammfleisch?","Kuzu eti yer misiniz?","Ja, sehr gern.","Evet, çok severim."],["Möchten Sie eine Limonade?","Bir limonata ister misiniz?","Ja, gern, danke.","Evet, lütfen, teşekkürler."],["Wie viele Liter Milch brauchen Sie?","Kaç litre süte ihtiyacınız var?","Einen Liter, bitte.","Bir litre, lütfen."],["Sind die Mandarinen süß?","Mandalinalar tatlı mı?","Ja, sehr süß.","Evet, çok tatlılar."],["Mögen Sie Mango?","Mangoyu sever misiniz?","Ja, ich mag Mango sehr.","Evet, mangoyu çok severim."],["Gehen Sie oft auf den Markt?","Sık sık pazara gider misiniz?","Ja, samstags immer.","Evet, her cumartesi."],["Essen Sie Brot mit Marmelade?","Reçelli ekmek yer misiniz?","Ja, zum Frühstück.","Evet, kahvaltıda."],["Brauchen Sie Mehl für den Kuchen?","Kek için una ihtiyacınız var mı?","Ja, ein halbes Kilo.","Evet, yarım kilo."],["Mögen Sie Melone im Sommer?","Yazın kavunu sever misiniz?","Ja, sehr gern.","Evet, çok severim."],["Welche Milchprodukte kaufen Sie?","Hangi süt ürünlerini alırsınız?","Käse und Joghurt meistens.","Genellikle peynir ve yoğurt."],["Sind Möhren gesund?","Havuç sağlıklı mı?","Ja, sehr gesund.","Evet, çok sağlıklı."],["Essen Kinder gern Nudeln?","Çocuklar makarna yemeyi sever mi?","Ja, sie essen sie sehr gern.","Evet, yemeyi çok severler."],["Machen Sie manchmal einen Obstsalat?","Bazen meyve salatası yapar mısınız?","Ja, im Sommer oft.","Evet, yazın sık sık."],["Kochen Sie mit Olivenöl?","Zeytinyağıyla mı pişirirsiniz?","Ja, immer.","Evet, her zaman."],["Trinken Sie Orangensaft?","Portakal suyu içer misiniz?","Ja, jeden Morgen.","Evet, her sabah."],["Können Sie mir eine Packung Reis bringen?","Bana bir paket pirinç getirebilir misiniz?","Ja, sofort.","Evet, hemen."],["Brauchen Sie noch Paprika?","Daha bibere ihtiyacınız var mı?","Ja, eine rote Paprika bitte.","Evet, bir kırmızı biber lütfen."],["Wie viele Pfund Tomaten möchten Sie?","Kaç yarım kilo domates istersiniz?","Ein Pfund, bitte.","Yarım kilo, lütfen."],["Mögen Sie Pilze?","Mantarı sever misiniz?","Ja, besonders frische Pilze.","Evet, özellikle taze mantarları."],["Möchten Sie einen Pudding zum Nachtisch?","Tatlı olarak puding ister misiniz?","Ja, gern.","Evet, lütfen."],["Essen Sie oft Reis?","Sık sık pirinç yer misiniz?","Ja, fast jede Woche.","Evet, neredeyse her hafta."],["Essen Sie Rindfleisch?","Sığır eti yer misiniz?","Nein, ich esse selten Rindfleisch.","Hayır, nadiren sığır eti yerim."],["Möchten Sie Sahne zum Kuchen?","Pastaya krema ister misiniz?","Ja, gern, ein bisschen.","Evet, lütfen, biraz."],["Mögen Sie Schokolade?","Çikolatayı sever misiniz?","Ja, ich mag sie sehr.","Evet, çok severim."],["Essen Sie Schweinefleisch?","Domuz eti yer misiniz?","Nein, ich esse kein Schweinefleisch.","Hayır, domuz eti yemem."],["Möchten Sie ein Stück Kuchen?","Bir dilim pasta ister misiniz?","Ja, gern, danke.","Evet, lütfen, teşekkürler."],["Möchten Sie eine Tasse Kaffee?","Bir fincan kahve ister misiniz?","Ja, gern, mit Milch.","Evet, lütfen, sütlü olsun."],["Wie viel Tipp geben Sie?","Ne kadar bahşiş verirsiniz?","Meistens fünf Euro.","Genellikle beş Euro."],["Mögen Sie Trauben?","Üzümü sever misiniz?","Ja, sie sind süß.","Evet, tatlılar."],["Möchten Sie Zitrone im Tee?","Çayınıza limon ister misiniz?","Ja, gern.","Evet, lütfen."],["Trinken Sie Kaffee mit Zucker?","Kahvenizi şekerli mi içersiniz?","Nein, ohne Zucker.","Hayır, şekersiz."],["Brauchen Sie eine Zwiebel für die Suppe?","Çorba için soğana ihtiyacınız var mı?","Ja, bitte.","Evet, lütfen."],["Haben Sie Hunger?","Acıktınız mı?","Ja, ich habe großen Hunger.","Evet, çok acıktım."],["Hast du Durst?","Susadın mı?","Ja, gibt es Wasser?","Evet, su var mı?"],["Was gibt es zum Mittagessen?","Öğle yemeğinde ne var?","Heute gibt es Suppe.","Bugün çorba var."],["Um wie viel Uhr ist das Abendessen?","Akşam yemeği saat kaçta?","Um sieben Uhr.","Saat yedide."],["Schmeckt Ihnen die Suppe?","Çorba hoşunuza gidiyor mu?","Ja, sie schmeckt sehr gut.","Evet, tadı çok güzel."],["Kaufen Sie im Supermarkt ein?","Süpermarketten mi alışveriş yaparsınız?","Ja, jeden Freitag.","Evet, her cuma."],["Ist der Supermarkt schon geöffnet?","Süpermarket açık mı zaten?","Ja, seit acht Uhr.","Evet, saat sekizden beri."],["Wie viele Euro kostet das?","Bu kaç Euro tutuyor?","Das kostet zwei Euro.","Bu iki Euro tutuyor."]];
+
+const GENDER_META = {
+  m: { color: "var(--der-blue)", hex: "#2E5FA3", label: "der" },
+  f: { color: "var(--die-red)", hex: "#C0392B", label: "die" },
+  n: { color: "var(--das-green)", hex: "#1E8449", label: "das" },
+  p: { color: "var(--plural-orange)", hex: "#D9791C", label: "die (çoğul)" },
+  "": { color: "var(--neutral-grey)", hex: "#5A6B63", label: "" }
+};
+
+const $ = sel => document.querySelector(sel);
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+// ---------- WORD HIGHLIGHTING ----------
+const CORE_OVERRIDE = { "die (Kredit-)Karte": "Karte" };
+
+function coreForm(de){
+  if (CORE_OVERRIDE[de]) return CORE_OVERRIDE[de];
+  let w = de.replace(/^(der|die|das)\s+/, "");
+  w = w.split(" / ")[0];
+  w = w.replace(/[()–-]/g, " ").trim().split(" ")[0];
+  return w;
+}
+function stemOf(w){
+  if (w.length > 5 && w.endsWith("en")) return w.slice(0, -2);
+  if (w.length > 4 && w.endsWith("e")) return w.slice(0, -1);
+  if (w.length > 4 && w.endsWith("n")) return w.slice(0, -1);
+  return w;
+}
+function escapeHtml(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+// Eski telefon tarayıcılarıyla da uyumlu olsun diye lookbehind/\p{L} yerine
+// klasik bir "harf sınıfı" ile kelime kelime tarama yapılır (Almanca ö/ü/ä/ß dahil).
+const LETTER_CLASS = "A-Za-zÀ-ÖØ-öø-ÿ";
+const SPLIT_RE = new RegExp("([^" + LETTER_CLASS + "]+)");
+const HAS_LETTER_RE = new RegExp("[" + LETTER_CLASS + "]");
+
+function findTargetWord(de, gender, sentence){
+  const core = coreForm(de);
+  const st = stemOf(core);
+  const isNoun = gender === "m" || gender === "f" || gender === "n" || gender === "p";
+  const tokens = sentence.split(SPLIT_RE);
+  for (const t of tokens){
+    if (!t || !HAS_LETTER_RE.test(t)) continue;
+    // isimlerde büyük/küçük harf duyarlı arama (örn. "Ei" kelimesi "ein" ile karışmasın diye)
+    const matches = isNoun ? t.indexOf(st) === 0 : t.toLowerCase().indexOf(st.toLowerCase()) === 0;
+    if (matches) return t;
+  }
+  return null;
+}
+function highlightSentence(de, gender, sentence){
+  const target = findTargetWord(de, gender, sentence);
+  const safe = escapeHtml(sentence);
+  if (!target) return safe;
+  const escapedMatch = escapeHtml(target);
+  const idx = safe.indexOf(escapedMatch);
+  if (idx === -1) return safe;
+  return safe.slice(0, idx) + "<b>" + escapedMatch + "</b>" + safe.slice(idx + escapedMatch.length);
+}
+
+// ---------- AUDIO ----------
+let germanVoice = null;
+function pickGermanVoice(){
+  const voices = speechSynthesis.getVoices ? speechSynthesis.getVoices() : [];
+  germanVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("de")) || null;
+}
+if (typeof speechSynthesis !== "undefined") {
+  pickGermanVoice();
+  speechSynthesis.onvoiceschanged = pickGermanVoice;
+}
+function speakGerman(text){
+  try{
+    if (typeof speechSynthesis === "undefined") {
+      alert("Bu tarayıcı sesli okumayı desteklemiyor.");
+      return;
+    }
+    speechSynthesis.cancel();
+    // artikel (der/die/das) korunur, sadece alternatif yazımlar ve parantezler temizlenir
+    const clean = text.split(" / ")[0].replace(/[()]/g, "");
+    const utter = new SpeechSynthesisUtterance(clean);
+    utter.lang = "de-DE";
+    if (germanVoice) utter.voice = germanVoice;
+    utter.rate = 0.9;
+    speechSynthesis.speak(utter);
+  }catch(e){ console.warn("TTS error", e); }
+}
+
+// ---------- BACKEND (Google Apps Script + Google Sheets) ----------
+// Kurulum sonrası Apps Script "Web App URL"nizi aşağıya yapıştırın.
+// Örnek: "https://script.google.com/macros/s/AKfycb.../exec"
+const CONFIG = {
+  API_URL: "https://script.google.com/macros/s/AKfycbyGZWVGtjDukKHizQagXYXDJ8m4tNtrBiLMb8X5ootsy-WzkaNQHzew3k7wrUwkAnM4fA/exec"
+};
+
+function apiConfigured(){
+  return CONFIG.API_URL && CONFIG.API_URL.indexOf("script.google.com") !== -1;
+}
+
+async function apiCall(action, payload){
+  if (!apiConfigured()) return null;
+  try{
+    const res = await fetch(CONFIG.API_URL, {
+      method: "POST",
+      // "text/plain" kullanılır ki tarayıcı CORS ön-kontrolü (preflight) göndermesin;
+      // Apps Script Web App'ler OPTIONS isteklerine yanıt vermediği için bu şart.
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(Object.assign({ action: action }, payload))
+    });
+    return await res.json();
+  }catch(e){
+    console.warn("API error", e);
+    return null;
+  }
+}
+
+let storageAvailable = false; // apiConfigured() kontrolüyle çalışma anında güncellenir
+
+// ---------- IDENTITY ----------
+let student = { name: "", date: "" };
+
+function todayStr(){
+  const d = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate());
+}
+$("#gate-date").value = todayStr();
+
+$("#gate-submit").addEventListener("click", async ()=>{
+  const name = $("#gate-name").value.trim();
+  const date = $("#gate-date").value || todayStr();
+  if (!name) { $("#gate-name").focus(); return; }
+  student = { name, date };
+  $("#identity-gate").style.display = "none";
+  renderStudentLine();
+  await renderHistoryPanel();
+});
+
+function renderStudentLine(){
+  $("#student-line").innerHTML =
+    "👤 " + escapeHtml(student.name) + " · " + student.date +
+    ' <button id="change-student">Değiştir</button>';
+  $("#change-student").addEventListener("click", ()=>{
+    $("#identity-gate").style.display = "flex";
+  });
+}
+
+async function renderHistoryPanel(){
+  const existing = document.getElementById("history-panel");
+  if (existing) existing.remove();
+  if (!apiConfigured()) return;
+  const res = await apiCall("getHistory", { name: student.name });
+  if (!res || !res.records || !res.records.length) return;
+  const top = res.records.slice(0, 5);
+  const panel = document.createElement("div");
+  panel.id = "history-panel";
+  panel.className = "topic-tags";
+  panel.style.marginTop = "10px";
+  panel.innerHTML = '<span class="tag" style="background:rgba(227,169,58,0.18);">📊 Geçmiş sonuçların:</span>' +
+    top.map(r => '<span class="tag">Quiz ' + r.quizSet + ": " + r.score + "/" + r.total + " (%" + r.pct + ")</span>").join("");
+  $("#student-line").insertAdjacentElement("afterend", panel);
+}
+
+// allow Enter key to submit gate
+$("#gate-name").addEventListener("keydown", e=>{ if(e.key==="Enter") $("#gate-submit").click(); });
+
+// ---------- TABS ----------
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    if (btn.dataset.tab === "quiz") showQuizSelect();
+  });
+});
+
+// ---------- FLASHCARDS ----------
+let order = WORDS.map((_, i) => i);
+let idx = 0;
+let flipped = false;
+let knowSet = new Set();
+let unsureSet = new Set();
+let reviewOnly = false;
+let fcDirection = "de-tr";
+
+function currentList(){
+  return reviewOnly ? order.filter(i => unsureSet.has(i)) : order;
+}
+
+function renderCard(){
+  const list = currentList();
+  if (list.length === 0){
+    $("#fc-de").textContent = "Tekrar listesi boş 🎉";
+    $("#fc-tr").textContent = "";
+    $("#fc-ex").textContent = "Tüm kelimeleri biliyorsun!";
+    $("#fc-ex-tr").textContent = "";
+    $("#fc-examqa").style.display = "none";
+    $("#fc-count").textContent = "0 / 0";
+    return;
+  }
+  $("#fc-examqa").style.display = "block";
+  if (idx >= list.length) idx = 0;
+  if (idx < 0) idx = list.length - 1;
+  const wIndex = list[idx];
+  const [de, tr, deS, trS, gender] = WORDS[wIndex];
+  const meta = GENDER_META[gender] || GENDER_META[""];
+
+  const frontLabelEl = $("#fc-front-label");
+  const backLabelEl = $("#fc-back-label");
+  let front, back;
+  if (fcDirection === "de-tr"){
+    frontLabelEl.textContent = "Almanca";
+    backLabelEl.textContent = "Türkçe";
+    front = de; back = tr;
+  } else {
+    frontLabelEl.textContent = "Türkçe";
+    backLabelEl.textContent = "Almanca";
+    front = tr; back = de;
+  }
+  $("#fc-de").textContent = front;
+  $("#fc-de").style.color = meta.hex;
+  $("#fc-tr").textContent = back;
+
+  [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")].forEach(el=>{
+    if (meta.label){
+      el.textContent = meta.label;
+      el.style.background = meta.hex;
+      el.style.display = "inline-block";
+    } else {
+      el.style.display = "none";
+    }
+  });
+
+  $("#fc-ex").innerHTML = highlightSentence(de, gender, deS);
+  $("#fc-ex").style.color = meta.hex;
+  $("#fc-ex-tr").textContent = "(" + trS + ")";
+
+  const qa = EXAM_QA[wIndex];
+  if (qa){
+    $("#fc-qa-q").textContent = qa[0];
+    $("#fc-qa-q-tr").textContent = qa[1];
+    $("#fc-qa-a").textContent = qa[2];
+    $("#fc-qa-a-tr").textContent = qa[3];
+  }
+
+  const numLabel = "#" + (wIndex + 1);
+  $("#fc-number-front").textContent = numLabel;
+  $("#fc-number-back").textContent = numLabel;
+
+  $("#fc-count").textContent = (idx+1) + " / " + list.length;
+  $("#fc-progress").style.width = (((idx+1)/list.length)*100) + "%";
+  $("#fc-mode-label").textContent = reviewOnly ? "Tekrar listesi" : "Tüm kartlar";
+  const card = $("#flip-card");
+  card.classList.remove("flipped");
+  flipped = false;
+  updateStats();
+}
+
+function updateStats(){
+  $("#stat-know").textContent = knowSet.size;
+  $("#stat-unsure").textContent = unsureSet.size;
+  $("#fc-review-count").textContent = unsureSet.size;
+
+  const total = WORDS.length;
+  const reviewed = knowSet.size + unsureSet.size;
+  $("#mastery-count").textContent = reviewed + "/" + total;
+  $("#mastery-progress").style.width = ((reviewed/total)*100) + "%";
+
+  const badge = $("#mastery-badge");
+  if (reviewed === 0){
+    badge.style.display = "none";
+  } else {
+    const pct = Math.round((knowSet.size/total)*100);
+    const grade = gradeFor(pct);
+    badge.style.display = "inline-block";
+    badge.textContent = "Öğrenme Oranı: %" + pct + " — " + grade.label;
+    badge.style.background = grade.color + "22";
+    badge.style.color = grade.color;
+    badge.style.border = "2px solid " + grade.color;
+  }
+}
+
+$("#flip-card").addEventListener("click", ()=>{
+  flipped = !flipped;
+  $("#flip-card").classList.toggle("flipped", flipped);
+});
+$("#audio-btn-front").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentWord(); });
+$("#audio-btn-back").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentSentence(); });
+function speakCurrentWord(){
+  const list = currentList();
+  if (list.length === 0) return;
+  const wIndex = list[idx];
+  speakGerman(WORDS[wIndex][0]); // artikel + kelime, örn. "der Apfel"
+}
+function speakCurrentSentence(){
+  const list = currentList();
+  if (list.length === 0) return;
+  const wIndex = list[idx];
+  speakGerman(WORDS[wIndex][2]); // sadece Almanca örnek cümle (deS), Türkçesi okunmaz
+}
+
+$("#fc-next").addEventListener("click", ()=>{ idx++; renderCard(); });
+$("#fc-prev").addEventListener("click", ()=>{ idx--; renderCard(); });
+$("#fc-know").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; knowSet.add(wIndex); unsureSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-unsure").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; unsureSet.add(wIndex); knowSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-shuffle").addEventListener("click", ()=>{ order = shuffle(order); idx = 0; renderCard(); });
+$("#fc-review").addEventListener("click", ()=>{
+  reviewOnly = !reviewOnly; idx = 0;
+  $("#fc-review").innerHTML = reviewOnly
+    ? "⬅ Tüm Kartlara Dön"
+    : '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">' + unsureSet.size + '</span>)';
+  renderCard();
+});
+$("#fc-reset").addEventListener("click", ()=>{
+  knowSet.clear(); unsureSet.clear(); reviewOnly = false;
+  order = WORDS.map((_,i)=>i); idx = 0;
+  $("#fc-review").innerHTML = '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)';
+  renderCard();
+});
+document.querySelectorAll("#fc-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#fc-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    fcDirection = btn.dataset.dir;
+    renderCard();
+  });
+});
+
+renderCard();
+
+// ---------- QUIZ ----------
+const COGNATE_EXCLUDE = new Set([
+  "die Speisekarte", "das Café", "das Bistro", "der Kaffee", "die Schokolade",
+  "der Couscous", "die Limonade", "das Restaurant", "das Kilo", "das Gramm",
+  "der Liter", "der Pudding", "die Cola", "die Mango", "die Kiwi", "der Salat",
+  "das Bier", "die Mandarine", "die Kasse", "der Markt", "die Packung",
+  "der Becher", "der Cent", "der Euro", "der Supermarkt", "die Tomate",
+  "der Joghurt", "der Keks"
+]);
+
+const ELIGIBLE_POOL = WORDS.map((_, i) => i).filter(i => !COGNATE_EXCLUDE.has(WORDS[i][0]));
+const SET_SIZE = 25;
+const QUIZ_SETS = [
+  ELIGIBLE_POOL.slice(0*SET_SIZE, 1*SET_SIZE),
+  ELIGIBLE_POOL.slice(1*SET_SIZE, 2*SET_SIZE),
+  ELIGIBLE_POOL.slice(2*SET_SIZE, 3*SET_SIZE),
+  ELIGIBLE_POOL.slice(3*SET_SIZE, 4*SET_SIZE),
+];
+
+let activeQuizSet = null;
+let quizDirection = "de-tr";
+let quizOrder = [];
+let quizDirs = [];
+let quizIdx = 0;
+let quizScore = 0;
+let quizWrong = [];
+let answered = false;
+
+const GRADE_BANDS = [
+  { min: 90, label: "Pekiyi 🏆", color: "#2E7D46" },
+  { min: 75, label: "İyi 👍", color: "#5C8C52" },
+  { min: 60, label: "Orta 🙂", color: "#E3A93A" },
+  { min: 45, label: "Geçer 📘", color: "#D98C2B" },
+  { min: 0,  label: "Tekrar Çalış 💪", color: "#C1442C" },
+];
+function gradeFor(pct){ return GRADE_BANDS.find(b => pct >= b.min); }
+
+document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    quizDirection = btn.dataset.dir;
+    if (activeQuizSet !== null) startQuiz();
+  });
+});
+document.querySelectorAll(".quiz-set-btn").forEach(btn=>{
+  btn.addEventListener("click", async ()=>{
+    activeQuizSet = parseInt(btn.dataset.set, 10);
+    $("#quiz-select").style.display = "none";
+    $("#quiz-area").style.display = "block";
+    const resumed = await tryResumeQuiz();
+    if (!resumed) startQuiz();
+  });
+});
+
+function showQuizSelect(){
+  activeQuizSet = null;
+  $("#quiz-select").style.display = "block";
+  $("#quiz-area").style.display = "none";
+  storageAvailable = apiConfigured();
+  $("#storage-note").textContent = storageAvailable
+    ? "✔ Sonuçların ve ilerlemen kaydediliyor — istediğin zaman kaldığın yerden devam edebilirsin."
+    : "Not: Öğretmenin henüz sonuç kaydını aktif etmedi; quiz'i tek oturumda bitirmen gerekiyor. Sonucu bitince WhatsApp butonuyla gönderebilirsin.";
+}
+
+async function saveQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("saveProgress", {
+    name: student.name, quizSet: activeQuizSet+1, direction: quizDirection,
+    quizOrder, quizDirs, quizIdx, quizScore, quizWrong
+  });
+}
+async function clearQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("clearProgress", { name: student.name, quizSet: activeQuizSet+1, direction: quizDirection });
+}
+async function tryResumeQuiz(){
+  if (!apiConfigured()) return false;
+  const res = await apiCall("getProgress", { name: student.name, quizSet: activeQuizSet+1, direction: quizDirection });
+  if (!res || !res.found) return false;
+  if (!res.quizOrder || res.quizIdx >= res.quizOrder.length) return false;
+  quizOrder = res.quizOrder; quizDirs = res.quizDirs;
+  quizIdx = res.quizIdx; quizScore = res.quizScore; quizWrong = res.quizWrong;
+  renderResumeBanner(res.quizIdx, res.quizScore);
+  renderQuizQuestion();
+  return true;
+}
+function renderResumeBanner(qIdx, score){
+  const area = $("#quiz-area");
+  const banner = document.createElement("div");
+  banner.className = "resume-banner";
+  banner.innerHTML = "📌 Kaldığın yerden devam ediyorsun: Soru " + (qIdx+1) + ", şu ana kadar " + score + " doğru. " +
+    '<button class="btn btn-ghost" id="resume-restart-instead" style="padding:4px 10px;font-size:12px;">Baştan Başla</button>';
+  area.parentNode.insertBefore(banner, area);
+  $("#resume-restart-instead").addEventListener("click", ()=>{
+    banner.remove();
+    startQuiz();
+  });
+  setTimeout(()=>{ if(banner.parentNode) banner.remove(); }, 6000);
+}
+
+function buildQuizOrder(){ return shuffle(QUIZ_SETS[activeQuizSet]); }
+
+function startQuiz(){
+  quizOrder = buildQuizOrder();
+  quizDirs = quizOrder.map(()=> quizDirection === "mixed" ? (Math.random()<0.5 ? "de-tr" : "tr-de") : quizDirection);
+  quizIdx = 0; quizScore = 0; quizWrong = [];
+  renderQuizQuestion();
+}
+
+function pickDistractors(correctIndex, count){
+  const pool = WORDS.map((_,i)=>i).filter(i => i !== correctIndex);
+  return shuffle(pool).slice(0, count);
+}
+
+function renderQuizQuestion(){
+  answered = false;
+  const area = $("#quiz-area");
+  if (quizIdx >= quizOrder.length){ renderQuizResult(); return; }
+  const wIndex = quizOrder[quizIdx];
+  const dir = quizDirs[quizIdx];
+  const [de, tr] = WORDS[wIndex];
+  const askWord = dir === "de-tr" ? de : tr;
+  const questionLabel = dir === "de-tr" ? "Bu kelimenin Türkçesi ne?" : "Bu kelimenin Almancası ne?";
+  const dirTag = dir === "de-tr" ? "🇩🇪 → 🇹🇷" : "🇹🇷 → 🇩🇪";
+
+  const distractorIdx = pickDistractors(wIndex, 3);
+  const optionsIdx = shuffle([wIndex, ...distractorIdx]);
+
+  area.innerHTML =
+    '<div class="quiz-top">' +
+      '<span><button class="back-link" id="quiz-back-link">◀ Quiz ' + (activeQuizSet+1) + '</button> &nbsp; Soru ' + (quizIdx+1) + ' / ' + quizOrder.length + ' &nbsp; ' + dirTag + '</span>' +
+      '<span class="quiz-live-score">Puan: ' + quizScore + ' / ' + quizOrder.length + '</span>' +
+    '</div>' +
+    '<div class="quiz-question">' +
+      '<div class="eyebrow">' + questionLabel + '</div>' +
+      '<div class="word">' + escapeHtml(askWord) + '</div>' +
+    '</div>' +
+    '<div class="options" id="quiz-options"></div>' +
+    '<div class="quiz-feedback" id="quiz-feedback"></div>' +
+    '<div class="quiz-next" id="quiz-next-wrap"></div>';
+
+  $("#quiz-back-link").addEventListener("click", ()=>{ saveQuizProgress(); showQuizSelect(); });
+
+  const optsWrap = $("#quiz-options");
+  optionsIdx.forEach(oi=>{
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = dir === "de-tr" ? WORDS[oi][1] : WORDS[oi][0];
+    btn.addEventListener("click", ()=> handleAnswer(oi, wIndex, btn, dir));
+    optsWrap.appendChild(btn);
+  });
+
+  saveQuizProgress();
+}
+
+function handleAnswer(chosenIdx, correctIdx, btnEl, dir){
+  if (answered) return;
+  answered = true;
+  const correctText = dir === "de-tr" ? WORDS[correctIdx][1] : WORDS[correctIdx][0];
+  document.querySelectorAll(".option").forEach(opt=>{
+    opt.setAttribute("disabled","true");
+    if (opt.textContent === correctText) opt.classList.add("correct");
+  });
+  const feedback = $("#quiz-feedback");
+  if (chosenIdx === correctIdx){
+    quizScore++;
+    feedback.textContent = "✔ Doğru!";
+    feedback.className = "quiz-feedback correct";
+  } else {
+    btnEl.classList.add("wrong");
+    feedback.textContent = "✘ Doğrusu: " + correctText;
+    feedback.className = "quiz-feedback wrong";
+    quizWrong.push(correctIdx);
+  }
+  const nextWrap = $("#quiz-next-wrap");
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "btn btn-know";
+  nextBtn.textContent = (quizIdx === quizOrder.length - 1) ? "Sonuçları Gör →" : "Sonraki Soru →";
+  nextBtn.addEventListener("click", ()=>{ quizIdx++; renderQuizQuestion(); });
+  nextWrap.appendChild(nextBtn);
+  saveQuizProgress();
+}
+
+function buildWhatsAppLink(pct, total, grade){
+  const msg = "Merhaba! Ben " + student.name + ". " + student.date + " tarihinde Quiz " + (activeQuizSet+1) +
+    "'i çözdüm. Sonucum: " + quizScore + "/" + total + " doğru = " + pct + "/100 puan (" + grade.label + ").";
+  return "https://wa.me/?text=" + encodeURIComponent(msg);
+}
+
+function renderQuizResult(){
+  clearQuizProgress();
+  const area = $("#quiz-area");
+  const total = quizOrder.length;
+  const pct = Math.round((quizScore/total)*100);
+  const grade = gradeFor(pct);
+
+  let reviewHtml = "";
+  if (quizWrong.length){
+    reviewHtml = '<div class="review-list">' + quizWrong.map(i=>{
+      const [de,tr] = WORDS[i];
+      return '<div class="review-item"><b>' + escapeHtml(de) + '</b><span>' + escapeHtml(tr) + '</span></div>';
+    }).join("") + '</div>';
+  }
+
+  area.innerHTML =
+    '<div class="result-card">' +
+      '<div class="result-max-badge">100 puan üzerinden</div>' +
+      '<div class="eyebrow">Quiz ' + (activeQuizSet+1) + ' Sonucu</div>' +
+      '<div class="big-score">' + pct + '<span style="font-size:22px;">/100 puan</span></div>' +
+      '<div class="points-row">' +
+        '<span>Doğru: <b>' + quizScore + '</b> / ' + total + '</span>' +
+        '<span>Yanlış: <b>' + quizWrong.length + '</b></span>' +
+      '</div>' +
+      '<div class="grade-badge" style="background:' + grade.color + '22; color:' + grade.color + '; border:2px solid ' + grade.color + ';">' + grade.label + '</div>' +
+      (reviewHtml ? '<div style="margin-top:16px; font-size:13px; color:var(--muted); text-align:left;">Tekrar edilmesi gerekenler:</div>' + reviewHtml : '') +
+      '<div class="controls-row" style="margin-top:20px;">' +
+        '<button class="btn btn-know" id="quiz-restart">🔄 Bu Quizi Tekrarla</button>' +
+        '<button class="btn btn-nav" id="quiz-back-to-select">◀ Başka Quiz Seç</button>' +
+      '</div>' +
+      '<div style="margin-top:14px;">' +
+        '<a class="whatsapp-btn" id="whatsapp-share" href="#" target="_blank" rel="noopener">📤 Sonucu WhatsApp\'tan Gönder</a>' +
+      '</div>' +
+    '</div>';
+
+  $("#quiz-restart").addEventListener("click", startQuiz);
+  $("#quiz-back-to-select").addEventListener("click", showQuizSelect);
+  $("#whatsapp-share").addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.open(buildWhatsAppLink(pct, total, grade), "_blank");
+  });
+
+  logAttempt(pct, total, grade);
+}
+
+async function logAttempt(pct, total, grade){
+  const wrongWords = quizWrong.map(i => WORDS[i][0] + " (" + WORDS[i][1] + ")").join(", ");
+  await apiCall("completeQuiz", {
+    name: student.name, date: student.date, quizSet: activeQuizSet+1,
+    direction: quizDirection, score: quizScore, total, pct, grade: grade.label,
+    wrongWords
+  });
+}
+</script>
+</body>
+</html>

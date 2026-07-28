@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Hadi Almanca — Kelime Sepeti Admin Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#1E3B2F;
+    --green-mid:#2F5D45;
+    --paper:#FBF3E1;
+    --paper-shadow:#E9DCBB;
+    --mustard:#E3A93A;
+    --tomato:#C1442C;
+    --leaf:#5C8C52;
+    --ink:#26332B;
+    --muted:#6b7568;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Karla',sans-serif;
+    background:var(--green-deep);
+    color:var(--paper);
+    min-height:100vh;
+    padding:24px clamp(14px,2.5vw,40px) 60px;
+    font-size:16px;
+  }
+  .wrap{max-width:1800px;margin:0 auto;}
+
+  #pw-gate{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(15,30,25,0.97);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .pw-box{
+    background:var(--paper); color:var(--ink);
+    border-radius:20px; padding:34px 28px; max-width:360px; width:100%;
+    text-align:center;
+    box-shadow:0 16px 0 var(--paper-shadow);
+  }
+  .pw-box h2{font-family:'Baloo 2',sans-serif; color:var(--green-mid); margin:8px 0 6px; font-size:22px;}
+  .pw-box input{
+    width:100%; padding:11px 12px; border-radius:10px; border:2px solid #DCCB9E;
+    font-size:15px; font-family:'Karla',sans-serif; margin:14px 0;
+  }
+  .pw-box button{
+    width:100%; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:16px;
+    padding:11px; border-radius:12px; border:none;
+    background:var(--mustard); color:var(--green-deep); cursor:pointer;
+  }
+  .pw-error{color:var(--tomato); font-size:13px; margin-top:8px; display:none;}
+
+  header{text-align:center;margin-bottom:26px;}
+  h1{font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(26px,3.2vw,42px); margin:8px 0 6px; color:var(--mustard);}
+  .subtitle{font-size:clamp(14px,1.1vw,18px);color:#CFE3D4;}
+
+  .panel{background:var(--paper); color:var(--ink); border-radius:18px; padding:clamp(18px,2vw,32px); margin-bottom:24px; box-shadow:0 10px 0 var(--paper-shadow);}
+  .panel-head{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:16px;}
+  .panel h3{font-family:'Baloo 2',sans-serif; color:var(--green-mid); margin:0; font-size:clamp(18px,1.6vw,24px);}
+
+  .stat-cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-bottom:24px;}
+  .stat-card{
+    background:var(--paper); color:var(--ink); border-radius:16px;
+    padding:22px 16px; text-align:center; box-shadow:0 8px 0 var(--paper-shadow);
+  }
+  .stat-card .num{font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(30px,3vw,44px); color:var(--tomato); line-height:1.1;}
+  .stat-card .lbl{font-size:14px; color:var(--muted); margin-top:6px;}
+
+  .filter-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px; align-items:center;}
+  .filter-row input, .filter-row select{
+    padding:11px 14px; border-radius:10px; border:1.5px solid #DCCB9E; font-family:'Karla',sans-serif;
+    font-size:15px; background:#FFFDF8; color:var(--ink);
+  }
+  .filter-row input{flex:1; min-width:180px;}
+  .btn{
+    border:none; border-radius:10px; padding:11px 18px;
+    font-weight:700; cursor:pointer; font-family:'Karla',sans-serif; font-size:14.5px;
+  }
+  .refresh-btn{background:var(--leaf); color:#fff;}
+  .export-btn{background:var(--mustard); color:var(--green-deep);}
+
+  table{width:100%; border-collapse:collapse; font-size:15px;}
+  th, td{padding:12px 14px; text-align:left; border-bottom:1px solid #EFE3C4; white-space:nowrap;}
+  th{background:#F3E8CB; color:var(--green-mid); font-weight:700; position:sticky; top:0; cursor:pointer; user-select:none;}
+  th:hover{background:#ECDFB9;}
+  th .arrow{font-size:11px; opacity:0.6; margin-left:4px;}
+  tr:nth-child(even) td{background:rgba(0,0,0,0.02);}
+  tr:hover td{background:#F3E8CB55;}
+  .table-scroll{overflow-x:auto; max-height:600px; overflow-y:auto; border-radius:12px; border:1px solid #EFE3C4;}
+  .grade-pill{padding:4px 12px; border-radius:999px; font-size:13px; font-weight:700; display:inline-block;}
+  .attempt-badge{
+    background:var(--mustard); color:var(--green-deep); font-weight:800; font-size:13px;
+    padding:3px 11px; border-radius:999px;
+  }
+  .empty-msg{text-align:center; color:var(--muted); padding:36px; font-style:italic; font-size:16px;}
+  .loading{text-align:center; color:var(--muted); padding:36px; font-size:16px;}
+  footer{text-align:center; margin-top:34px; font-size:13px; color:#9FB8A6;}
+
+  .student-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:14px;}
+  .student-card{
+    background:#FFFDF8; border:1.5px solid #EFE3C4; border-radius:14px; padding:16px;
+  }
+  .student-card .s-name{font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; color:var(--green-mid); margin-bottom:6px;}
+  .student-card .s-row{display:flex; justify-content:space-between; font-size:13.5px; color:var(--muted); margin-top:3px;}
+  .student-card .s-row b{color:var(--ink);}
+
+  @media (max-width:640px){
+    table{font-size:13px;}
+    th, td{padding:9px 10px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="pw-gate">
+  <div class="pw-box">
+    <div style="font-size:32px;">🔐</div>
+    <h2>Admin Panel Girişi</h2>
+    <p style="font-size:13.5px;color:var(--muted);margin:0;">Devam etmek için şifreyi girin.</p>
+    <input type="password" id="pw-input" placeholder="Şifre">
+    <button id="pw-submit">Giriş Yap</button>
+    <div class="pw-error" id="pw-error">Yanlış şifre, tekrar deneyin.</div>
+  </div>
+</div>
+
+<div class="wrap" id="main-content" style="display:none;">
+  <header>
+    <div style="font-size:36px;">🧺</div>
+    <h1>Hadi Almanca — Kelime Sepeti Admin Panel</h1>
+    <div class="subtitle">Tüm öğrencilerin tüm temalardaki quiz sonuçları ve kart tamamlama kayıtları</div>
+  </header>
+
+  <div class="stat-cards" id="stat-cards"></div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h3>👤 Öğrenci Özeti</h3>
+    </div>
+    <div class="student-grid" id="student-grid"></div>
+    <div id="student-empty" class="empty-msg" style="display:none;">Henüz öğrenci kaydı yok.</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h3>📝 Quiz Sonuçları</h3>
+      <button class="btn export-btn" id="export-btn">⬇️ CSV olarak indir</button>
+    </div>
+    <div class="filter-row">
+      <input type="text" id="filter-name" placeholder="Öğrenci adına göre ara...">
+      <select id="filter-thema"><option value="">Tüm temalar</option></select>
+      <select id="filter-quiz"><option value="">Tüm quizler</option></select>
+      <button class="btn refresh-btn" id="refresh-btn">🔄 Yenile</button>
+    </div>
+    <div class="table-scroll">
+      <table id="results-table">
+        <thead>
+          <tr>
+            <th data-key="name">İsim <span class="arrow"></span></th>
+            <th data-key="thema">Tema <span class="arrow"></span></th>
+            <th data-key="date">Tarih <span class="arrow"></span></th>
+            <th data-key="time">Saat (DE) <span class="arrow"></span></th>
+            <th data-key="quizSet">Quiz <span class="arrow"></span></th>
+            <th data-key="direction">Yön <span class="arrow"></span></th>
+            <th data-key="attemptNo">Deneme <span class="arrow"></span></th>
+            <th data-key="score">Doğru/Toplam <span class="arrow"></span></th>
+            <th data-key="pct">Puan <span class="arrow"></span></th>
+            <th data-key="grade">Değerlendirme <span class="arrow"></span></th>
+          </tr>
+        </thead>
+        <tbody id="results-tbody"></tbody>
+      </table>
+    </div>
+    <div id="results-empty" class="empty-msg" style="display:none;">Henüz sonuç yok.</div>
+    <div id="results-loading" class="loading">Yükleniyor...</div>
+  </div>
+
+  <div class="panel">
+    <h3>🃏 Kart Tamamlama Kayıtları</h3>
+    <div class="table-scroll">
+      <table id="cards-table">
+        <thead>
+          <tr><th>İsim</th><th>Tema</th><th>Tamamlama Sayısı</th><th>Son Tarih</th><th>Son Saat (DE)</th></tr>
+        </thead>
+        <tbody id="cards-tbody"></tbody>
+      </table>
+    </div>
+    <div id="cards-empty" class="empty-msg" style="display:none;">Henüz kart tamamlama kaydı yok.</div>
+  </div>
+
+  <footer>Hadi Almanca — Kelime Sepeti Admin Panel • youtube.com/@hadialmanca</footer>
+</div>
+
+<script>
+const ADMIN_PASSWORD = "hocam2026";
+const API_URL = "https://script.google.com/macros/s/AKfycbyGZWVGtjDukKHizQagXYXDJ8m4tNtrBiLMb8X5ootsy-WzkaNQHzew3k7wrUwkAnM4fA/exec";
+
+const $ = sel => document.querySelector(sel);
+
+$("#pw-submit").addEventListener("click", checkPassword);
+$("#pw-input").addEventListener("keydown", e => { if (e.key === "Enter") checkPassword(); });
+function checkPassword(){
+  const val = $("#pw-input").value;
+  if (val === ADMIN_PASSWORD){
+    $("#pw-gate").style.display = "none";
+    $("#main-content").style.display = "block";
+    loadAll();
+  } else {
+    $("#pw-error").style.display = "block";
+  }
+}
+
+async function apiCall(action, payload){
+  try{
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(Object.assign({ action: action }, payload || {}))
+    });
+    return await res.json();
+  }catch(e){
+    console.warn("API error", e);
+    return null;
+  }
+}
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+const GRADE_COLORS = {
+  "Pekiyi 🏆": "#2E7D46", "İyi 👍": "#5C8C52", "Orta 🙂": "#E3A93A",
+  "Geçer 📘": "#D98C2B", "Tekrar Çalış 💪": "#C1442C"
+};
+
+let allResults = [];
+let allCards = [];
+let sortKey = "timestamp";
+let sortDir = "desc";
+
+async function loadAll(){
+  $("#results-loading").style.display = "block";
+  const [resResults, resCards] = await Promise.all([
+    apiCall("getAllResults", {}),
+    apiCall("getAllCardCompletions", {})
+  ]);
+  allResults = (resResults && resResults.records) ? resResults.records : [];
+  allCards = (resCards && resCards.records) ? resCards.records : [];
+  $("#results-loading").style.display = "none";
+  populateFilters();
+  renderStats();
+  renderStudents();
+  renderResults();
+  renderCards();
+}
+
+function populateFilters(){
+  const themaSel = $("#filter-thema");
+  const quizSel = $("#filter-quiz");
+  const themas = [...new Set(allResults.map(r => r.thema).filter(Boolean))].sort();
+  const quizzes = [...new Set(allResults.map(r => r.quizSet).filter(q => q !== "" && q !== undefined))].sort();
+  themaSel.innerHTML = '<option value="">Tüm temalar</option>' + themas.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
+  quizSel.innerHTML = '<option value="">Tüm quizler</option>' + quizzes.map(q => `<option value="${escapeHtml(q)}">Quiz ${escapeHtml(q)}</option>`).join("");
+}
+
+function renderStats(){
+  const studentSet = new Set(allResults.map(r => r.name.trim().toLowerCase()));
+  const themaSet = new Set(allResults.map(r => r.thema).filter(Boolean));
+  const avgPct = allResults.length ? Math.round(allResults.reduce((s,r)=>s+Number(r.pct||0),0) / allResults.length) : 0;
+  $("#stat-cards").innerHTML = `
+    <div class="stat-card"><div class="num">${allResults.length}</div><div class="lbl">Toplam Çözülen Quiz</div></div>
+    <div class="stat-card"><div class="num">${studentSet.size}</div><div class="lbl">Farklı Öğrenci</div></div>
+    <div class="stat-card"><div class="num">${themaSet.size}</div><div class="lbl">Aktif Tema</div></div>
+    <div class="stat-card"><div class="num">%${avgPct}</div><div class="lbl">Ortalama Puan</div></div>
+  `;
+}
+
+function renderStudents(){
+  const grid = $("#student-grid");
+  if (!allResults.length){
+    grid.innerHTML = "";
+    $("#student-empty").style.display = "block";
+    return;
+  }
+  $("#student-empty").style.display = "none";
+
+  const byName = {};
+  allResults.forEach(r=>{
+    const key = String(r.name).trim();
+    if (!byName[key]) byName[key] = [];
+    byName[key].push(r);
+  });
+
+  const cards = Object.keys(byName).sort().map(name=>{
+    const recs = byName[name];
+    const avg = Math.round(recs.reduce((s,r)=>s+Number(r.pct||0),0) / recs.length);
+    const last = recs.slice().sort((a,b)=> new Date(b.timestamp) - new Date(a.timestamp))[0];
+    const themas = new Set(recs.map(r=>r.thema).filter(Boolean));
+    return `<div class="student-card">
+      <div class="s-name">${escapeHtml(name)}</div>
+      <div class="s-row"><span>Çözülen quiz</span><b>${recs.length}</b></div>
+      <div class="s-row"><span>Ortalama puan</span><b>%${avg}</b></div>
+      <div class="s-row"><span>Tema sayısı</span><b>${themas.size}</b></div>
+      <div class="s-row"><span>Son aktivite</span><b>${escapeHtml(last.date || "—")}</b></div>
+    </div>`;
+  });
+  grid.innerHTML = cards.join("");
+}
+
+function filteredResults(){
+  const nameQ = $("#filter-name").value.trim().toLowerCase();
+  const themaQ = $("#filter-thema").value;
+  const quizQ = $("#filter-quiz").value;
+  let list = allResults.filter(r=>{
+    if (nameQ && !String(r.name).toLowerCase().includes(nameQ)) return false;
+    if (themaQ && String(r.thema) !== themaQ) return false;
+    if (quizQ && String(r.quizSet) !== quizQ) return false;
+    return true;
+  });
+  list.sort((a,b)=>{
+    let av = a[sortKey], bv = b[sortKey];
+    if (sortKey === "score" || sortKey === "pct" || sortKey === "attemptNo" || sortKey === "quizSet"){
+      av = Number(av)||0; bv = Number(bv)||0;
+    } else {
+      av = String(av||"").toLowerCase(); bv = String(bv||"").toLowerCase();
+    }
+    if (av < bv) return sortDir === "asc" ? -1 : 1;
+    if (av > bv) return sortDir === "asc" ? 1 : -1;
+    return 0;
+  });
+  return list;
+}
+
+function renderResults(){
+  const list = filteredResults();
+  const tbody = $("#results-tbody");
+  if (!list.length){
+    tbody.innerHTML = "";
+    $("#results-empty").style.display = "block";
+    return;
+  }
+  $("#results-empty").style.display = "none";
+  tbody.innerHTML = list.map(r=>{
+    const color = GRADE_COLORS[r.grade] || "#5A6B63";
+    return `<tr>
+      <td>${escapeHtml(r.name)}</td>
+      <td>${escapeHtml(r.thema || "—")}</td>
+      <td>${escapeHtml(r.date || "—")}</td>
+      <td>${escapeHtml(r.time || "—")}</td>
+      <td>Quiz ${escapeHtml(r.quizSet)}</td>
+      <td>${escapeHtml(r.direction)}</td>
+      <td><span class="attempt-badge">${escapeHtml(r.attemptNo || 1)}. deneme</span></td>
+      <td>${escapeHtml(r.score)}/${escapeHtml(r.total)}</td>
+      <td><b>${escapeHtml(r.pct)}</b>/100</td>
+      <td><span class="grade-pill" style="background:${color}22; color:${color}; border:1.5px solid ${color};">${escapeHtml(r.grade)}</span></td>
+    </tr>`;
+  }).join("");
+}
+
+function renderCards(){
+  const tbody = $("#cards-tbody");
+  if (!allCards.length){
+    tbody.innerHTML = "";
+    $("#cards-empty").style.display = "block";
+    return;
+  }
+  $("#cards-empty").style.display = "none";
+  tbody.innerHTML = allCards.map(c => `<tr>
+    <td>${escapeHtml(c.name)}</td>
+    <td>${escapeHtml(c.thema || "—")}</td>
+    <td>${escapeHtml(c.count)}. kez</td>
+    <td>${escapeHtml(c.date || "—")}</td>
+    <td>${escapeHtml(c.time || "—")}</td>
+  </tr>`).join("");
+}
+
+function exportCsv(){
+  const list = filteredResults();
+  const headers = ["İsim","Tema","Tarih","Saat","Quiz","Yön","Deneme","Doğru","Toplam","Puan","Değerlendirme"];
+  const rows = list.map(r => [
+    r.name, r.thema, r.date, r.time, r.quizSet, r.direction, r.attemptNo || 1, r.score, r.total, r.pct, r.grade
+  ]);
+  const csv = [headers, ...rows].map(row =>
+    row.map(v => `"${String(v==null?"":v).replace(/"/g,'""')}"`).join(",")
+  ).join("\n");
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "kelime_sepeti_sonuclari_" + new Date().toISOString().slice(0,10) + ".csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+document.querySelectorAll("#results-table th[data-key]").forEach(th=>{
+  th.addEventListener("click", ()=>{
+    const key = th.dataset.key;
+    if (sortKey === key){
+      sortDir = sortDir === "asc" ? "desc" : "asc";
+    } else {
+      sortKey = key;
+      sortDir = "asc";
+    }
+    document.querySelectorAll("#results-table th .arrow").forEach(a => a.textContent = "");
+    th.querySelector(".arrow").textContent = sortDir === "asc" ? "▲" : "▼";
+    renderResults();
+  });
+});
+
+$("#filter-name").addEventListener("input", renderResults);
+$("#filter-thema").addEventListener("change", renderResults);
+$("#filter-quiz").addEventListener("change", renderResults);
+$("#refresh-btn").addEventListener("click", loadAll);
+$("#export-btn").addEventListener("click", exportCsv);
+</script>
+</body>
+</html>

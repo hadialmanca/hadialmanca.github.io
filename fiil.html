@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Hadi Almanca Kelime Sepeti – A1 Fiiller (Verben)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#1E3B2F;
+    --green-mid:#2F5D45;
+    --paper:#FBF3E1;
+    --paper-shadow:#E9DCBB;
+    --mustard:#E3A93A;
+    --tomato:#C1442C;
+    --leaf:#5C8C52;
+    --ink:#26332B;
+    --muted:#6b7568;
+    /* gender colors */
+    --der-blue:#2E5FA3;
+    --die-red:#C0392B;
+    --das-green:#1E8449;
+    --plural-orange:#D9791C;
+    --neutral-grey:#5A6B63;
+    --modal-purple:#6C3FA0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Karla',sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,0.05), transparent 40%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 40px),
+      var(--green-deep);
+    color:var(--paper);
+    min-height:100vh;
+    padding:20px 14px 50px;
+    font-size:16px;
+  }
+  .wrap{max-width:800px;margin:0 auto;}
+
+  /* ---- IDENTITY GATE ---- */
+  #identity-gate{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(15,30,25,0.96);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .gate-box{
+    background:var(--paper); color:var(--ink);
+    border-radius:20px; padding:34px 28px; max-width:380px; width:100%;
+    text-align:center;
+    box-shadow:0 16px 0 var(--paper-shadow);
+  }
+  .gate-box h2{
+    font-family:'Baloo 2',sans-serif; color:var(--green-mid); margin:8px 0 6px; font-size:24px;
+  }
+  .gate-box p{font-size:14px; color:var(--muted); margin:0 0 20px;}
+  .gate-field{text-align:left; margin-bottom:14px;}
+  .gate-field label{font-size:13px; font-weight:700; color:var(--green-mid); display:block; margin-bottom:5px;}
+  .gate-field input{
+    width:100%; padding:10px 12px; border-radius:10px; border:2px solid #DCCB9E;
+    font-size:15px; font-family:'Karla',sans-serif;
+  }
+  .gate-submit{
+    width:100%; margin-top:8px;
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
+    padding:12px; border-radius:12px; border:none;
+    background:var(--mustard); color:var(--green-deep); cursor:pointer;
+  }
+  .gate-note{font-size:11.5px; color:#9a9a8a; margin-top:14px; line-height:1.4;}
+
+  header{text-align:center;margin-bottom:14px;}
+  .basket{font-size:38px;line-height:1;}
+  h1{
+    font-family:'Baloo 2',sans-serif; font-weight:800;
+    font-size:clamp(24px,5vw,36px); margin:6px 0 4px; color:var(--mustard);
+  }
+  .subtitle{font-size:15px;color:#CFE3D4;font-style:italic;}
+  .topic-line{font-size:16px;font-weight:700;color:var(--mustard);margin-top:6px;}
+  .student-line{
+    margin-top:10px; font-size:13.5px; color:#CFE3D4;
+    display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+  }
+  .student-line button{
+    background:none;border:none;color:var(--mustard);text-decoration:underline;
+    font-size:12.5px;cursor:pointer;padding:0;
+  }
+  .topic-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .tag{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);padding:5px 13px;border-radius:999px;font-size:13px;color:var(--paper);}
+
+  nav.tabs{display:flex;justify-content:center;gap:10px;margin:24px 0 20px;flex-wrap:wrap;}
+  .tab-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:17px;
+    padding:11px 24px;border-radius:12px;border:2px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.04);color:var(--paper);cursor:pointer;
+  }
+  .tab-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+  section{display:none;}
+  section.active{display:block;}
+
+  /* legend */
+  .gender-legend{
+    display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+    margin-bottom:18px; font-size:12.5px; color:#CFE3D4;
+  }
+  .legend-chip{display:flex; align-items:center; gap:5px;}
+  .legend-dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+
+  .direction-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 16px;}
+  .dir-btn{
+    font-family:'Karla',sans-serif;font-weight:700;font-size:13.5px;
+    padding:8px 15px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.22);
+    background:rgba(255,255,255,0.05);color:var(--paper);cursor:pointer;
+  }
+  .dir-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+
+  .progress-row{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:460px;margin:0 auto 14px;font-size:14px;color:#CFE3D4;
+  }
+  .progress-bar{flex:1;height:7px;background:rgba(255,255,255,0.12);border-radius:4px;margin:0 10px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--mustard);width:0%;transition:width .3s ease;}
+
+  /* ---- FLASHCARD ---- */
+  .card-stage{perspective:1400px;max-width:460px;margin:0 auto;height:560px;}
+  .card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.3,1.1);cursor:pointer;}
+  .card.flipped{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;
+    background:var(--paper);color:var(--ink);display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-start;padding:26px 24px;text-align:center;
+    box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);
+    border:1px dashed rgba(38,51,43,0.25);
+    overflow-y:auto;
+  }
+  .face.front{justify-content:center;}
+  .face.back{transform:rotateY(180deg);}
+  .card-number{
+    position:absolute; top:12px; left:14px;
+    background:var(--green-deep); color:var(--mustard);
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:13px;
+    padding:3px 10px; border-radius:999px;
+  }
+  .audio-btn{
+    position:absolute; top:10px; right:12px;
+    background:var(--mustard); color:var(--green-deep);
+    border:none; border-radius:50%; width:38px; height:38px;
+    font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+  }
+  .audio-btn:active{transform:scale(0.92);}
+  .gender-badge{
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    padding:3px 11px; border-radius:999px; color:#fff; margin-bottom:10px; margin-top:30px;
+  }
+  .eyebrow{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700;}
+  .de-word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(28px,7vw,38px);}
+  .tr-word{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:30px;color:var(--tomato);margin-bottom:12px;}
+  .example{font-size:16.5px;line-height:1.55;color:var(--ink);}
+  .example b{color:#000; font-weight:800;}
+  .example-tr{font-size:15.5px; color:var(--muted); font-style:italic; margin-top:6px;}
+  .exam-qa-box{
+    margin-top:16px; padding-top:14px; border-top:2px dashed #DCCB9E;
+    width:100%; text-align:left;
+  }
+  .exam-qa-warning{
+    font-size:12.5px; font-weight:800; color:var(--tomato); text-transform:uppercase;
+    letter-spacing:0.5px; margin-bottom:9px; text-align:center;
+  }
+  .exam-qa-line{font-size:16px; color:var(--ink); margin-bottom:3px; line-height:1.45;}
+  .exam-qa-line b{color:var(--green-mid);}
+  .exam-qa-tr{font-size:14.5px; color:var(--muted); font-style:italic; margin-bottom:10px;}
+  .hint{margin-top:12px;font-size:12.5px;color:var(--muted);}
+
+  .controls-row{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .btn{font-family:'Karla',sans-serif;font-weight:700;font-size:15px;padding:11px 20px;border-radius:10px;border:none;cursor:pointer;transition:transform .12s ease, filter .15s ease;}
+  .btn:hover{transform:translateY(-2px); filter:brightness(1.08);}
+  .btn:active{transform:translateY(0);}
+  .btn-nav{background:rgba(255,255,255,0.12);color:var(--paper);}
+  .btn-know{background:var(--leaf);color:white;}
+  .btn-unsure{background:var(--tomato);color:white;}
+  .btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:var(--paper);}
+
+  .stat-row{display:flex;justify-content:center;gap:22px;margin-top:18px;font-size:14px;color:#CFE3D4;}
+  .stat-row b{color:var(--mustard);}
+
+  .mastery-panel .progress-row{max-width:460px;margin:16px auto 8px;}
+  .grade-badge{display:inline-block;margin-top:6px;padding:7px 20px;border-radius:999px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;}
+
+  /* ---- QUIZ ---- */
+  .quiz-select{max-width:460px;margin:0 auto;text-align:center;}
+  .quiz-select-label{font-size:14.5px;color:#CFE3D4;margin-bottom:14px;}
+  .quiz-set-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .quiz-set-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:21px;padding:22px 10px;
+    border-radius:14px;border:2px solid var(--mustard);background:var(--paper);color:var(--green-mid);
+    cursor:pointer;box-shadow:0 8px 0 var(--paper-shadow);
+  }
+  .quiz-select-hint{margin-top:16px;font-size:12.5px;color:#9FB8A6;font-style:italic;}
+  .back-link{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;padding:0;}
+
+  .quiz-card{background:var(--paper);color:var(--ink);border-radius:18px;max-width:480px;margin:0 auto;padding:30px 26px;box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);}
+  .quiz-top{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:700;flex-wrap:wrap; gap:6px;}
+  .quiz-live-score{color:var(--leaf); font-weight:800;}
+  .quiz-question{text-align:center;margin-bottom:22px;}
+  .quiz-question .word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:32px;color:var(--green-mid);}
+  .options{display:flex;flex-direction:column;gap:11px;}
+  .option{text-align:left;padding:13px 17px;border-radius:11px;border:2px solid #E3D6B4;background:#FFFDF8;font-size:16px;font-weight:500;cursor:pointer;transition:all .15s ease;color:var(--ink);}
+  .option:hover{border-color:var(--mustard);}
+  .option.correct{background:#DCEEDA;border-color:var(--leaf);color:#274423;font-weight:700;}
+  .option.wrong{background:#F6DCD6;border-color:var(--tomato);color:#6B231A;font-weight:700;}
+  .option[disabled]{cursor:default;}
+  .quiz-feedback{margin-top:16px;text-align:center;min-height:22px;font-weight:700;font-size:15px;}
+  .quiz-feedback.correct{color:var(--leaf);}
+  .quiz-feedback.wrong{color:var(--tomato);}
+  .quiz-next{display:flex;justify-content:center;margin-top:16px;}
+
+  .result-card{text-align:center; position:relative;}
+  .result-max-badge{
+    position:absolute; top:-14px; right:-10px;
+    background:var(--green-deep); color:var(--mustard);
+    font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px;
+  }
+  .result-card .big-score{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:56px;color:var(--tomato);margin:8px 0;}
+  .points-row{display:flex;justify-content:center;gap:26px;margin:10px 0 4px;font-size:15px;color:var(--muted);}
+  .points-row b{font-size:16px;}
+  .review-list{text-align:left;margin-top:18px;max-height:220px;overflow-y:auto;border-top:1px dashed #D8C79A;padding-top:12px;}
+  .review-item{display:flex;justify-content:space-between;font-size:14.5px;padding:6px 4px;border-bottom:1px solid #F0E6CC;}
+  .review-item b{color:var(--green-mid);}
+  .whatsapp-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:#25D366; color:#fff; font-weight:700; font-family:'Karla',sans-serif;
+    font-size:14.5px; padding:11px 20px; border-radius:10px; border:none; cursor:pointer; margin-top:6px;
+    text-decoration:none;
+  }
+  .resume-banner{
+    max-width:460px; margin:0 auto 14px; background:rgba(227,169,58,0.15);
+    border:1.5px solid var(--mustard); border-radius:12px; padding:12px 16px;
+    text-align:center; font-size:14px; color:var(--mustard);
+  }
+  .resume-banner button{margin-left:8px;}
+
+  footer{text-align:center;margin-top:40px;font-size:12.5px;color:#9FB8A6;}
+  .storage-note{
+    max-width:460px; margin:16px auto 0; font-size:11.5px; color:#7c9992;
+    text-align:center; line-height:1.5; font-style:italic;
+  }
+
+  @media (prefers-reduced-motion: reduce){.card{transition:none;} .btn,.option{transition:none;}}
+</style>
+</head>
+<body>
+
+<div id="identity-gate">
+  <div class="gate-box">
+    <div style="font-size:34px;">🧺</div>
+    <h2>Hoş Geldin!</h2>
+    <p>Kelime çalışmasına başlamadan önce adını ve tarihi gir.</p>
+    <div class="gate-field">
+      <label for="gate-name">Adın / Nickname</label>
+      <input type="text" id="gate-name" placeholder="örn. Ahmet Y.">
+    </div>
+    <div class="gate-field">
+      <label for="gate-date">Tarih</label>
+      <input type="date" id="gate-date">
+    </div>
+    <button class="gate-submit" id="gate-submit">Başla →</button>
+    <div class="gate-note">Adın ve tarihin, öğretmenine quiz sonuçlarını ve ilerlemeni kaydetmek için kullanılıyor. Böylece kaldığın yerden devam edebilir ve geçmiş sonuçlarını görebilirsin.</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="basket">🧺</div>
+    <h1>Hadi Almanca Kelime Sepeti</h1>
+    <div class="subtitle">Goethe A1 Kelime Çalışması</div>
+    <div class="topic-line">Konu: A1 Seviyesinde Bilinmesi Gereken En Önemli Fiiller</div>
+    <div class="student-line" id="student-line"></div>
+    <div class="topic-tags">
+      <span class="tag">209 fiil</span>
+      <span class="tag">Goethe · Telc · Cornelsen</span>
+      <span class="tag">Kartlar + Quiz</span>
+    </div>
+  </header>
+
+  <div class="gender-legend">
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--neutral-grey);"></span>Normal fiil</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--modal-purple);"></span>Modal fiil (können, müssen, wollen, dürfen, sollen, mögen, möchten)</span>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="flash">🃏 Kartlar</button>
+    <button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+  </nav>
+
+  <!-- FLASHCARDS -->
+  <section id="flash" class="active">
+    <div class="direction-row" id="fc-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca göster</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe göster</button>
+    </div>
+    <div class="progress-row">
+      <span id="fc-count">1 / 209</span>
+      <div class="progress-bar"><div class="progress-fill" id="fc-progress"></div></div>
+      <span id="fc-mode-label">Tüm kartlar</span>
+    </div>
+    <div style="text-align:center; font-size:12px; color:#9FB8A6; margin-bottom:10px;">👉 Telefonda sağa/sola kaydırarak da kart değiştirebilirsin</div>
+
+    <div class="card-stage">
+      <div class="card" id="flip-card">
+        <div class="face front">
+          <div class="card-number" id="fc-number-front">#1</div>
+          <button class="audio-btn" id="audio-btn-front" title="Fiili dinle">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-front"></div>
+          <div class="eyebrow" id="fc-front-label">Almanca</div>
+          <div class="de-word" id="fc-de"></div>
+          <div class="example" id="fc-ex-front"></div>
+          <div class="exam-qa-box" id="fc-examqa-front">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q-front"></span></div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a-front"></span></div>
+          </div>
+          <div class="hint">Çevirmek için karta dokun</div>
+        </div>
+        <div class="face back">
+          <div class="card-number" id="fc-number-back">#1</div>
+          <button class="audio-btn" id="audio-btn-back" title="Örnek cümleyi (Almanca) dinle">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-back"></div>
+          <div class="eyebrow" id="fc-back-label">Türkçe</div>
+          <div class="tr-word" id="fc-tr"></div>
+          <div class="example" id="fc-ex"></div>
+          <div class="example-tr" id="fc-ex-tr"></div>
+          <div class="exam-qa-box" id="fc-examqa">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q"></span></div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <button class="btn btn-nav" id="fc-prev">← Önceki</button>
+      <button class="btn btn-unsure" id="fc-unsure">🔁 Tekrar Gerekli</button>
+      <button class="btn btn-know" id="fc-know">✔ Biliyorum</button>
+      <button class="btn btn-nav" id="fc-next">Sonraki →</button>
+    </div>
+    <div class="controls-row">
+      <button class="btn btn-ghost" id="fc-shuffle">🔀 Karıştır</button>
+      <button class="btn btn-ghost" id="fc-review">🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)</button>
+      <button class="btn btn-ghost" id="fc-reset">↺ Sıfırla</button>
+    </div>
+
+    <div class="stat-row">
+      <span>✔ Biliyorum: <b id="stat-know">0</b></span>
+      <span>🔁 Tekrar: <b id="stat-unsure">0</b></span>
+    </div>
+
+    <div class="mastery-panel">
+      <div class="progress-row" style="max-width:460px; margin:16px auto 8px;">
+        <span>Değerlendirilen</span>
+        <div class="progress-bar"><div class="progress-fill" id="mastery-progress" style="background:var(--leaf);"></div></div>
+        <span id="mastery-count">0/209</span>
+      </div>
+      <div style="text-align:center;">
+        <div class="grade-badge" id="mastery-badge" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz">
+    <div class="direction-row" id="quiz-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca sorulsun</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe sorulsun</button>
+      <button class="dir-btn" data-dir="mixed">🔀 Karışık</button>
+    </div>
+    <div class="quiz-select" id="quiz-select">
+      <div class="quiz-select-label">Bir quiz seçin (her biri ~50 soru)</div>
+      <div class="quiz-set-grid">
+        <button class="quiz-set-btn" data-set="0">Quiz 1</button>
+        <button class="quiz-set-btn" data-set="1">Quiz 2</button>
+        <button class="quiz-set-btn" data-set="2">Quiz 3</button>
+        <button class="quiz-set-btn" data-set="3">Quiz 4</button>
+      </div>
+      <div class="quiz-select-hint">Türkçede de neredeyse aynı olan fiiller (telefonieren, organisieren, renovieren, reservieren, kontrollieren, notieren, fotografieren, markieren, planen) quizlere dahil edilmedi.</div>
+    </div>
+    <div class="quiz-card" id="quiz-area" style="display:none;"></div>
+    <div class="storage-note" id="storage-note"></div>
+  </section>
+
+  <footer>Hadi Almanca — DTZ / Telc / ÖSD Sınav Hazırlık • youtube.com/@hadialmanca</footer>
+</div>
+
+<script>
+const WORDS = [
+["sein","olmak (1. olduğumuz şeyler, 2. bulunduğumuz yer)","Ich bin Lehrer.","Ben öğretmenim.",""],
+["haben","sahip olmak (benim … var/yok)","Ich habe zwei Kinder.","İki çocuğum var.",""],
+["werden","olmak, -leşmek (değişim); gelecek zaman ve edilgen çatı için yardımcı fiil","Er wird bald Vater.","O yakında baba olacak.",""],
+["heißen","adı olmak, adlandırılmak","Ich heiße Ali.","Adım Ali.",""],
+["wohnen","oturmak, ikamet etmek","Ich wohne in Berlin.","Berlin'de oturuyorum.",""],
+["leben","yaşamak","Meine Familie lebt in Izmir.","Ailem İzmir'de yaşıyor.",""],
+["kommen","gelmek","Ich komme aus der Türkei.","Türkiye'den geliyorum.",""],
+["gehen","gitmek (yürüyerek)","Ich gehe zur Arbeit.","İşe yürüyerek gidiyorum.",""],
+["fahren","gitmek (araçla), sürmek","Ich fahre mit dem Auto.","Arabayla gidiyorum.",""],
+["fliegen","uçmak","Wir fliegen nach Istanbul.","İstanbul'a uçuyoruz.",""],
+["reisen","seyahat etmek","Ich reise gern.","Seyahat etmeyi severim.",""],
+["ankommen","varmak, ulaşmak, gelmek","Der Zug kommt um acht Uhr an.","Tren saat sekizde varıyor.",""],
+["abfahren","kalkmak, hareket etmek","Der Bus fährt um neun ab.","Otobüs dokuzda kalkıyor.",""],
+["einsteigen","binmek","Wir steigen hier ein.","Buradan biniyoruz.",""],
+["aussteigen","inmek","Ich steige an der nächsten Haltestelle aus.","Bir sonraki durakta iniyorum.",""],
+["umsteigen","aktarma yapmak","In Frankfurt müssen wir umsteigen.","Frankfurt'ta aktarma yapmamız lazım.",""],
+["erreichen","ulaşmak","Wir erreichen den Bahnhof pünktlich.","Tren istasyonuna zamanında ulaşıyoruz.",""],
+["spazieren gehen","gezmeye gitmek, dolaşmak","Wir gehen im Park spazieren.","Parkta gezmeye gidiyoruz.",""],
+["wandern","doğa yürüyüşü yapmak","Am Wochenende wandern wir in den Bergen.","Hafta sonu dağlarda doğa yürüyüşü yapıyoruz.",""],
+["laufen","koşmak","Ich laufe jeden Morgen.","Her sabah koşuyorum.",""],
+["schwimmen","yüzmek","Wir schwimmen im Sommer im See.","Yazın gölde yüzüyoruz.",""],
+["Rad fahren","bisiklet sürmek","Ich fahre gern Rad.","Bisiklet sürmeyi severim.",""],
+["Ski fahren","kayak yapmak","Im Winter fahren wir Ski.","Kışın kayak yapıyoruz.",""],
+["mitkommen","birlikte gelmek","Kommst du mit?","Sen de geliyor musun?",""],
+["weggehen","gitmek (bir yerden ayrılmak)","Ich muss jetzt weggehen.","Şimdi gitmem lazım.",""],
+["bleiben","kalmak","Wir bleiben zwei Wochen in Köln.","Köln'de iki hafta kalıyoruz.",""],
+["übernachten","gecelemek","Wir übernachten im Hotel.","Otelde geceliyoruz.",""],
+["besichtigen","gezip görmek","Wir besichtigen das Museum.","Müzeyi gezip görüyoruz.",""],
+["warten auf","bir şeyi, birini beklemek","Ich warte auf den Bus.","Otobüsü bekliyorum.",""],
+["treffen","rastlamak, karşılaşmak","Ich treffe meinen Freund.","Arkadaşımla karşılaşıyorum.",""],
+["sich treffen","buluşmak","Wir treffen uns um acht.","Saat sekizde buluşuyoruz.",""],
+["besuchen","ziyaret etmek","Ich besuche meine Oma.","Anneannemi ziyaret ediyorum.",""],
+["mitnehmen","yanına almak","Ich nehme einen Regenschirm mit.","Yanıma bir şemsiye alıyorum.",""],
+["mitbringen","beraberinde getirmek","Ich bringe einen Kuchen mit.","Beraberimde bir kek getiriyorum.",""],
+["holen","getirmek","Ich hole Wasser aus der Küche.","Mutfaktan su getiriyorum.",""],
+["abholen","bir yerden almak, alıp getirmek","Ich hole dich vom Bahnhof ab.","Seni istasyondan alıyorum.",""],
+["bringen","getirmek","Bringen Sie mir bitte die Speisekarte.","Lütfen bana menüyü getirin.",""],
+["zurückkommen","geri gelmek","Ich komme um sechs zurück.","Saat altıda geri geliyorum.",""],
+["wiederkommen","tekrar gelmek","Kommen Sie bald wieder!","Yakında tekrar gelin!",""],
+["zurückgeben","geri vermek","Ich gebe dir das Buch zurück.","Kitabı sana geri veriyorum.",""],
+["hinfallen","yere düşmek","Das Kind ist hingefallen.","Çocuk yere düştü.",""],
+["aufstehen","kalkmak, uyanmak","Ich stehe um sieben auf.","Saat yedide kalkıyorum.",""],
+["sitzen","oturmak","Er sitzt am Tisch.","Masada oturuyor.",""],
+["stehen","dik durmak","Die Flasche steht auf dem Tisch.","Şişe masanın üzerinde dik duruyor.",""],
+["stellen","dik koymak","Ich stelle die Flasche auf den Tisch.","Şişeyi masanın üzerine koyuyorum.",""],
+["liegen","yatay durmak","Das Buch liegt auf dem Tisch.","Kitap masanın üzerinde duruyor.",""],
+["legen","yatay koymak","Ich lege das Buch auf den Tisch.","Kitabı masaya yatay koyuyorum.",""],
+["es gibt","var","Es gibt viele Restaurants hier.","Burada birçok restoran var.",""],
+["gehören","ait olmak","Das Auto gehört meinem Vater.","Araba babama ait.",""],
+["glauben","inanmak","Ich glaube dir.","Sana inanıyorum.",""],
+["vergessen","unutmak","Ich vergesse oft meinen Schlüssel.","Sık sık anahtarımı unutuyorum.",""],
+["lassen","bırakmak, izin vermek, -tirmek","Ich lasse mein Auto zu Hause.","Arabamı evde bırakıyorum.",""],
+["aufwachen","uyanmak","Ich wache um sechs auf.","Saat altıda uyanıyorum.",""],
+["einschlafen","uykuya dalmak","Ich schlafe schnell ein.","Çabuk uykuya dalıyorum.",""],
+["schlafen","uyumak","Ich schlafe acht Stunden.","Sekiz saat uyuyorum.",""],
+["ins Bett gehen","yatağa gitmek, yatmak","Ich gehe um zehn ins Bett.","Saat onda yatağa gidiyorum.",""],
+["duschen","duş almak","Ich dusche morgens.","Sabahları duş alıyorum.",""],
+["waschen","yıkamak","Ich wasche das Geschirr.","Bulaşıkları yıkıyorum.",""],
+["sich waschen","yıkanmak","Ich wasche mich jeden Morgen.","Her sabah yıkanıyorum.",""],
+["anziehen","giymek","Ich ziehe meine Jacke an.","Ceketimi giyiyorum.",""],
+["ausziehen","1. soyunmak, 2. evden çıkmak, taşınmak","Ich ziehe meine Schuhe aus.","Ayakkabılarımı çıkarıyorum.",""],
+["umziehen","1. kıyafet değiştirmek, 2. taşınmak","Wir ziehen nächsten Monat um.","Gelecek ay taşınıyoruz.",""],
+["kochen","pişirmek","Ich koche heute Suppe.","Bugün çorba pişiriyorum.",""],
+["backen","fırında pişirmek","Meine Mutter backt einen Kuchen.","Annem fırında bir kek pişiriyor.",""],
+["grillen","ızgara yapmak","Am Wochenende grillen wir im Garten.","Hafta sonu bahçede ızgara yapıyoruz.",""],
+["frühstücken","kahvaltı yapmak","Wir frühstücken um acht Uhr.","Saat sekizde kahvaltı yapıyoruz.",""],
+["essen","yemek yemek","Ich esse gern Pizza.","Pizza yemeyi severim.",""],
+["trinken","içmek","Ich trinke jeden Morgen Tee.","Her sabah çay içiyorum.",""],
+["bestellen","sipariş vermek","Ich bestelle einen Salat.","Bir salata sipariş veriyorum.",""],
+["putzen","temizlemek","Ich putze die Wohnung.","Evi temizliyorum.",""],
+["ordnen","düzenlemek","Ich ordne meine Papiere.","Evraklarımı düzenliyorum.",""],
+["abwaschen","durulamak, bulaşık yıkamak","Ich wasche das Geschirr ab.","Bulaşıkları yıkıyorum.",""],
+["vorbereiten","hazırlamak","Ich bereite das Abendessen vor.","Akşam yemeğini hazırlıyorum.",""],
+["öffnen","açmak","Ich öffne das Fenster.","Pencereyi açıyorum.",""],
+["schließen","kapatmak","Ich schließe die Tür.","Kapıyı kapatıyorum.",""],
+["aufmachen","açmak (kapı, ağız vs.)","Mach bitte die Tür auf!","Lütfen kapıyı aç!",""],
+["zumachen","kapamak (kapı, ağız vs.)","Mach bitte das Fenster zu!","Lütfen pencereyi kapat!",""],
+["einschalten","açmak (şalterli)","Ich schalte den Fernseher ein.","Televizyonu açıyorum.",""],
+["ausschalten","kapamak (şalterli)","Ich schalte den Computer aus.","Bilgisayarı kapatıyorum.",""],
+["kaufen","satın almak","Ich kaufe Brot.","Ekmek satın alıyorum.",""],
+["verkaufen","satmak","Er verkauft sein Auto.","Arabasını satıyor.",""],
+["einkaufen","alışveriş yapmak","Ich gehe einkaufen.","Alışverişe gidiyorum.",""],
+["mieten","kiralamak","Wir mieten eine Wohnung.","Bir daire kiralıyoruz.",""],
+["vermieten","kiraya vermek","Er vermietet sein Zimmer.","Odasını kiraya veriyor.",""],
+["kosten","mal olmak, fiyatında olmak, tutmak","Das Brot kostet zwei Euro.","Ekmek iki avro tutuyor.",""],
+["zahlen","ödemek","Ich zahle mit Karte.","Kartla ödüyorum.",""],
+["bezahlen","ödemek","Ich bezahle die Rechnung.","Faturayı ödüyorum.",""],
+["brauchen","ihtiyacı olmak","Ich brauche einen Regenschirm.","Bir şemsiyeye ihtiyacım var.",""],
+["benutzen","kullanmak","Ich benutze mein Handy oft.","Telefonumu sık kullanıyorum.",""],
+["verwenden","kullanmak","Ich verwende dieses Wörterbuch.","Bu sözlüğü kullanıyorum.",""],
+["funktionieren","işlemek, çalışmak","Der Fernseher funktioniert nicht.","Televizyon çalışmıyor.",""],
+["renovieren","yenilemek, tadilat yapmak","Wir renovieren die Küche.","Mutfağı yeniliyoruz.",""],
+["reservieren","rezervasyon yaptırmak","Ich reserviere einen Tisch.","Bir masa rezerve ettiriyorum.",""],
+["buchen","yer ayırtmak","Ich buche einen Flug.","Bir uçuş ayırtıyorum.",""],
+["dabeihaben","yanında bulundurmak, yanında taşımak","Hast du deinen Ausweis dabei?","Kimliğin yanında mı?",""],
+["fehlen","eksik olmak","Deine Unterschrift fehlt noch.","İmzan hâlâ eksik.",""],
+["abnehmen","kilo vermek, zayıflamak","Ich möchte fünf Kilo abnehmen.","Beş kilo vermek istiyorum.",""],
+["schneiden","kesmek","Ich schneide das Brot.","Ekmeği kesiyorum.",""],
+["gießen","sulamak","Ich gieße die Blumen.","Çiçekleri suluyorum.",""],
+["füttern","yemlemek","Ich füttere die Katze.","Kediyi yemliyorum.",""],
+["tragen","1. taşımak, 2. giymek","Ich trage die Tasche.","Çantayı taşıyorum.",""],
+["zeigen","göstermek","Ich zeige dir den Weg.","Sana yolu gösteriyorum.",""],
+["schicken","göndermek","Ich schicke dir eine E-Mail.","Sana bir e-posta gönderiyorum.",""],
+["schenken","hediye etmek","Ich schenke ihr Blumen.","Ona çiçek hediye ediyorum.",""],
+["sagen","söylemek","Was sagst du?","Ne söylüyorsun?",""],
+["reden","konuşmak","Wir reden über die Arbeit.","İş hakkında konuşuyoruz.",""],
+["sprechen","konuşmak","Ich spreche Deutsch.","Almanca konuşuyorum.",""],
+["erzählen","anlatmak","Erzähl mir von deinem Urlaub!","Bana tatilinden bahset!",""],
+["erklären","izah etmek, açıklamak","Können Sie das erklären?","Bunu açıklayabilir misiniz?",""],
+["fragen","soru sormak","Ich frage den Lehrer.","Öğretmene soruyorum.",""],
+["antworten","cevap vermek","Bitte antworten Sie schnell.","Lütfen çabuk cevap verin.",""],
+["beantworten","cevap vermek","Ich beantworte die Frage.","Soruyu cevaplıyorum.",""],
+["schreiben","yazmak","Ich schreibe eine E-Mail.","Bir e-posta yazıyorum.",""],
+["lesen","okumak","Ich lese ein Buch.","Bir kitap okuyorum.",""],
+["vorlesen","başkalarına sesli okumak","Ich lese dem Kind vor.","Çocuğa sesli okuyorum.",""],
+["weiterlesen","devam etmek (okumaya)","Lesen Sie bitte weiter.","Lütfen okumaya devam edin.",""],
+["weitergehen","devam etmek (gitmeye)","Gehen wir weiter!","Gitmeye devam edelim!",""],
+["buchstabieren","harf harf söylemek, hecelemek","Bitte buchstabieren Sie Ihren Namen.","Lütfen isminizi harf harf söyleyin.",""],
+["hören","dinlemek","Ich höre Musik.","Müzik dinliyorum.",""],
+["verstehen","anlamak","Ich verstehe dich nicht.","Seni anlamıyorum.",""],
+["anschauen","bakmak","Ich schaue mir das Bild an.","Resme bakıyorum.",""],
+["aussehen","görünmek","Du siehst müde aus.","Yorgun görünüyorsun.",""],
+["gefallen","hoşuna gitmek, hoş gelmek","Das Kleid gefällt mir.","Elbise hoşuma gidiyor.",""],
+["schmecken","tatmak, tadı olmak","Die Suppe schmeckt gut.","Çorbanın tadı güzel.",""],
+["wissen","bilmek","Ich weiß die Antwort nicht.","Cevabı bilmiyorum.",""],
+["kennen","tanımak","Ich kenne diese Frau.","Bu kadını tanıyorum.",""],
+["kennenlernen","tanışmak","Ich möchte dich kennenlernen.","Seninle tanışmak istiyorum.",""],
+["denken","düşünmek","Ich denke oft an dich.","Sık sık seni düşünüyorum.",""],
+["lernen","1. öğrenmek, 2. ders çalışmak","Ich lerne Deutsch.","Almanca öğreniyorum.",""],
+["üben","alıştırma yapmak","Ich übe jeden Tag Grammatik.","Her gün gramer alıştırması yapıyorum.",""],
+["Hausaufgaben machen","ev ödevlerini yapmak","Ich mache meine Hausaufgaben.","Ev ödevlerimi yapıyorum.",""],
+["studieren","üniversitede öğrenim görmek","Ich studiere Medizin.","Tıp okuyorum.",""],
+["arbeiten","çalışmak","Ich arbeite bei einer Firma.","Bir firmada çalışıyorum.",""],
+["lachen","gülmek","Wir lachen viel.","Çok gülüyoruz.",""],
+["lächeln","gülümsemek","Sie lächelt immer.","O her zaman gülümsüyor.",""],
+["weinen","ağlamak","Das Baby weint.","Bebek ağlıyor.",""],
+["sich freuen","sevinmek","Ich freue mich auf den Urlaub.","Tatile seviniyorum.",""],
+["sich ausruhen","dinlenmek","Ich ruhe mich am Wochenende aus.","Hafta sonu dinleniyorum.",""],
+["sich entschuldigen","özür dilemek","Ich entschuldige mich für die Verspätung.","Gecikme için özür diliyorum.",""],
+["sich bedanken","teşekkür etmek","Ich bedanke mich für die Hilfe.","Yardım için teşekkür ediyorum.",""],
+["danken","teşekkür etmek","Ich danke dir sehr.","Sana çok teşekkür ederim.",""],
+["sich fühlen","hissetmek (kendini)","Ich fühle mich gut.","Kendimi iyi hissediyorum.",""],
+["regnen","yağmur yağmak","Es regnet heute.","Bugün yağmur yağıyor.",""],
+["schneien","kar yağmak","Im Winter schneit es oft.","Kışın sık kar yağar.",""],
+["scheinen","parıldamak","Die Sonne scheint heute.","Bugün güneş parlıyor.",""],
+["spielen","oynamak","Die Kinder spielen im Garten.","Çocuklar bahçede oynuyor.",""],
+["Fußball spielen","futbol oynamak","Wir spielen jeden Samstag Fußball.","Her cumartesi futbol oynuyoruz.",""],
+["Gitarre spielen","gitar çalmak","Ich spiele Gitarre.","Gitar çalıyorum.",""],
+["Sport treiben","spor yapmak","Ich treibe jeden Tag Sport.","Her gün spor yapıyorum.",""],
+["tanzen","dans etmek","Wir tanzen auf der Party.","Partide dans ediyoruz.",""],
+["singen","şarkı söylemek","Sie singt sehr gut.","O çok iyi şarkı söylüyor.",""],
+["fernsehen","televizyon izlemek","Ich sehe abends fern.","Akşamları televizyon izliyorum.",""],
+["Radio hören","radyo dinlemek","Ich höre morgens Radio.","Sabahları radyo dinliyorum.",""],
+["fotografieren","fotoğraf çekmek","Ich fotografiere gern die Natur.","Doğayı fotoğraflamayı severim.",""],
+["rauchen","sigara içmek","Er raucht nicht mehr.","Artık sigara içmiyor.",""],
+["sammeln","toplamak","Ich sammle Briefmarken.","Pul topluyorum.",""],
+["gewinnen","kazanmak (yarışma/oyun)","Wir gewinnen das Spiel.","Oyunu kazanıyoruz.",""],
+["verlieren","kaybetmek","Ich verliere oft meinen Schlüssel.","Sık sık anahtarımı kaybediyorum.",""],
+["anfangen","başlamak","Der Kurs fängt um neun an.","Kurs saat dokuzda başlıyor.",""],
+["beginnen","başlamak","Die Schule beginnt im September.","Okul Eylül'de başlıyor.",""],
+["aufhören","bitirmek, bırakmak, kesmek","Ich höre um fünf auf zu arbeiten.","Saat beşte çalışmayı bırakıyorum.",""],
+["ausfallen","iptal olmak","Der Kurs fällt heute aus.","Kurs bugün iptal oluyor.",""],
+["stattfinden","vuku bulmak, gerçekleşmek","Die Prüfung findet am Montag statt.","Sınav pazartesi gerçekleşiyor.",""],
+["geben","vermek","Ich gebe dir das Buch.","Kitabı sana veriyorum.",""],
+["nehmen","1. almak 2. binmek (araç)","Ich nehme den Bus.","Otobüse biniyorum.",""],
+["suchen","aramak","Ich suche meinen Schlüssel.","Anahtarımı arıyorum.",""],
+["finden","bulmak","Ich finde meinen Schlüssel nicht.","Anahtarımı bulamıyorum.",""],
+["helfen","yardım etmek","Kannst du mir helfen?","Bana yardım edebilir misin?",""],
+["empfehlen","tavsiye etmek","Ich empfehle dieses Restaurant.","Bu restoranı tavsiye ediyorum.",""],
+["anbieten","sunmak, ikram etmek","Ich biete dir Kaffee an.","Sana kahve ikram ediyorum.",""],
+["sehen","görmek","Ich sehe meine Freunde.","Arkadaşlarımı görüyorum.",""],
+["einen Film sehen","film izlemek","Wir sehen einen Film.","Bir film izliyoruz.",""],
+["machen","yapmak","Was machst du heute?","Bugün ne yapıyorsun?",""],
+["tun","yapmak","Was kann ich tun?","Ne yapabilirim?",""],
+["telefonieren","telefon etmek","Ich telefoniere mit meiner Mutter.","Annemle telefonda konuşuyorum.",""],
+["anrufen","telefonla aramak","Ich rufe dich später an.","Seni sonra ararım.",""],
+["planen","planlamak","Wir planen eine Reise.","Bir seyahat planlıyoruz.",""],
+["organisieren","organize etmek","Ich organisiere die Party.","Partiyi organize ediyorum.",""],
+["markieren","işaretlemek","Markieren Sie die richtige Antwort.","Doğru cevabı işaretleyin.",""],
+["ankreuzen","çarpı ile işaretlemek","Kreuzen Sie die richtige Antwort an.","Doğru cevabı çarpı ile işaretleyin.",""],
+["unterschreiben","imzalamak","Bitte unterschreiben Sie hier.","Lütfen burayı imzalayın.",""],
+["ergänzen","tamamlamak, doldurmak","Ergänzen Sie den Satz.","Cümleyi tamamlayın.",""],
+["ein Formular ausfüllen","bir form doldurmak","Ich fülle das Formular aus.","Formu dolduruyorum.",""],
+["aufhängen","asmak","Ich hänge das Bild auf.","Resmi asıyorum.",""],
+["klingeln","zil çalmak","Es klingelt an der Tür.","Kapı zili çalıyor.",""],
+["passieren","olmak, meydana gelmek","Was ist passiert?","Ne oldu?",""],
+["kontrollieren","kontrol etmek","Ich kontrolliere die Hausaufgaben.","Ödevleri kontrol ediyorum.",""],
+["notieren","not etmek","Ich notiere die Adresse.","Adresi not ediyorum.",""],
+["vergleichen","karşılaştırmak","Wir vergleichen die Preise.","Fiyatları karşılaştırıyoruz.",""],
+["beschreiben","tasvir etmek","Beschreiben Sie das Bild.","Resmi tasvir edin.",""],
+["wiederholen","tekrar etmek","Können Sie das wiederholen?","Bunu tekrar edebilir misiniz?",""],
+["feiern","kutlamak","Wir feiern meinen Geburtstag.","Doğum günümü kutluyoruz.",""],
+["gratulieren","tebriklerini sunmak","Ich gratuliere dir zum Geburtstag!","Doğum günün için seni tebrik ederim!",""],
+["einladen","davet etmek","Ich lade dich zur Party ein.","Seni partiye davet ediyorum.",""],
+["heiraten","evlenmek","Wir heiraten im Sommer.","Yazın evleniyoruz.",""],
+["sich anmelden","kaydolmak, kaydettirmek","Ich melde mich für den Kurs an.","Kursa kaydoluyorum.",""],
+["begrüßen","selamlamak","Ich begrüße die Gäste.","Misafirleri selamlıyorum.",""],
+["bekommen","almak, temin etmek, elde etmek","Ich bekomme ein Geschenk.","Bir hediye alıyorum.",""],
+["verdienen","kazanmak (para)","Ich verdiene gut.","İyi kazanıyorum.",""],
+["wünschen","arzulamak, dilemek","Ich wünsche dir alles Gute.","Sana her şeyin gönlünce olmasını dilerim.",""],
+["müde sein","yorgun olmak","Ich bin müde.","Yorgunum.",""],
+["Zeit haben","zamanı olmak","Ich habe heute keine Zeit.","Bugün zamanım yok.",""],
+["mögen","sevmek, hoşlanmak","Ich mag Schokolade.","Çikolatayı severim.","mod"],
+["möchten","istemek (kibarca)","Ich möchte einen Tee.","Bir çay istiyorum.","mod"],
+["können","ebilmek","Ich kann Deutsch sprechen.","Almanca konuşabilirim.","mod"],
+["müssen","mecbur olmak, -meli, -malı","Ich muss jetzt gehen.","Şimdi gitmem lazım.","mod"],
+["wollen","istemek (direkt)","Ich will nach Hause.","Eve gitmek istiyorum.","mod"],
+["dürfen","1. ebilmek (izinli olarak) 2. yapamamak (yasak)","Hier darf man nicht rauchen.","Burada sigara içilemez (izin yok).","mod"],
+["sollen","tavsiye niteliğinde zorunluluk, -meli, -malı","Du sollst mehr Wasser trinken.","Daha çok su içmelisin.","mod"]
+];
+
+const EXAM_QA = [
+["Was sind Sie von Beruf?","Mesleğiniz nedir?","Ich bin Lehrer.","Ben öğretmenim."],
+["Haben Sie Kinder?","Çocuğunuz var mı?","Ja, ich habe zwei Kinder.","Evet, iki çocuğum var."],
+["Was wird aus dir?","Sen ne olacaksın?","Ich werde Arzt.","Ben doktor olacağım."],
+["Wie heißen Sie?","Adınız ne?","Ich heiße Ali.","Adım Ali."],
+["Wo wohnen Sie?","Nerede oturuyorsunuz?","Ich wohne in Berlin.","Berlin'de oturuyorum."],
+["Wo leben Sie?","Nerede yaşıyorsunuz?","Ich lebe in Deutschland.","Almanya'da yaşıyorum."],
+["Woher kommen Sie?","Nereden geliyorsunuz?","Ich komme aus der Türkei.","Türkiye'den geliyorum."],
+["Gehst du zu Fuß?","Yürüyerek mi gidiyorsun?","Ja, ich gehe zu Fuß.","Evet, yürüyerek gidiyorum."],
+["Wie fahren Sie zur Arbeit?","İşe nasıl gidiyorsunuz?","Ich fahre mit dem Auto.","Arabayla gidiyorum."],
+["Fliegt ihr im Sommer?","Yazın uçacak mısınız?","Ja, wir fliegen nach Antalya.","Evet, Antalya'ya uçuyoruz."],
+["Reist du gern?","Seyahat etmeyi sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Wann kommt der Zug an?","Tren ne zaman varıyor?","Er kommt um acht Uhr an.","Saat sekizde varıyor."],
+["Wann fährt der Bus ab?","Otobüs ne zaman kalkıyor?","Er fährt um neun ab.","Dokuzda kalkıyor."],
+["Wo steigen wir ein?","Nereden biniyoruz?","Wir steigen hier ein.","Buradan biniyoruz."],
+["Wo steigst du aus?","Nerede iniyorsun?","Ich steige hier aus.","Burada iniyorum."],
+["Müssen wir umsteigen?","Aktarma yapmamız gerekiyor mu?","Ja, in Köln.","Evet, Köln'de."],
+["Erreichen wir den Zug noch?","Trene hâlâ yetişebilir miyiz?","Ja, wir erreichen ihn.","Evet, yetişiriz."],
+["Gehst du gern spazieren?","Gezmeye gitmeyi sever misin?","Ja, jeden Abend.","Evet, her akşam."],
+["Wandert ihr oft?","Sık doğa yürüyüşü yapar mısınız?","Ja, jedes Wochenende.","Evet, her hafta sonu."],
+["Läufst du gern?","Koşmayı sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Schwimmst du gut?","İyi yüzüyor musun?","Ja, sehr gut.","Evet, çok iyi."],
+["Fährst du oft Rad?","Sık bisiklet sürer misin?","Ja, jeden Tag.","Evet, her gün."],
+["Fährst du gern Ski?","Kayak yapmayı sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Kommst du mit ins Kino?","Sinemaya birlikte geliyor musun?","Ja, ich komme mit.","Evet, geliyorum."],
+["Musst du schon weggehen?","Şimdiden gitmen mi lazım?","Ja, leider.","Evet, maalesef."],
+["Wie lange bleibst du?","Ne kadar kalıyorsun?","Ich bleibe eine Woche.","Bir hafta kalıyorum."],
+["Wo übernachtet ihr?","Nerede geceliyorsunuz?","Wir übernachten im Hotel.","Otelde geceliyoruz."],
+["Was besichtigt ihr heute?","Bugün ne gezip görüyorsunuz?","Wir besichtigen die Altstadt.","Eski şehri geziyoruz."],
+["Wartest du auf mich?","Beni bekliyor musun?","Ja, ich warte auf dich.","Evet, seni bekliyorum."],
+["Wen triffst du heute?","Bugün kiminle karşılaşıyorsun?","Ich treffe meine Kollegin.","İş arkadaşımla karşılaşıyorum."],
+["Wann treffen wir uns?","Ne zaman buluşuyoruz?","Wir treffen uns um acht.","Saat sekizde buluşuyoruz."],
+["Besuchst du oft deine Familie?","Ailenizi sık ziyaret eder misiniz?","Ja, jedes Wochenende.","Evet, her hafta sonu."],
+["Nimmst du dein Handy mit?","Telefonunu yanına alıyor musun?","Ja, ich nehme es mit.","Evet, yanıma alıyorum."],
+["Was bringst du mit?","Beraberinde ne getiriyorsun?","Ich bringe einen Salat mit.","Beraberimde bir salata getiriyorum."],
+["Kannst du Brot holen?","Ekmek getirebilir misin?","Ja, ich hole Brot.","Evet, ekmek getiriyorum."],
+["Holst du mich ab?","Beni almaya gelir misin?","Ja, ich hole dich ab.","Evet, seni almaya geliyorum."],
+["Können Sie mir Wasser bringen?","Bana su getirebilir misiniz?","Ja, sofort.","Evet, hemen."],
+["Wann kommst du zurück?","Ne zaman geri geliyorsun?","Ich komme um sechs zurück.","Saat altıda geri geliyorum."],
+["Kommst du morgen wieder?","Yarın tekrar geliyor musun?","Ja, ich komme wieder.","Evet, tekrar geliyorum."],
+["Gibst du mir mein Buch zurück?","Kitabımı bana geri verir misin?","Ja, morgen.","Evet, yarın."],
+["Ist jemand hingefallen?","Biri mi yere düştü?","Ja, das Kind.","Evet, çocuk."],
+["Wann stehst du auf?","Ne zaman kalkıyorsun?","Ich stehe um sieben auf.","Saat yedide kalkıyorum."],
+["Wo sitzt du?","Nerede oturuyorsun?","Ich sitze hier.","Burada oturuyorum."],
+["Wo steht das Auto?","Araba nerede duruyor?","Es steht vor dem Haus.","Evin önünde duruyor."],
+["Wohin stellst du die Tasche?","Çantayı nereye koyuyorsun?","Ich stelle sie hier hin.","Onu buraya koyuyorum."],
+["Wo liegt mein Handy?","Telefonum nerede duruyor?","Es liegt auf dem Bett.","Yatağın üzerinde duruyor."],
+["Wohin legst du das Buch?","Kitabı nereye koyuyorsun?","Ich lege es auf den Tisch.","Onu masaya koyuyorum."],
+["Gibt es hier einen Supermarkt?","Burada bir süpermarket var mı?","Ja, es gibt einen.","Evet, var."],
+["Wem gehört das Buch?","Kitap kime ait?","Es gehört mir.","Bana ait."],
+["Glaubst du mir?","Bana inanıyor musun?","Ja, ich glaube dir.","Evet, sana inanıyorum."],
+["Hast du deinen Pass vergessen?","Pasaportunu mu unuttun?","Ja, leider.","Evet, maalesef."],
+["Lässt du dein Handy hier?","Telefonunu burada mı bırakıyorsun?","Ja, ich lasse es hier.","Evet, burada bırakıyorum."],
+["Wann wachst du auf?","Ne zaman uyanıyorsun?","Ich wache um sechs auf.","Saat altıda uyanıyorum."],
+["Schläfst du schnell ein?","Çabuk uykuya dalar mısın?","Ja, sehr schnell.","Evet, çok çabuk."],
+["Wie viele Stunden schläfst du?","Kaç saat uyuyorsun?","Ich schlafe acht Stunden.","Sekiz saat uyuyorum."],
+["Wann gehst du ins Bett?","Ne zaman yatağa gidiyorsun?","Ich gehe um zehn ins Bett.","Saat onda yatağa gidiyorum."],
+["Duschst du morgens oder abends?","Sabah mı akşam mı duş alıyorsun?","Ich dusche morgens.","Sabahları duş alıyorum."],
+["Wäschst du die Wäsche?","Çamaşırları yıkıyor musun?","Ja, ich wasche sie.","Evet, onları yıkıyorum."],
+["Wäschst du dich jeden Tag?","Her gün yıkanıyor musun?","Ja, jeden Tag.","Evet, her gün."],
+["Was ziehst du heute an?","Bugün ne giyiyorsun?","Ich ziehe einen Pullover an.","Bir kazak giyiyorum."],
+["Ziehst du deine Schuhe aus?","Ayakkabılarını çıkarıyor musun?","Ja, ich ziehe sie aus.","Evet, onları çıkarıyorum."],
+["Wann zieht ihr um?","Ne zaman taşınıyorsunuz?","Wir ziehen im Mai um.","Mayıs'ta taşınıyoruz."],
+["Kochst du gern?","Yemek pişirmeyi sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Backst du gern Kuchen?","Kek pişirmeyi sever misin?","Ja, jedes Wochenende.","Evet, her hafta sonu."],
+["Grillt ihr heute Abend?","Bu akşam ızgara mı yapıyorsunuz?","Ja, wir grillen Fleisch.","Evet, et ızgara yapıyoruz."],
+["Wann frühstückst du?","Ne zaman kahvaltı yapıyorsun?","Ich frühstücke um acht.","Saat sekizde kahvaltı yapıyorum."],
+["Was isst du gern?","Ne yemeyi seversin?","Ich esse gern Nudeln.","Makarna yemeyi severim."],
+["Was trinkst du gern?","Ne içmeyi seversin?","Ich trinke gern Kaffee.","Kahve içmeyi severim."],
+["Was möchten Sie bestellen?","Ne sipariş etmek istersiniz?","Ich bestelle die Suppe.","Çorba sipariş ediyorum."],
+["Putzt du am Wochenende?","Hafta sonu temizlik yapıyor musun?","Ja, jeden Samstag.","Evet, her cumartesi."],
+["Ordnest du deinen Schreibtisch?","Masanı düzenliyor musun?","Ja, jeden Freitag.","Evet, her cuma."],
+["Wer wäscht heute ab?","Bugün bulaşıkları kim yıkıyor?","Ich wasche ab.","Ben yıkıyorum."],
+["Bereitest du dich auf die Prüfung vor?","Sınava hazırlanıyor musun?","Ja, jeden Tag.","Evet, her gün."],
+["Können Sie die Tür öffnen?","Kapıyı açabilir misiniz?","Ja, sofort.","Evet, hemen."],
+["Können Sie das Fenster schließen?","Pencereyi kapatabilir misiniz?","Ja, gern.","Evet, memnuniyetle."],
+["Kannst du die Tür aufmachen?","Kapıyı açabilir misin?","Ja, ich mache sie auf.","Evet, açıyorum."],
+["Kannst du das Fenster zumachen?","Pencereyi kapatabilir misin?","Ja, ich mache es zu.","Evet, kapatıyorum."],
+["Schaltest du das Licht ein?","Işığı açıyor musun?","Ja, ich schalte es ein.","Evet, açıyorum."],
+["Schaltest du das Radio aus?","Radyoyu kapatıyor musun?","Ja, ich schalte es aus.","Evet, kapatıyorum."],
+["Was kaufst du heute?","Bugün ne satın alıyorsun?","Ich kaufe Obst.","Meyve satın alıyorum."],
+["Verkaufst du dein Fahrrad?","Bisikletini satıyor musun?","Ja, ich verkaufe es.","Evet, satıyorum."],
+["Wann gehst du einkaufen?","Ne zaman alışverişe gidiyorsun?","Ich gehe am Samstag einkaufen.","Cumartesi alışverişe gidiyorum."],
+["Mietet ihr ein Auto?","Bir araba mı kiralıyorsunuz?","Ja, für den Urlaub.","Evet, tatil için."],
+["Vermieten Sie Ihre Wohnung?","Dairenizi kiraya veriyor musunuz?","Ja, ab September.","Evet, Eylül'den itibaren."],
+["Was kostet das?","Bu ne kadar tutuyor?","Es kostet zehn Euro.","On avro tutuyor."],
+["Zahlen Sie bar oder mit Karte?","Nakit mi kartla mı ödüyorsunuz?","Ich zahle mit Karte.","Kartla ödüyorum."],
+["Können Sie das bezahlen?","Bunu ödeyebilir misiniz?","Ja, ich bezahle es.","Evet, ödüyorum."],
+["Brauchst du Hilfe?","Yardıma ihtiyacın var mı?","Ja, bitte.","Evet, lütfen."],
+["Benutzt du einen Laptop?","Dizüstü bilgisayar kullanıyor musun?","Ja, jeden Tag.","Evet, her gün."],
+["Verwendest du dieses Programm?","Bu programı kullanıyor musun?","Ja, oft.","Evet, sık sık."],
+["Funktioniert das Wi-Fi?","Wi-Fi çalışıyor mu?","Nein, es funktioniert nicht.","Hayır, çalışmıyor."],
+["Renoviert ihr das Bad?","Banyoyu mu yeniliyorsunuz?","Ja, nächsten Monat.","Evet, gelecek ay."],
+["Haben Sie reserviert?","Rezervasyon yaptırdınız mı?","Ja, für zwei Personen.","Evet, iki kişi için."],
+["Hast du das Hotel gebucht?","Oteli ayırttın mı?","Ja, schon gebucht.","Evet, zaten ayırttım."],
+["Haben Sie Ihren Pass dabei?","Pasaportunuz yanınızda mı?","Ja, hier ist er.","Evet, işte burada."],
+["Was fehlt noch?","Daha ne eksik?","Deine Adresse fehlt.","Adresin eksik."],
+["Möchtest du abnehmen?","Kilo vermek istiyor musun?","Ja, ein bisschen.","Evet, biraz."],
+["Kannst du das Gemüse schneiden?","Sebzeyi kesebilir misin?","Ja, sofort.","Evet, hemen."],
+["Gießt du jeden Tag die Blumen?","Çiçekleri her gün suluyor musun?","Ja, jeden Morgen.","Evet, her sabah."],
+["Fütterst du den Hund?","Köpeği yemliyor musun?","Ja, zweimal am Tag.","Evet, günde iki kez."],
+["Trägst du eine Brille?","Gözlük takıyor musun?","Ja, ich trage eine Brille.","Evet, gözlük takıyorum."],
+["Können Sie mir den Weg zeigen?","Bana yolu gösterebilir misiniz?","Ja, gern.","Evet, memnuniyetle."],
+["Schickst du mir das Foto?","Bana fotoğrafı gönderir misin?","Ja, sofort.","Evet, hemen."],
+["Was schenkst du ihm?","Ona ne hediye ediyorsun?","Ich schenke ihm ein Buch.","Ona bir kitap hediye ediyorum."],
+["Was sagt der Lehrer?","Öğretmen ne söylüyor?","Er sagt: Sehr gut!","Çok iyi diyor!"],
+["Worüber redet ihr?","Ne hakkında konuşuyorsunuz?","Wir reden über Deutschland.","Almanya hakkında konuşuyoruz."],
+["Sprechen Sie Englisch?","İngilizce konuşuyor musunuz?","Ja, ein bisschen.","Evet, biraz."],
+["Erzählst du mir die Geschichte?","Bana hikayeyi anlatır mısın?","Ja, gern.","Evet, memnuniyetle."],
+["Erklärst du mir die Regel?","Bana kuralı açıklar mısın?","Ja, natürlich.","Evet, tabii ki."],
+["Darf ich etwas fragen?","Bir şey sorabilir miyim?","Ja, natürlich.","Evet, tabii ki."],
+["Antwortest du mir?","Bana cevap veriyor musun?","Ja, sofort.","Evet, hemen."],
+["Können Sie diese Frage beantworten?","Bu soruyu cevaplayabilir misiniz?","Ja, natürlich.","Evet, tabii ki."],
+["Schreibst du deinen Namen?","İsmini yazıyor musun?","Ja, hier.","Evet, işte burada."],
+["Liest du gern?","Okumayı sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Liest du deinem Kind vor?","Çocuğuna sesli okuyor musun?","Ja, jeden Abend.","Evet, her akşam."],
+["Sollen wir weiterlesen?","Okumaya devam edelim mi?","Ja, bitte.","Evet, lütfen."],
+["Sollen wir weitergehen?","Gitmeye devam edelim mi?","Ja, kommt!","Evet, hadi gelin!"],
+["Können Sie das buchstabieren?","Bunu hecelayabilir misiniz?","Ja: M-Ü-L-L-E-R.","Evet: M-Ü-L-L-E-R."],
+["Hörst du gern Musik?","Müzik dinlemeyi sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Verstehst du das?","Bunu anlıyor musun?","Ja, jetzt verstehe ich.","Evet, şimdi anlıyorum."],
+["Schaust du dir den Film an?","Filme bakıyor musun (izliyor musun)?","Ja, heute Abend.","Evet, bu akşam."],
+["Wie sieht das Zimmer aus?","Oda nasıl görünüyor?","Es sieht sehr schön aus.","Çok güzel görünüyor."],
+["Gefällt dir die Stadt?","Şehir hoşuna gidiyor mu?","Ja, sie gefällt mir sehr.","Evet, çok hoşuma gidiyor."],
+["Schmeckt dir das Essen?","Yemeğin tadı hoşuna gidiyor mu?","Ja, sehr gut.","Evet, çok güzel."],
+["Weißt du seine Adresse?","Onun adresini biliyor musun?","Nein, ich weiß es nicht.","Hayır, bilmiyorum."],
+["Kennst du ihn?","Onu tanıyor musun?","Ja, ich kenne ihn gut.","Evet, onu iyi tanırım."],
+["Wann habt ihr euch kennengelernt?","Ne zaman tanıştınız?","Letztes Jahr.","Geçen yıl."],
+["Was denkst du darüber?","Bu konuda ne düşünüyorsun?","Ich denke, das ist gut.","Bence bu iyi."],
+["Lernst du für die Prüfung?","Sınav için mi çalışıyorsun?","Ja, jeden Tag.","Evet, her gün."],
+["Übst du oft Deutsch?","Sık sık Almanca alıştırması yapıyor musun?","Ja, jeden Abend.","Evet, her akşam."],
+["Machst du deine Hausaufgaben?","Ev ödevlerini yapıyor musun?","Ja, jeden Nachmittag.","Evet, her öğleden sonra."],
+["Was studierst du?","Ne okuyorsun?","Ich studiere Informatik.","Bilgisayar mühendisliği okuyorum."],
+["Wo arbeiten Sie?","Nerede çalışıyorsunuz?","Ich arbeite in Bonn.","Bonn'da çalışıyorum."],
+["Warum lachst du?","Neden gülüyorsun?","Der Film ist lustig.","Film komik."],
+["Warum lächelst du?","Neden gülümsüyorsun?","Ich bin glücklich.","Mutluyum."],
+["Warum weinst du?","Neden ağlıyorsun?","Ich bin traurig.","Üzgünüm."],
+["Freust du dich auf die Party?","Partiye seviniyor musun?","Ja, ich freue mich sehr.","Evet, çok seviniyorum."],
+["Ruhst du dich heute aus?","Bugün dinleniyor musun?","Ja, ich bin müde.","Evet, yorgunum."],
+["Entschuldigst du dich bei ihm?","Ondan özür diliyor musun?","Ja, natürlich.","Evet, tabii ki."],
+["Bedankst du dich bei ihr?","Ona teşekkür ediyor musun?","Ja, natürlich.","Evet, tabii ki."],
+["Wem dankst du?","Kime teşekkür ediyorsun?","Ich danke meiner Lehrerin.","Öğretmenime teşekkür ediyorum."],
+["Wie fühlst du dich?","Kendini nasıl hissediyorsun?","Ich fühle mich müde.","Kendimi yorgun hissediyorum."],
+["Regnet es morgen?","Yarın yağmur yağacak mı?","Ja, wahrscheinlich.","Evet, muhtemelen."],
+["Schneit es in Ihrer Stadt?","Şehrinizde kar yağıyor mu?","Ja, jeden Winter.","Evet, her kış."],
+["Scheint die Sonne heute?","Bugün güneş var mı (parlıyor mu)?","Ja, den ganzen Tag.","Evet, tüm gün."],
+["Was spielt ihr?","Ne oynuyorsunuz?","Wir spielen Karten.","Kart oynuyoruz."],
+["Spielst du Fußball?","Futbol oynuyor musun?","Ja, im Verein.","Evet, kulüpte."],
+["Spielst du ein Instrument?","Bir enstrüman çalıyor musun?","Ja, ich spiele Gitarre.","Evet, gitar çalıyorum."],
+["Treibst du gern Sport?","Spor yapmayı sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Tanzt du gern?","Dans etmeyi sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Singst du gern?","Şarkı söylemeyi sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Siehst du gern fern?","Televizyon izlemeyi sever misin?","Ja, jeden Abend.","Evet, her akşam."],
+["Hörst du Radio im Auto?","Arabada radyo dinliyor musun?","Ja, immer.","Evet, her zaman."],
+["Fotografierst du gern?","Fotoğraf çekmeyi sever misin?","Ja, sehr gern.","Evet, çok severim."],
+["Rauchst du?","Sigara içiyor musun?","Nein, ich rauche nicht.","Hayır, sigara içmiyorum."],
+["Sammelst du etwas?","Bir şey topluyor musun?","Ja, Münzen.","Evet, madeni para."],
+["Wer gewinnt?","Kim kazanıyor?","Unsere Mannschaft gewinnt.","Bizim takım kazanıyor."],
+["Verlierst du oft Sachen?","Sık sık eşyalarını kaybeder misin?","Ja, leider oft.","Evet, maalesef sık sık."],
+["Wann fängt der Film an?","Film ne zaman başlıyor?","Er fängt um acht an.","Saat sekizde başlıyor."],
+["Wann beginnt der Unterricht?","Ders ne zaman başlıyor?","Er beginnt um neun.","Saat dokuzda başlıyor."],
+["Wann hörst du auf?","Ne zaman bırakıyorsun?","Ich höre um fünf auf.","Saat beşte bırakıyorum."],
+["Fällt der Unterricht aus?","Ders iptal mi oluyor?","Ja, er fällt aus.","Evet, iptal oluyor."],
+["Wann findet die Party statt?","Parti ne zaman gerçekleşiyor?","Sie findet am Samstag statt.","Cumartesi gerçekleşiyor."],
+["Können Sie mir das Formular geben?","Bana formu verebilir misiniz?","Ja, hier bitte.","Evet, buyurun."],
+["Was nimmst du?","Ne alıyorsun?","Ich nehme die Suppe.","Çorbayı alıyorum."],
+["Was suchst du?","Ne arıyorsun?","Ich suche mein Handy.","Telefonumu arıyorum."],
+["Hast du deinen Pass gefunden?","Pasaportunu buldun mu?","Ja, endlich.","Evet, sonunda."],
+["Können Sie mir helfen?","Bana yardım edebilir misiniz?","Ja, natürlich.","Evet, tabii ki."],
+["Können Sie ein Hotel empfehlen?","Bir otel tavsiye edebilir misiniz?","Ja, gern.","Evet, memnuniyetle."],
+["Bietest du mir etwas an?","Bana bir şey ikram ediyor musun?","Ja, Tee oder Kaffee?","Evet, çay mı kahve mi?"],
+["Siehst du deine Familie oft?","Ailenizi sık görür müsünüz?","Ja, jedes Wochenende.","Evet, her hafta sonu."],
+["Wollt ihr einen Film sehen?","Bir film izlemek ister misiniz?","Ja, gern.","Evet, memnuniyetle."],
+["Was machst du am Wochenende?","Hafta sonu ne yapıyorsun?","Ich mache nichts Besonderes.","Özel bir şey yapmıyorum."],
+["Was tust du gerade?","Şu anda ne yapıyorsun?","Ich lese ein Buch.","Bir kitap okuyorum."],
+["Telefonierst du oft?","Sık telefon eder misin?","Ja, jeden Tag.","Evet, her gün."],
+["Kannst du mich morgen anrufen?","Yarın beni arayabilir misin?","Ja, ich rufe dich an.","Evet, seni ararım."],
+["Was plant ihr für den Urlaub?","Tatil için ne planlıyorsunuz?","Wir planen eine Reise nach Spanien.","İspanya'ya bir seyahat planlıyoruz."],
+["Wer organisiert das Fest?","Şenliği kim organize ediyor?","Ich organisiere es.","Ben organize ediyorum."],
+["Sollen wir die Wörter markieren?","Kelimeleri işaretleyelim mi?","Ja, bitte.","Evet, lütfen."],
+["Wie soll ich das ankreuzen?","Bunu nasıl işaretlemeliyim?","Kreuzen Sie hier an.","Burayı işaretleyin."],
+["Kann ich hier unterschreiben?","Burayı imzalayabilir miyim?","Ja, bitte hier.","Evet, lütfen buraya."],
+["Können Sie den Text ergänzen?","Metni tamamlayabilir misiniz?","Ja, natürlich.","Evet, tabii ki."],
+["Müssen wir ein Formular ausfüllen?","Bir form doldurmamız gerekiyor mu?","Ja, bitte.","Evet, lütfen."],
+["Wo hängst du das Bild auf?","Resmi nereye asıyorsun?","Ich hänge es hier auf.","Buraya asıyorum."],
+["Hat es geklingelt?","Zil mi çaldı?","Ja, jemand ist da.","Evet, biri var."],
+["Was ist hier passiert?","Burada ne oldu?","Nichts Schlimmes.","Kötü bir şey değil."],
+["Kontrollierst du meine Antworten?","Cevaplarımı kontrol eder misin?","Ja, natürlich.","Evet, tabii ki."],
+["Kannst du das notieren?","Bunu not edebilir misin?","Ja, sofort.","Evet, hemen."],
+["Vergleichst du die Angebote?","Teklifleri karşılaştırıyor musun?","Ja, immer.","Evet, her zaman."],
+["Können Sie sich beschreiben?","Kendinizi tasvir edebilir misiniz?","Ich bin groß und schlank.","Uzun boylu ve inceyim."],
+["Können Sie das wiederholen?","Bunu tekrar edebilir misiniz?","Ja, noch einmal.","Evet, bir kez daha."],
+["Feiert ihr Weihnachten?","Noel'i kutluyor musunuz?","Ja, mit der Familie.","Evet, ailemle."],
+["Wer gratuliert dir?","Sana kim tebrik ediyor?","Meine Familie gratuliert mir.","Ailem beni tebrik ediyor."],
+["Darf ich dich einladen?","Seni davet edebilir miyim?","Ja, sehr gern.","Evet, çok isterim."],
+["Wann heiratet ihr?","Ne zaman evleniyorsunuz?","Wir heiraten im Juni.","Haziran'da evleniyoruz."],
+["Musst du dich anmelden?","Kaydolman gerekiyor mu?","Ja, online.","Evet, çevrimiçi."],
+["Wer begrüßt die Gäste?","Misafirleri kim selamlıyor?","Ich begrüße sie.","Onları ben selamlıyorum."],
+["Was bekommst du zum Geburtstag?","Doğum günün için ne alıyorsun?","Ich bekomme ein Buch.","Bir kitap alıyorum."],
+["Wie viel verdienst du?","Ne kadar kazanıyorsun?","Ich verdiene genug.","Yeterince kazanıyorum."],
+["Was wünschst du dir?","Ne diliyorsun (istiyorsun)?","Ich wünsche mir Gesundheit.","Sağlık diliyorum."],
+["Bist du müde?","Yorgun musun?","Ja, sehr müde.","Evet, çok yorgunum."],
+["Hast du morgen Zeit?","Yarın zamanın var mı?","Ja, ich habe Zeit.","Evet, zamanım var."],
+["Magst du Kaffee?","Kahveyi sever misin?","Ja, sehr.","Evet, çok."],
+["Was möchten Sie trinken?","Ne içmek istersiniz?","Ich möchte Wasser.","Su istiyorum."],
+["Können Sie mir helfen?","Bana yardım edebilir misiniz?","Ja, ich kann helfen.","Evet, yardım edebilirim."],
+["Musst du arbeiten?","Çalışman mı gerekiyor?","Ja, ich muss arbeiten.","Evet, çalışmam lazım."],
+["Willst du mitkommen?","Birlikte gelmek ister misin?","Ja, ich will mitkommen.","Evet, gelmek istiyorum."],
+["Darf ich hier parken?","Buraya park edebilir miyim?","Nein, das dürfen Sie nicht.","Hayır, yapamazsınız."],
+["Was soll ich tun?","Ne yapmalıyım?","Du sollst zum Arzt gehen.","Doktora gitmelisin."]
+];
+
+
+const GENDER_META = {
+  mod: { color: "var(--modal-purple)", hex: "#6C3FA0", label: "Modal Fiil" },
+  "": { color: "var(--neutral-grey)", hex: "#5A6B63", label: "" }
+};
+
+const $ = sel => document.querySelector(sel);
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+// ---------- WORD HIGHLIGHTING ----------
+const CORE_OVERRIDE = {
+  "sich freuen": "freuen", "sich treffen": "treffen", "sich waschen": "waschen",
+  "sich ausruhen": "ausruhen", "sich entschuldigen": "entschuldigen",
+  "sich bedanken": "bedanken", "sich anmelden": "anmelden", "sich fühlen": "fühlen",
+  "spazieren gehen": "spazieren", "ins Bett gehen": "Bett", "warten auf": "warten",
+  "Rad fahren": "Rad", "Ski fahren": "Ski", "Sport treiben": "Sport",
+  "Fußball spielen": "Fußball", "Gitarre spielen": "Gitarre", "Radio hören": "Radio",
+  "Hausaufgaben machen": "Hausaufgaben", "einen Film sehen": "Film",
+  "ein Formular ausfüllen": "Formular", "müde sein": "müde", "Zeit haben": "Zeit",
+  "es gibt": "gibt"
+};
+
+function coreForm(de){
+  if (CORE_OVERRIDE[de]) return CORE_OVERRIDE[de];
+  let w = de.replace(/^(der|die|das)\s+/, "");
+  w = w.split(" / ")[0];
+  w = w.replace(/[()–-]/g, " ").trim().split(" ")[0];
+  return w;
+}
+function stemOf(w){
+  if (w.length > 5 && w.endsWith("en")) return w.slice(0, -2);
+  if (w.length > 4 && w.endsWith("e")) return w.slice(0, -1);
+  if (w.length > 4 && w.endsWith("n")) return w.slice(0, -1);
+  return w;
+}
+function escapeHtml(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+// Eski telefon tarayıcılarıyla da uyumlu olsun diye lookbehind/\p{L} yerine
+// klasik bir "harf sınıfı" ile kelime kelime tarama yapılır (Almanca ö/ü/ä/ß dahil).
+const LETTER_CLASS = "A-Za-zÀ-ÖØ-öø-ÿ";
+const SPLIT_RE = new RegExp("([^" + LETTER_CLASS + "]+)");
+const HAS_LETTER_RE = new RegExp("[" + LETTER_CLASS + "]");
+
+function findTargetWord(de, gender, sentence){
+  const core = coreForm(de);
+  const st = stemOf(core);
+  const isNoun = gender === "m" || gender === "f" || gender === "n" || gender === "p";
+  const tokens = sentence.split(SPLIT_RE);
+  for (const t of tokens){
+    if (!t || !HAS_LETTER_RE.test(t)) continue;
+    // isimlerde büyük/küçük harf duyarlı arama (örn. "Ei" kelimesi "ein" ile karışmasın diye)
+    const matches = isNoun ? t.indexOf(st) === 0 : t.toLowerCase().indexOf(st.toLowerCase()) === 0;
+    if (matches) return t;
+  }
+  return null;
+}
+function highlightSentence(de, gender, sentence){
+  const target = findTargetWord(de, gender, sentence);
+  const safe = escapeHtml(sentence);
+  if (!target) return safe;
+  const escapedMatch = escapeHtml(target);
+  const idx = safe.indexOf(escapedMatch);
+  if (idx === -1) return safe;
+  return safe.slice(0, idx) + "<b>" + escapedMatch + "</b>" + safe.slice(idx + escapedMatch.length);
+}
+
+// ---------- AUDIO ----------
+let germanVoice = null;
+function pickGermanVoice(){
+  const voices = speechSynthesis.getVoices ? speechSynthesis.getVoices() : [];
+  germanVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("de")) || null;
+}
+if (typeof speechSynthesis !== "undefined") {
+  pickGermanVoice();
+  speechSynthesis.onvoiceschanged = pickGermanVoice;
+}
+function speakGerman(text){
+  try{
+    if (typeof speechSynthesis === "undefined") {
+      alert("Bu tarayıcı sesli okumayı desteklemiyor.");
+      return;
+    }
+    speechSynthesis.cancel();
+    // artikel (der/die/das) korunur, sadece alternatif yazımlar ve parantezler temizlenir
+    const clean = text.split(" / ")[0].replace(/[()]/g, "");
+    const utter = new SpeechSynthesisUtterance(clean);
+    utter.lang = "de-DE";
+    if (germanVoice) utter.voice = germanVoice;
+    utter.rate = 0.9;
+    speechSynthesis.speak(utter);
+  }catch(e){ console.warn("TTS error", e); }
+}
+
+// ---------- BACKEND (Google Apps Script + Google Sheets) ----------
+// Kurulum sonrası Apps Script "Web App URL"nizi aşağıya yapıştırın.
+// Örnek: "https://script.google.com/macros/s/AKfycb.../exec"
+const CONFIG = {
+  API_URL: "https://script.google.com/macros/s/AKfycbyGZWVGtjDukKHizQagXYXDJ8m4tNtrBiLMb8X5ootsy-WzkaNQHzew3k7wrUwkAnM4fA/exec",
+  THEMA: "Fiiller (Verben)"
+};
+
+function apiConfigured(){
+  return CONFIG.API_URL && CONFIG.API_URL.indexOf("script.google.com") !== -1;
+}
+
+async function apiCall(action, payload){
+  if (!apiConfigured()) return null;
+  try{
+    const res = await fetch(CONFIG.API_URL, {
+      method: "POST",
+      // "text/plain" kullanılır ki tarayıcı CORS ön-kontrolü (preflight) göndermesin;
+      // Apps Script Web App'ler OPTIONS isteklerine yanıt vermediği için bu şart.
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(Object.assign({ action: action }, payload))
+    });
+    return await res.json();
+  }catch(e){
+    console.warn("API error", e);
+    return null;
+  }
+}
+
+let storageAvailable = false; // apiConfigured() kontrolüyle çalışma anında güncellenir
+
+// ---------- IDENTITY ----------
+let student = { name: "", date: "" };
+
+function todayStr(){
+  const d = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate());
+}
+$("#gate-date").value = todayStr();
+
+$("#gate-submit").addEventListener("click", async ()=>{
+  const name = $("#gate-name").value.trim();
+  const date = $("#gate-date").value || todayStr();
+  if (!name) { $("#gate-name").focus(); return; }
+  student = { name, date };
+  $("#identity-gate").style.display = "none";
+  renderStudentLine();
+  await renderHistoryPanel();
+});
+
+function renderStudentLine(){
+  $("#student-line").innerHTML =
+    "👤 " + escapeHtml(student.name) + " · " + student.date +
+    ' <button id="change-student">Değiştir</button>';
+  $("#change-student").addEventListener("click", ()=>{
+    $("#identity-gate").style.display = "flex";
+  });
+}
+
+async function renderHistoryPanel(){
+  const existing = document.getElementById("history-panel");
+  if (existing) existing.remove();
+  if (!apiConfigured()) return;
+  const res = await apiCall("getHistory", { name: student.name, thema: CONFIG.THEMA });
+  if (!res || !res.records || !res.records.length) return;
+  const top = res.records.slice(0, 5);
+  const panel = document.createElement("div");
+  panel.id = "history-panel";
+  panel.className = "topic-tags";
+  panel.style.marginTop = "10px";
+  panel.innerHTML = '<span class="tag" style="background:rgba(227,169,58,0.18);">📊 Geçmiş sonuçların:</span>' +
+    top.map(r => '<span class="tag">Quiz ' + r.quizSet + ": " + r.score + "/" + r.total + " (%" + r.pct + ")</span>").join("");
+  $("#student-line").insertAdjacentElement("afterend", panel);
+}
+
+// allow Enter key to submit gate
+$("#gate-name").addEventListener("keydown", e=>{ if(e.key==="Enter") $("#gate-submit").click(); });
+
+// ---------- TABS ----------
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    if (btn.dataset.tab === "quiz") showQuizSelect();
+  });
+});
+
+// ---------- FLASHCARDS ----------
+let order = WORDS.map((_, i) => i);
+let idx = 0;
+let flipped = false;
+let knowSet = new Set();
+let unsureSet = new Set();
+let reviewOnly = false;
+let fcDirection = "de-tr";
+
+function currentList(){
+  return reviewOnly ? order.filter(i => unsureSet.has(i)) : order;
+}
+
+function renderCard(){
+  const list = currentList();
+  if (list.length === 0){
+    $("#fc-de").textContent = "Tekrar listesi boş 🎉";
+    $("#fc-tr").textContent = "";
+    $("#fc-ex").textContent = "Tüm kelimeleri biliyorsun!";
+    $("#fc-ex-tr").textContent = "";
+    $("#fc-examqa").style.display = "none";
+    $("#fc-examqa-front").style.display = "none";
+    $("#fc-count").textContent = "0 / 0";
+    return;
+  }
+  $("#fc-examqa").style.display = "block";
+  $("#fc-examqa-front").style.display = "block";
+  if (idx >= list.length) idx = 0;
+  if (idx < 0) idx = list.length - 1;
+  const wIndex = list[idx];
+  const [de, tr, deS, trS, gender] = WORDS[wIndex];
+  const meta = GENDER_META[gender] || GENDER_META[""];
+
+  const frontLabelEl = $("#fc-front-label");
+  const backLabelEl = $("#fc-back-label");
+  let front, back;
+  if (fcDirection === "de-tr"){
+    frontLabelEl.textContent = "Almanca";
+    backLabelEl.textContent = "Türkçe";
+    front = de; back = tr;
+  } else {
+    frontLabelEl.textContent = "Türkçe";
+    backLabelEl.textContent = "Almanca";
+    front = tr; back = de;
+  }
+  $("#fc-de").textContent = front;
+  $("#fc-de").style.color = meta.hex;
+  $("#fc-tr").textContent = back;
+
+  [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")].forEach(el=>{
+    if (meta.label){
+      el.textContent = meta.label;
+      el.style.background = meta.hex;
+      el.style.display = "inline-block";
+    } else {
+      el.style.display = "none";
+    }
+  });
+
+  // Her yüz sadece kendi dilindeki cümleyi gösterir (çapraz dil karışmaz)
+  if (fcDirection === "de-tr"){
+    $("#fc-ex-front").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex-front").style.color = meta.hex;
+    $("#fc-ex").textContent = trS;
+    $("#fc-ex").style.color = "var(--ink)";
+  } else {
+    $("#fc-ex-front").textContent = trS;
+    $("#fc-ex-front").style.color = "var(--ink)";
+    $("#fc-ex").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex").style.color = meta.hex;
+  }
+  $("#fc-ex-tr").textContent = "";
+
+  const qa = EXAM_QA[wIndex];
+  if (qa){
+    if (fcDirection === "de-tr"){
+      // front = Almanca, back = Türkçe
+      $("#fc-qa-q-front").textContent = qa[0];
+      $("#fc-qa-a-front").textContent = qa[2];
+      $("#fc-qa-q").textContent = qa[1];
+      $("#fc-qa-a").textContent = qa[3];
+    } else {
+      // front = Türkçe, back = Almanca
+      $("#fc-qa-q-front").textContent = qa[1];
+      $("#fc-qa-a-front").textContent = qa[3];
+      $("#fc-qa-q").textContent = qa[0];
+      $("#fc-qa-a").textContent = qa[2];
+    }
+  }
+
+  const numLabel = "#" + (wIndex + 1);
+  $("#fc-number-front").textContent = numLabel;
+  $("#fc-number-back").textContent = numLabel;
+
+  $("#fc-count").textContent = (idx+1) + " / " + list.length;
+  $("#fc-progress").style.width = (((idx+1)/list.length)*100) + "%";
+  $("#fc-mode-label").textContent = reviewOnly ? "Tekrar listesi" : "Tüm kartlar";
+  const card = $("#flip-card");
+  card.classList.remove("flipped");
+  flipped = false;
+  updateStats();
+}
+
+function updateStats(){
+  $("#stat-know").textContent = knowSet.size;
+  $("#stat-unsure").textContent = unsureSet.size;
+  $("#fc-review-count").textContent = unsureSet.size;
+
+  const total = WORDS.length;
+  const reviewed = knowSet.size + unsureSet.size;
+  $("#mastery-count").textContent = reviewed + "/" + total;
+  $("#mastery-progress").style.width = ((reviewed/total)*100) + "%";
+
+  const badge = $("#mastery-badge");
+  if (reviewed === 0){
+    badge.style.display = "none";
+  } else {
+    const pct = Math.round((knowSet.size/total)*100);
+    const grade = gradeFor(pct);
+    badge.style.display = "inline-block";
+    badge.textContent = "Öğrenme Oranı: %" + pct + " — " + grade.label;
+    badge.style.background = grade.color + "22";
+    badge.style.color = grade.color;
+    badge.style.border = "2px solid " + grade.color;
+  }
+}
+
+let swipeHandled = false;
+
+$("#flip-card").addEventListener("click", ()=>{
+  if (swipeHandled) { swipeHandled = false; return; }
+  flipped = !flipped;
+  $("#flip-card").classList.toggle("flipped", flipped);
+});
+$("#audio-btn-front").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentWord(); });
+$("#audio-btn-back").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentSentence(); });
+function speakCurrentWord(){
+  const list = currentList();
+  if (list.length === 0) return;
+  const wIndex = list[idx];
+  speakGerman(WORDS[wIndex][0]); // artikel + kelime, örn. "der Apfel"
+}
+function speakCurrentSentence(){
+  const list = currentList();
+  if (list.length === 0) return;
+  const wIndex = list[idx];
+  speakGerman(WORDS[wIndex][2]); // sadece Almanca örnek cümle (deS), Türkçesi okunmaz
+}
+
+function goNext(){
+  const list = currentList();
+  const wasFullPassEnd = !reviewOnly && list.length > 0 && idx === list.length - 1;
+  idx++;
+  renderCard();
+  if (wasFullPassEnd) handleFullPassComplete();
+}
+function goPrev(){ idx--; renderCard(); }
+
+$("#fc-next").addEventListener("click", goNext);
+$("#fc-prev").addEventListener("click", goPrev);
+
+// ---- Telefonda parmakla kaydırarak kart değiştirme ----
+(function setupSwipe(){
+  const el = $("#flip-card");
+  let startX = 0, startY = 0;
+  el.addEventListener("touchstart", (e)=>{
+    const t = e.changedTouches[0];
+    startX = t.screenX; startY = t.screenY;
+  }, { passive: true });
+  el.addEventListener("touchend", (e)=>{
+    const t = e.changedTouches[0];
+    const dx = t.screenX - startX;
+    const dy = t.screenY - startY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4){
+      swipeHandled = true;
+      if (dx < 0) goNext(); else goPrev();
+    }
+  }, { passive: true });
+})();
+
+async function handleFullPassComplete(){
+  if (!apiConfigured() || !student.name) return;
+  const res = await apiCall("completeCardPass", { name: student.name, thema: CONFIG.THEMA });
+  if (res && res.count) showCardCompletionBanner(res.count);
+}
+
+function showCardCompletionBanner(count){
+  const existing = document.getElementById("card-complete-banner");
+  if (existing) existing.remove();
+  const banner = document.createElement("div");
+  banner.id = "card-complete-banner";
+  banner.className = "resume-banner";
+  const waMsg = "Merhaba! Ben " + student.name + ". Kartlar bölümünü " + count + ". kez bitirdim. (" + student.date + ")";
+  banner.innerHTML = "🎉 Kartlar bölümünü <b>" + count + ". kez</b> bitirdin! " +
+    '<a class="whatsapp-btn" style="margin-left:8px;padding:6px 14px;font-size:13px;" href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank">📤 Hocama Bildir</a>';
+  const stage = document.querySelector(".card-stage");
+  stage.parentNode.insertBefore(banner, stage);
+  setTimeout(()=>{ if (banner.parentNode) banner.remove(); }, 15000);
+}
+
+$("#fc-know").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; knowSet.add(wIndex); unsureSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-unsure").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; unsureSet.add(wIndex); knowSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-shuffle").addEventListener("click", ()=>{ order = shuffle(order); idx = 0; renderCard(); });
+$("#fc-review").addEventListener("click", ()=>{
+  reviewOnly = !reviewOnly; idx = 0;
+  $("#fc-review").innerHTML = reviewOnly
+    ? "⬅ Tüm Kartlara Dön"
+    : '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">' + unsureSet.size + '</span>)';
+  renderCard();
+});
+$("#fc-reset").addEventListener("click", ()=>{
+  knowSet.clear(); unsureSet.clear(); reviewOnly = false;
+  order = WORDS.map((_,i)=>i); idx = 0;
+  $("#fc-review").innerHTML = '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)';
+  renderCard();
+});
+document.querySelectorAll("#fc-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#fc-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    fcDirection = btn.dataset.dir;
+    renderCard();
+  });
+});
+
+renderCard();
+
+// ---------- QUIZ ----------
+const COGNATE_EXCLUDE = new Set([
+  "telefonieren", "organisieren", "renovieren", "reservieren",
+  "kontrollieren", "notieren", "fotografieren", "markieren", "planen"
+]);
+
+const ELIGIBLE_POOL = WORDS.map((_, i) => i).filter(i => !COGNATE_EXCLUDE.has(WORDS[i][0]));
+// Havuzu tam olarak QUIZ_COUNT parçaya böler; bölünemeyen kalan kelimeler
+// otomatik olarak son quize eklenir (örn. 208 kelime -> 50,50,50,58 gibi).
+const QUIZ_COUNT = 4;
+const baseSize = Math.floor(ELIGIBLE_POOL.length / QUIZ_COUNT);
+const QUIZ_SETS = [];
+for (let i = 0; i < QUIZ_COUNT; i++) {
+  const start = i * baseSize;
+  const end = (i === QUIZ_COUNT - 1) ? ELIGIBLE_POOL.length : start + baseSize;
+  QUIZ_SETS.push(ELIGIBLE_POOL.slice(start, end));
+}
+
+let activeQuizSet = null;
+let quizDirection = "de-tr";
+let quizOrder = [];
+let quizDirs = [];
+let quizIdx = 0;
+let quizScore = 0;
+let quizWrong = [];
+let answered = false;
+
+const GRADE_BANDS = [
+  { min: 90, label: "Pekiyi 🏆", color: "#2E7D46" },
+  { min: 75, label: "İyi 👍", color: "#5C8C52" },
+  { min: 60, label: "Orta 🙂", color: "#E3A93A" },
+  { min: 45, label: "Geçer 📘", color: "#D98C2B" },
+  { min: 0,  label: "Tekrar Çalış 💪", color: "#C1442C" },
+];
+function gradeFor(pct){ return GRADE_BANDS.find(b => pct >= b.min); }
+
+document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    quizDirection = btn.dataset.dir;
+    if (activeQuizSet !== null) startQuiz();
+  });
+});
+document.querySelectorAll(".quiz-set-btn").forEach(btn=>{
+  btn.addEventListener("click", async ()=>{
+    activeQuizSet = parseInt(btn.dataset.set, 10);
+    $("#quiz-select").style.display = "none";
+    $("#quiz-area").style.display = "block";
+    const resumed = await tryResumeQuiz();
+    if (!resumed) startQuiz();
+  });
+});
+
+function showQuizSelect(){
+  activeQuizSet = null;
+  $("#quiz-select").style.display = "block";
+  $("#quiz-area").style.display = "none";
+  storageAvailable = apiConfigured();
+  $("#storage-note").textContent = storageAvailable
+    ? "✔ Sonuçların ve ilerlemen kaydediliyor — istediğin zaman kaldığın yerden devam edebilirsin."
+    : "Not: Öğretmenin henüz sonuç kaydını aktif etmedi; quiz'i tek oturumda bitirmen gerekiyor. Sonucu bitince WhatsApp butonuyla gönderebilirsin.";
+}
+
+async function saveQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("saveProgress", {
+    name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection,
+    quizOrder, quizDirs, quizIdx, quizScore, quizWrong
+  });
+}
+async function clearQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("clearProgress", { name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection });
+}
+async function tryResumeQuiz(){
+  if (!apiConfigured()) return false;
+  const res = await apiCall("getProgress", { name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection });
+  if (!res || !res.found) return false;
+  if (!res.quizOrder || res.quizIdx >= res.quizOrder.length) return false;
+  quizOrder = res.quizOrder; quizDirs = res.quizDirs;
+  quizIdx = res.quizIdx; quizScore = res.quizScore; quizWrong = res.quizWrong;
+  renderResumeBanner(res.quizIdx, res.quizScore);
+  renderQuizQuestion();
+  return true;
+}
+function renderResumeBanner(qIdx, score){
+  const area = $("#quiz-area");
+  const banner = document.createElement("div");
+  banner.className = "resume-banner";
+  banner.innerHTML = "📌 Kaldığın yerden devam ediyorsun: Soru " + (qIdx+1) + ", şu ana kadar " + score + " doğru. " +
+    '<button class="btn btn-ghost" id="resume-restart-instead" style="padding:4px 10px;font-size:12px;">Baştan Başla</button>';
+  area.parentNode.insertBefore(banner, area);
+  $("#resume-restart-instead").addEventListener("click", ()=>{
+    banner.remove();
+    startQuiz();
+  });
+  setTimeout(()=>{ if(banner.parentNode) banner.remove(); }, 6000);
+}
+
+function buildQuizOrder(){ return shuffle(QUIZ_SETS[activeQuizSet]); }
+
+function startQuiz(){
+  quizOrder = buildQuizOrder();
+  quizDirs = quizOrder.map(()=> quizDirection === "mixed" ? (Math.random()<0.5 ? "de-tr" : "tr-de") : quizDirection);
+  quizIdx = 0; quizScore = 0; quizWrong = [];
+  renderQuizQuestion();
+}
+
+function pickDistractors(correctIndex, count){
+  const pool = WORDS.map((_,i)=>i).filter(i => i !== correctIndex);
+  return shuffle(pool).slice(0, count);
+}
+
+function renderQuizQuestion(){
+  answered = false;
+  const area = $("#quiz-area");
+  if (quizIdx >= quizOrder.length){ renderQuizResult(); return; }
+  const wIndex = quizOrder[quizIdx];
+  const dir = quizDirs[quizIdx];
+  const [de, tr] = WORDS[wIndex];
+  const askWord = dir === "de-tr" ? de : tr;
+  const questionLabel = dir === "de-tr" ? "Bu kelimenin Türkçesi ne?" : "Bu kelimenin Almancası ne?";
+  const dirTag = dir === "de-tr" ? "🇩🇪 → 🇹🇷" : "🇹🇷 → 🇩🇪";
+
+  const distractorIdx = pickDistractors(wIndex, 3);
+  const optionsIdx = shuffle([wIndex, ...distractorIdx]);
+
+  area.innerHTML =
+    '<div class="quiz-top">' +
+      '<span><button class="back-link" id="quiz-back-link">◀ Quiz ' + (activeQuizSet+1) + '</button> &nbsp; Soru ' + (quizIdx+1) + ' / ' + quizOrder.length + ' &nbsp; ' + dirTag + '</span>' +
+      '<span class="quiz-live-score">Puan: ' + quizScore + ' / ' + quizOrder.length + '</span>' +
+    '</div>' +
+    '<div class="quiz-question">' +
+      '<div class="eyebrow">' + questionLabel + '</div>' +
+      '<div class="word">' + escapeHtml(askWord) + '</div>' +
+    '</div>' +
+    '<div class="options" id="quiz-options"></div>' +
+    '<div class="quiz-feedback" id="quiz-feedback"></div>' +
+    '<div class="quiz-next" id="quiz-next-wrap"></div>';
+
+  $("#quiz-back-link").addEventListener("click", ()=>{ saveQuizProgress(); showQuizSelect(); });
+
+  const optsWrap = $("#quiz-options");
+  optionsIdx.forEach(oi=>{
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = dir === "de-tr" ? WORDS[oi][1] : WORDS[oi][0];
+    btn.addEventListener("click", ()=> handleAnswer(oi, wIndex, btn, dir));
+    optsWrap.appendChild(btn);
+  });
+
+  saveQuizProgress();
+}
+
+function handleAnswer(chosenIdx, correctIdx, btnEl, dir){
+  if (answered) return;
+  answered = true;
+  const correctText = dir === "de-tr" ? WORDS[correctIdx][1] : WORDS[correctIdx][0];
+  document.querySelectorAll(".option").forEach(opt=>{
+    opt.setAttribute("disabled","true");
+    if (opt.textContent === correctText) opt.classList.add("correct");
+  });
+  const feedback = $("#quiz-feedback");
+  if (chosenIdx === correctIdx){
+    quizScore++;
+    feedback.textContent = "✔ Doğru!";
+    feedback.className = "quiz-feedback correct";
+  } else {
+    btnEl.classList.add("wrong");
+    feedback.textContent = "✘ Doğrusu: " + correctText;
+    feedback.className = "quiz-feedback wrong";
+    quizWrong.push(correctIdx);
+  }
+  const nextWrap = $("#quiz-next-wrap");
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "btn btn-know";
+  nextBtn.textContent = (quizIdx === quizOrder.length - 1) ? "Sonuçları Gör →" : "Sonraki Soru →";
+  nextBtn.addEventListener("click", ()=>{ quizIdx++; renderQuizQuestion(); });
+  nextWrap.appendChild(nextBtn);
+  saveQuizProgress();
+}
+
+function buildWhatsAppLink(pct, total, grade){
+  const msg = "Merhaba! Ben " + student.name + ". " + student.date + " tarihinde Quiz " + (activeQuizSet+1) +
+    "'i çözdüm. Sonucum: " + quizScore + "/" + total + " doğru = " + pct + "/100 puan (" + grade.label + ").";
+  return "https://wa.me/?text=" + encodeURIComponent(msg);
+}
+
+function renderQuizResult(){
+  clearQuizProgress();
+  const area = $("#quiz-area");
+  const total = quizOrder.length;
+  const pct = Math.round((quizScore/total)*100);
+  const grade = gradeFor(pct);
+
+  let reviewHtml = "";
+  if (quizWrong.length){
+    reviewHtml = '<div class="review-list">' + quizWrong.map(i=>{
+      const [de,tr] = WORDS[i];
+      return '<div class="review-item"><b>' + escapeHtml(de) + '</b><span>' + escapeHtml(tr) + '</span></div>';
+    }).join("") + '</div>';
+  }
+
+  area.innerHTML =
+    '<div class="result-card">' +
+      '<div class="result-max-badge">100 puan üzerinden</div>' +
+      '<div class="eyebrow">Quiz ' + (activeQuizSet+1) + ' Sonucu</div>' +
+      '<div class="big-score">' + pct + '<span style="font-size:22px;">/100 puan</span></div>' +
+      '<div class="points-row">' +
+        '<span>Doğru: <b>' + quizScore + '</b> / ' + total + '</span>' +
+        '<span>Yanlış: <b>' + quizWrong.length + '</b></span>' +
+      '</div>' +
+      '<div class="grade-badge" style="background:' + grade.color + '22; color:' + grade.color + '; border:2px solid ' + grade.color + ';">' + grade.label + '</div>' +
+      (reviewHtml ? '<div style="margin-top:16px; font-size:13px; color:var(--muted); text-align:left;">Tekrar edilmesi gerekenler:</div>' + reviewHtml : '') +
+      '<div class="controls-row" style="margin-top:20px;">' +
+        '<button class="btn btn-know" id="quiz-restart">🔄 Bu Quizi Tekrarla</button>' +
+        '<button class="btn btn-nav" id="quiz-back-to-select">◀ Başka Quiz Seç</button>' +
+      '</div>' +
+      '<div style="margin-top:14px;">' +
+        '<a class="whatsapp-btn" id="whatsapp-share" href="#" target="_blank" rel="noopener">📤 Sonucu WhatsApp\'tan Gönder</a>' +
+      '</div>' +
+    '</div>';
+
+  $("#quiz-restart").addEventListener("click", startQuiz);
+  $("#quiz-back-to-select").addEventListener("click", showQuizSelect);
+  $("#whatsapp-share").addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.open(buildWhatsAppLink(pct, total, grade), "_blank");
+  });
+
+  logAttempt(pct, total, grade);
+}
+
+async function logAttempt(pct, total, grade){
+  const wrongWords = quizWrong.map(i => WORDS[i][0] + " (" + WORDS[i][1] + ")").join(", ");
+  await apiCall("completeQuiz", {
+    name: student.name, thema: CONFIG.THEMA, date: student.date, quizSet: activeQuizSet+1,
+    direction: quizDirection, score: quizScore, total, pct, grade: grade.label,
+    wrongWords
+  });
+}
+</script>
+</body>
+</html>
