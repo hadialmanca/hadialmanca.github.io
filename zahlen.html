@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Hadi Almanca Kelime Sepeti – Zahlen, Datum, Uhrzeit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#1E3B2F;
+    --green-mid:#2F5D45;
+    --paper:#FBF3E1;
+    --paper-shadow:#E9DCBB;
+    --mustard:#E3A93A;
+    --tomato:#C1442C;
+    --leaf:#5C8C52;
+    --ink:#26332B;
+    --muted:#6b7568;
+    /* gender colors */
+    --der-blue:#2E5FA3;
+    --die-red:#C0392B;
+    --das-green:#1E8449;
+    --plural-orange:#D9791C;
+    --neutral-grey:#5A6B63;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Karla',sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,0.05), transparent 40%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 40px),
+      var(--green-deep);
+    color:var(--paper);
+    min-height:100vh;
+    padding:20px 14px 50px;
+    font-size:16px;
+  }
+  .wrap{max-width:1200px;margin:0 auto;}
+
+  /* ---- IDENTITY GATE ---- */
+  #identity-gate{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(15,30,25,0.96);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .gate-box{
+    background:var(--paper); color:var(--ink);
+    border-radius:20px; padding:34px 28px; max-width:380px; width:100%;
+    text-align:center;
+    box-shadow:0 16px 0 var(--paper-shadow);
+  }
+  .gate-box h2{
+    font-family:'Baloo 2',sans-serif; color:var(--green-mid); margin:8px 0 6px; font-size:24px;
+  }
+  .gate-box p{font-size:14px; color:var(--muted); margin:0 0 20px;}
+  .gate-field{text-align:left; margin-bottom:14px;}
+  .gate-field label{font-size:13px; font-weight:700; color:var(--green-mid); display:block; margin-bottom:5px;}
+  .gate-field input{
+    width:100%; padding:10px 12px; border-radius:10px; border:2px solid #DCCB9E;
+    font-size:15px; font-family:'Karla',sans-serif;
+  }
+  .gate-submit{
+    width:100%; margin-top:8px;
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
+    padding:12px; border-radius:12px; border:none;
+    background:var(--mustard); color:var(--green-deep); cursor:pointer;
+  }
+  .gate-note{font-size:11.5px; color:#9a9a8a; margin-top:14px; line-height:1.4;}
+
+  header{text-align:center;margin-bottom:14px;}
+  .basket{font-size:38px;line-height:1;}
+  h1{
+    font-family:'Baloo 2',sans-serif; font-weight:800;
+    font-size:clamp(24px,5vw,36px); margin:6px 0 4px; color:var(--mustard);
+  }
+  .subtitle{font-size:15px;color:#CFE3D4;font-style:italic;}
+  .topic-line{font-size:16px;font-weight:700;color:var(--mustard);margin-top:6px;}
+  .student-line{
+    margin-top:10px; font-size:13.5px; color:#CFE3D4;
+    display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+  }
+  .student-line button{
+    background:none;border:none;color:var(--mustard);text-decoration:underline;
+    font-size:12.5px;cursor:pointer;padding:0;
+  }
+  .topic-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .tag{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);padding:5px 13px;border-radius:999px;font-size:13px;color:var(--paper);}
+
+  nav.tabs{display:flex;justify-content:center;gap:10px;margin:24px 0 20px;flex-wrap:wrap;}
+  .tab-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:17px;
+    padding:11px 24px;border-radius:12px;border:2px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.04);color:var(--paper);cursor:pointer;
+  }
+  .tab-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+  section{display:none;}
+  section.active{display:block;}
+
+  /* legend */
+  .gender-legend{
+    display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+    margin-bottom:18px; font-size:12.5px; color:#CFE3D4;
+  }
+  .legend-chip{display:flex; align-items:center; gap:5px;}
+  .legend-dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+
+  .direction-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 16px;}
+  .dir-btn{
+    font-family:'Karla',sans-serif;font-weight:700;font-size:13.5px;
+    padding:8px 15px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.22);
+    background:rgba(255,255,255,0.05);color:var(--paper);cursor:pointer;
+  }
+  .dir-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+
+  .progress-row{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:760px;margin:0 auto 14px;font-size:16px;color:#CFE3D4;
+  }
+  .progress-bar{flex:1;height:7px;background:rgba(255,255,255,0.12);border-radius:4px;margin:0 10px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--mustard);width:0%;transition:width .3s ease;}
+
+  /* ---- FLASHCARD ---- */
+  .card-stage{perspective:1400px;max-width:760px;margin:0 auto;height:680px;}
+  .card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.3,1.1);cursor:pointer;}
+  .card.flipped{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;
+    background:var(--paper);color:var(--ink);display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-start;padding:26px 24px;text-align:center;
+    box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);
+    border:1px dashed rgba(38,51,43,0.25);
+    overflow-y:auto;
+  }
+  .face.front{justify-content:center;}
+  .face.back{transform:rotateY(180deg);}
+  .card-number{
+    position:absolute; top:12px; left:14px;
+    background:var(--green-deep); color:var(--mustard);
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:13px;
+    padding:3px 10px; border-radius:999px;
+  }
+  .audio-btn{
+    position:absolute; top:10px; right:12px;
+    background:var(--mustard); color:var(--green-deep);
+    border:none; border-radius:50%; width:38px; height:38px;
+    font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+  }
+  .audio-btn:active{transform:scale(0.92);}
+  .gender-badge{
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    padding:3px 11px; border-radius:999px; color:#fff; margin-bottom:10px; margin-top:30px;
+  }
+  .eyebrow{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700;}
+  .de-word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(30px,6vw,48px);line-height:1.2;}
+  .tr-word{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:clamp(26px,5vw,42px);color:var(--tomato);margin-bottom:12px;line-height:1.2;}
+  .word-sub{
+    display:block; font-family:'Karla',sans-serif; font-weight:600;
+    font-size:0.4em; color:var(--muted); margin-top:8px; line-height:1.35;
+    letter-spacing:0; text-transform:none;
+  }
+  .example{font-size:18.5px;line-height:1.6;color:var(--ink);}
+  .example b{color:#000; font-weight:800;}
+  .example-tr{font-size:15.5px; color:var(--muted); font-style:italic; margin-top:6px;}
+  .exam-qa-box{
+    margin-top:16px; padding-top:14px; border-top:2px dashed #DCCB9E;
+    width:100%; text-align:left;
+  }
+  .exam-qa-warning{
+    font-size:13.5px; font-weight:800; color:var(--tomato); text-transform:uppercase;
+    letter-spacing:0.5px; margin-bottom:9px; text-align:center;
+  }
+  .exam-qa-line{font-size:17.5px; color:var(--ink); margin-bottom:5px; line-height:1.5;}
+  .exam-qa-line b{color:var(--green-mid);}
+  .exam-qa-tr{font-size:14.5px; color:var(--muted); font-style:italic; margin-bottom:10px;}
+  .hint{margin-top:12px;font-size:13.5px;color:var(--muted);}
+
+  .controls-row{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .btn{font-family:'Karla',sans-serif;font-weight:700;font-size:15px;padding:11px 20px;border-radius:10px;border:none;cursor:pointer;transition:transform .12s ease, filter .15s ease;}
+  .btn:hover{transform:translateY(-2px); filter:brightness(1.08);}
+  .btn:active{transform:translateY(0);}
+  .btn-nav{background:rgba(255,255,255,0.12);color:var(--paper);}
+  .btn-know{background:var(--leaf);color:white;}
+  .btn-unsure{background:var(--tomato);color:white;}
+  .btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:var(--paper);}
+
+  .stat-row{display:flex;justify-content:center;gap:22px;margin-top:18px;font-size:14px;color:#CFE3D4;}
+  .stat-row b{color:var(--mustard);}
+
+  .mastery-panel .progress-row{max-width:760px;margin:16px auto 8px;}
+  .grade-badge{display:inline-block;margin-top:6px;padding:7px 20px;border-radius:999px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;}
+
+  /* ---- QUIZ ---- */
+  .quiz-select{max-width:760px;margin:0 auto;text-align:center;}
+  .quiz-select-label{font-size:14.5px;color:#CFE3D4;margin-bottom:14px;}
+  .quiz-set-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .quiz-set-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:21px;padding:22px 10px;
+    border-radius:14px;border:2px solid var(--mustard);background:var(--paper);color:var(--green-mid);
+    cursor:pointer;box-shadow:0 8px 0 var(--paper-shadow);
+  }
+  .quiz-select-hint{margin-top:16px;font-size:12.5px;color:#9FB8A6;font-style:italic;}
+  .back-link{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;padding:0;}
+
+  .quiz-card{background:var(--paper);color:var(--ink);border-radius:18px;max-width:800px;margin:0 auto;padding:34px 30px;box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);}
+  .quiz-top{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:700;flex-wrap:wrap; gap:6px;}
+  .quiz-live-score{color:var(--leaf); font-weight:800;}
+  .quiz-question{text-align:center;margin-bottom:22px;}
+  .quiz-question .word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:32px;color:var(--green-mid);}
+  .options{display:flex;flex-direction:column;gap:11px;}
+  .option{text-align:left;padding:13px 17px;border-radius:11px;border:2px solid #E3D6B4;background:#FFFDF8;font-size:16px;font-weight:500;cursor:pointer;transition:all .15s ease;color:var(--ink);}
+  .option:hover{border-color:var(--mustard);}
+  .option.correct{background:#DCEEDA;border-color:var(--leaf);color:#274423;font-weight:700;}
+  .option.wrong{background:#F6DCD6;border-color:var(--tomato);color:#6B231A;font-weight:700;}
+  .option[disabled]{cursor:default;}
+  .quiz-feedback{margin-top:16px;text-align:center;min-height:22px;font-weight:700;font-size:15px;}
+  .quiz-feedback.correct{color:var(--leaf);}
+  .quiz-feedback.wrong{color:var(--tomato);}
+  .quiz-next{display:flex;justify-content:center;margin-top:16px;}
+
+  .result-card{text-align:center; position:relative;}
+  .result-max-badge{
+    position:absolute; top:-14px; right:-10px;
+    background:var(--green-deep); color:var(--mustard);
+    font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px;
+  }
+  .result-card .big-score{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:56px;color:var(--tomato);margin:8px 0;}
+  .points-row{display:flex;justify-content:center;gap:26px;margin:10px 0 4px;font-size:15px;color:var(--muted);}
+  .points-row b{font-size:16px;}
+  .review-list{text-align:left;margin-top:18px;max-height:220px;overflow-y:auto;border-top:1px dashed #D8C79A;padding-top:12px;}
+  .review-item{display:flex;justify-content:space-between;font-size:14.5px;padding:6px 4px;border-bottom:1px solid #F0E6CC;}
+  .review-item b{color:var(--green-mid);}
+  .whatsapp-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:#25D366; color:#fff; font-weight:700; font-family:'Karla',sans-serif;
+    font-size:14.5px; padding:11px 20px; border-radius:10px; border:none; cursor:pointer; margin-top:6px;
+    text-decoration:none;
+  }
+  .resume-banner{
+    max-width:760px; margin:0 auto 14px; background:rgba(227,169,58,0.15);
+    border:1.5px solid var(--mustard); border-radius:12px; padding:12px 16px;
+    text-align:center; font-size:14px; color:var(--mustard);
+  }
+  .resume-banner button{margin-left:8px;}
+
+  footer{text-align:center;margin-top:40px;font-size:12.5px;color:#9FB8A6;}
+  .storage-note{
+    max-width:760px; margin:16px auto 0; font-size:11.5px; color:#7c9992;
+    text-align:center; line-height:1.5; font-style:italic;
+  }
+
+  @media (prefers-reduced-motion: reduce){.card{transition:none;} .btn,.option{transition:none;}}
+</style>
+</head>
+<body>
+
+<div id="identity-gate">
+  <div class="gate-box">
+    <div style="font-size:34px;">🧺</div>
+    <h2>Hoş Geldin!</h2>
+    <p>Kelime çalışmasına başlamadan önce adını ve tarihi gir.</p>
+    <div class="gate-field">
+      <label for="gate-name">Adın / Nickname</label>
+      <input type="text" id="gate-name" placeholder="örn. Ahmet Y.">
+    </div>
+    <div class="gate-field">
+      <label for="gate-date">Tarih</label>
+      <input type="date" id="gate-date">
+    </div>
+    <button class="gate-submit" id="gate-submit">Başla →</button>
+    <div class="gate-note">Adın ve tarihin, öğretmenine quiz sonuçlarını ve ilerlemeni kaydetmek için kullanılıyor. Böylece kaldığın yerden devam edebilir ve geçmiş sonuçlarını görebilirsin.</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="basket">🧺</div>
+    <h1>Hadi Almanca Kelime Sepeti</h1>
+    <div class="subtitle">Goethe A1 Kelime Çalışması</div>
+    <div class="topic-line">Konu: Sayılar, Tarih ve Saat (Zahlen, Datum, Uhrzeit)</div>
+    <div class="student-line" id="student-line"></div>
+    <div class="topic-tags">
+      <span class="tag">112 kelime</span>
+      <span class="tag">Goethe · Telc · Cornelsen</span>
+      <span class="tag">Kartlar + Quiz</span>
+    </div>
+  </header>
+
+  <div class="gender-legend">
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--der-blue);"></span>der</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--die-red);"></span>die</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--das-green);"></span>das</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--plural-orange);"></span>die (çoğul)</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--neutral-grey);"></span>fiil / sıfat</span>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="flash">🃏 Kartlar</button>
+    <button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+  </nav>
+
+  <!-- FLASHCARDS -->
+  <section id="flash" class="active">
+    <div class="direction-row" id="fc-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca göster</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe göster</button>
+    </div>
+    <div class="progress-row">
+      <span id="fc-count">1 / 135</span>
+      <div class="progress-bar"><div class="progress-fill" id="fc-progress"></div></div>
+      <span id="fc-mode-label">Tüm kartlar</span>
+    </div>
+
+    <div class="card-stage">
+      <div class="card" id="flip-card">
+        <div class="face front">
+          <div class="card-number" id="fc-number-front">#1</div>
+          <button class="audio-btn" id="audio-btn-front" title="Kelimeyi artikeliyle dinle (der/die/das + kelime)">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-front"></div>
+          <div class="eyebrow" id="fc-front-label">Almanca</div>
+          <div class="de-word" id="fc-de"></div>
+          <div class="example" id="fc-ex-front"></div>
+          <div class="exam-qa-box" id="fc-examqa-front">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q-front"></span></div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a-front"></span></div>
+          </div>
+          <div class="hint">Çevirmek için karta dokun</div>
+        </div>
+        <div class="face back">
+          <div class="card-number" id="fc-number-back">#1</div>
+          <button class="audio-btn" id="audio-btn-back" title="Örnek cümleyi (Almanca) dinle">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-back"></div>
+          <div class="eyebrow" id="fc-back-label">Türkçe</div>
+          <div class="tr-word" id="fc-tr"></div>
+          <div class="example" id="fc-ex"></div>
+          <div class="exam-qa-box" id="fc-examqa">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q"></span></div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <button class="btn btn-nav" id="fc-prev">← Önceki</button>
+      <button class="btn btn-unsure" id="fc-unsure">🔁 Tekrar Gerekli</button>
+      <button class="btn btn-know" id="fc-know">✔ Biliyorum</button>
+      <button class="btn btn-nav" id="fc-next">Sonraki →</button>
+    </div>
+    <div class="controls-row">
+      <button class="btn btn-ghost" id="fc-shuffle">🔀 Karıştır</button>
+      <button class="btn btn-ghost" id="fc-review">🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)</button>
+      <button class="btn btn-ghost" id="fc-reset">↺ Sıfırla</button>
+    </div>
+
+    <div class="stat-row">
+      <span>✔ Biliyorum: <b id="stat-know">0</b></span>
+      <span>🔁 Tekrar: <b id="stat-unsure">0</b></span>
+    </div>
+
+    <div class="mastery-panel">
+      <div class="progress-row" style="max-width:760px; margin:16px auto 8px;">
+        <span>Değerlendirilen</span>
+        <div class="progress-bar"><div class="progress-fill" id="mastery-progress" style="background:var(--leaf);"></div></div>
+        <span id="mastery-count">0/135</span>
+      </div>
+      <div style="text-align:center;">
+        <div class="grade-badge" id="mastery-badge" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz">
+    <div class="direction-row" id="quiz-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca sorulsun</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe sorulsun</button>
+      <button class="dir-btn" data-dir="mixed">🔀 Karışık</button>
+    </div>
+    <div class="quiz-select" id="quiz-select">
+      <div class="quiz-select-label">Bir quiz seçin (her biri 25 soru)</div>
+      <div class="quiz-set-grid">
+        <button class="quiz-set-btn" data-set="0">Quiz 1</button>
+        <button class="quiz-set-btn" data-set="1">Quiz 2</button>
+        <button class="quiz-set-btn" data-set="2">Quiz 3</button>
+        <button class="quiz-set-btn" data-set="3">Quiz 4</button>
+      </div>
+      <div class="quiz-select-hint">Türkçede de neredeyse aynı olan kelimeler (Joghurt, Keks, Kasse vb.) quizlere dahil edilmedi.</div>
+    </div>
+    <div class="quiz-card" id="quiz-area" style="display:none;"></div>
+    <div class="storage-note" id="storage-note"></div>
+  </section>
+
+  <footer>Hadi Almanca — DTZ / Telc / ÖSD Sınav Hazırlık • youtube.com/@hadialmanca</footer>
+</div>
+
+<script>
+const WORDS = [
+["null","sıfır","Meine Telefonnummer beginnt mit null.","Telefon numaram sıfırla başlıyor.",""],
+["eins","bir","Ich habe nur eins.","Sadece bir tanem var.",""],
+["zwei","iki","Ich habe zwei Kinder.","İki çocuğum var.",""],
+["drei","üç","Wir sind zu dritt.","Üç kişiyiz.",""],
+["vier","dört","Der Tisch hat vier Stühle.","Masanın dört sandalyesi var.",""],
+["fünf","beş","Ich brauche fünf Minuten.","Beş dakikaya ihtiyacım var.",""],
+["sechs","altı","Der Kurs beginnt um sechs Uhr.","Kurs saat altıda başlıyor.",""],
+["sieben","yedi","Ich stehe um sieben Uhr auf.","Saat yedide kalkıyorum.",""],
+["acht","sekiz","Wir treffen uns um acht Uhr.","Saat sekizde buluşuyoruz.",""],
+["neun","dokuz","Die Schule beginnt um neun Uhr.","Okul saat dokuzda başlıyor.",""],
+["zehn","on","Ich habe zehn Euro dabei.","Yanımda on avro var.",""],
+["elf","on bir","Es ist schon elf Uhr.","Saat çoktan on bir oldu.",""],
+["zwölf","on iki","Um zwölf Uhr essen wir Mittag.","Saat on ikide öğle yemeği yiyoruz.",""],
+["dreizehn","on üç","Mein Bruder ist dreizehn Jahre alt.","Erkek kardeşim on üç yaşında.",""],
+["vierzehn","on dört","Der Kurs dauert vierzehn Tage.","Kurs on dört gün sürüyor.",""],
+["fünfzehn","on beş","Ich warte seit fünfzehn Minuten.","On beş dakikadır bekliyorum.",""],
+["sechzehn","on altı","Sie wird bald sechzehn.","O yakında on altı yaşına giriyor.",""],
+["siebzehn","on yedi","Er ist siebzehn Jahre alt.","O on yedi yaşında.",""],
+["achtzehn","on sekiz","Mit achtzehn darf man Auto fahren.","On sekizinde araba kullanılabilir.",""],
+["neunzehn","on dokuz","Sie ist neunzehn Jahre alt.","O on dokuz yaşında.",""],
+["zwanzig","yirmi","Ich arbeite seit zwanzig Jahren hier.","Yirmi yıldır burada çalışıyorum.",""],
+["einundzwanzig","yirmi bir","Er wird einundzwanzig.","O yirmi bir yaşına giriyor.",""],
+["dreißig","otuz","Die Fahrt dauert dreißig Minuten.","Yolculuk otuz dakika sürüyor.",""],
+["vierzig","kırk","Mein Vater ist vierzig Jahre alt.","Babam kırk yaşında.",""],
+["fünfzig","elli","Das kostet fünfzig Euro.","Bu elli avro tutuyor.",""],
+["sechzig","altmış","Meine Oma ist sechzig Jahre alt.","Büyükannem altmış yaşında.",""],
+["siebzig","yetmiş","Er wiegt siebzig Kilo.","O yetmiş kilo geliyor.",""],
+["achtzig","seksen","Der Opa ist achtzig Jahre alt.","Dede seksen yaşında.",""],
+["neunzig","doksan","Das Auto fährt neunzig Kilometer pro Stunde.","Araba saatte doksan kilometre gidiyor.",""],
+["hundert","yüz","Die Rechnung ist hundert Euro.","Fatura yüz avro.",""],
+["tausend","bin","Die Miete ist tausend Euro.","Kira bin avro.",""],
+["die Million","milyon","Die Stadt hat eine Million Einwohner.","Şehrin bir milyon nüfusu var.","f"],
+["der erste","birinci","Heute ist der erste Mai.","Bugün 1 Mayıs.","m"],
+["der zweite","ikinci","Er wohnt im zweiten Stock.","O ikinci katta oturuyor.","m"],
+["der dritte","üçüncü","Das ist mein dritter Versuch.","Bu benim üçüncü denemem.","m"],
+["der vierte","dördüncü","Heute ist der vierte April.","Bugün 4 Nisan.","m"],
+["der fünfte","beşinci","Wir wohnen im fünften Stock.","Beşinci katta oturuyoruz.","m"],
+["der sechste","altıncı","Er wird der sechste Gast.","O altıncı misafir oluyor.","m"],
+["der siebte","yedinci","Heute ist der siebte Tag.","Bugün yedinci gün.","m"],
+["der achte","sekizinci","Sie feiert ihren achten Geburtstag.","O sekizinci doğum gününü kutluyor.","m"],
+["der neunte","dokuzuncu","Das ist der neunte Monat.","Bu dokuzuncu ay.","m"],
+["der zehnte","onuncu","Heute ist der zehnte Januar.","Bugün 10 Ocak.","m"],
+["der zwanzigste","yirminci","Der Kurs endet am zwanzigsten Juni.","Kurs 20 Haziran'da sona eriyor.","m"],
+["der dreißigste","otuzuncu","Sein Geburtstag ist der dreißigste August.","Doğum günü 30 Ağustos.","m"],
+["die Sekunde","saniye","Warte nur eine Sekunde.","Sadece bir saniye bekle.","f"],
+["die Minute","dakika","Ich bin in einer Minute fertig.","Bir dakikaya hazır olurum.","f"],
+["die Stunde","saat (süre)","Ich bin in einer Stunde zurück.","Bir saat sonra dönerim.","f"],
+["der Tag","gün","Ich habe jeden Tag Deutschkurs.","Her gün Almanca kursum var.","m"],
+["die Woche","hafta","Wir sehen uns nächste Woche.","Gelecek hafta görüşürüz.","f"],
+["der Monat","ay","Ich bezahle die Miete jeden Monat.","Kirayı her ay ödüyorum.","m"],
+["das Jahr","yıl","Ich lerne seit einem Jahr Deutsch.","Bir yıldır Almanca öğreniyorum.","n"],
+["der Montag","pazartesi","Am Montag beginnt der Kurs.","Kurs pazartesi başlıyor.","m"],
+["der Dienstag","salı","Am Dienstag habe ich keine Zeit.","Salı günü vaktim yok.","m"],
+["der Mittwoch","çarşamba","Wir treffen uns am Mittwoch.","Çarşamba buluşuyoruz.","m"],
+["der Donnerstag","perşembe","Am Donnerstag arbeite ich lange.","Perşembe günü uzun çalışıyorum.","m"],
+["der Freitag","cuma","Am Freitag gehen wir einkaufen.","Cuma günü alışverişe gidiyoruz.","m"],
+["der Samstag","cumartesi","Am Samstag schlafe ich lange.","Cumartesi geç saate kadar uyuyorum.","m"],
+["der Sonntag","pazar","Am Sonntag besuchen wir die Familie.","Pazar günü aileyi ziyaret ediyoruz.","m"],
+["der Wochentag","haftanın günü","Welcher Wochentag ist heute?","Bugün haftanın hangi günü?","m"],
+["das Wochenende","hafta sonu","Am Wochenende haben wir Gäste.","Hafta sonu misafirlerimiz var.","n"],
+["der Januar","ocak","Im Januar ist es sehr kalt.","Ocak ayında hava çok soğuk.","m"],
+["der Februar","şubat","Mein Geburtstag ist im Februar.","Doğum günüm şubatta.","m"],
+["der März","mart","Im März beginnt der Frühling.","Mart ayında ilkbahar başlıyor.","m"],
+["der April","nisan","Im April regnet es oft.","Nisan ayında sık sık yağmur yağar.","m"],
+["der Mai","mayıs","Im Mai blühen die Blumen.","Mayıs ayında çiçekler açar.","m"],
+["der Juni","haziran","Die Schule endet im Juni.","Okul haziranda bitiyor.","m"],
+["der Juli","temmuz","Im Juli fahren wir in Urlaub.","Temmuzda tatile gidiyoruz.","m"],
+["der August","ağustos","Im August ist es sehr heiß.","Ağustos ayında hava çok sıcak.","m"],
+["der September","eylül","Die Schule beginnt im September.","Okul eylülde başlıyor.","m"],
+["der Oktober","ekim","Im Oktober werden die Blätter bunt.","Ekim ayında yapraklar renkleniyor.","m"],
+["der November","kasım","Im November wird es kalt.","Kasım ayında hava soğuyor.","m"],
+["der Dezember","aralık","Im Dezember feiern wir Weihnachten.","Aralık ayında Noel'i kutluyoruz.","m"],
+["der Frühling","ilkbahar","Im Frühling wird es wärmer.","İlkbaharda hava ısınıyor.","m"],
+["der Sommer","yaz","Im Sommer fahren wir ans Meer.","Yazın denize gidiyoruz.","m"],
+["der Herbst","sonbahar","Im Herbst fallen die Blätter.","Sonbaharda yapraklar dökülüyor.","m"],
+["der Winter","kış","Im Winter ist es kalt.","Kışın hava soğuk oluyor.","m"],
+["der Morgen","sabah","Am Morgen trinke ich Kaffee.","Sabahları kahve içerim.","m"],
+["der Vormittag","öğleden önce","Ich arbeite am Vormittag.","Öğleden önce çalışıyorum.","m"],
+["der Mittag","öğle","Was gibt es zu Mittag?","Öğle yemeğinde ne var?","m"],
+["der Nachmittag","öğleden sonra","Am Nachmittag habe ich Zeit.","Öğleden sonra vaktim var.","m"],
+["der Abend","akşam","Am Abend sehe ich fern.","Akşamları televizyon izlerim.","m"],
+["die Nacht","gece","In der Nacht schlafe ich gut.","Gece iyi uyurum.","f"],
+["die Uhr","saat (nesne/vakit)","Es ist vier Uhr.","Saat dört.","f"],
+["die Uhrzeit","saat vakti","Wie ist die Uhrzeit?","Saat kaç?","f"],
+["Wie spät ist es?","Saat kaç?","Wie spät ist es? – Es ist drei Uhr.","Saat kaç? – Saat üç.",""],
+["Punkt (Uhrzeit)","tam saatinde","Der Zug fährt Punkt acht Uhr ab.","Tren tam sekizde kalkıyor.",""],
+["Viertel nach","çeyrek geçe","Es ist Viertel nach neun.","Saat dokuzu çeyrek geçiyor.",""],
+["Viertel vor","çeyrek kala","Es ist Viertel vor zehn.","Saat ona çeyrek var.",""],
+["halb","buçuk (yarım)","Es ist halb sechs.","Saat beş buçuk.",""],
+["circa / ca.","yaklaşık","Von Mainz nach Frankfurt sind es circa fünfzig Kilometer.","Mainz'dan Frankfurt'a yaklaşık elli kilometre var.",""],
+["das Datum","tarih","Bitte schreiben Sie das Datum auf das Formular.","Lütfen tarihi forma yazın.","n"],
+["die Zeit","zaman, vakit","Ich habe heute keine Zeit.","Bugün zamanım yok.","f"],
+["zurzeit","şu zamanda","Zurzeit habe ich sehr viel zu tun.","Şu sıralar çok işim var.",""],
+["bald","yakında","Ich komme bald.","Yakında geliyorum.",""],
+["jetzt","şimdi","Jetzt machen wir eine Pause.","Şimdi bir mola veriyoruz.",""],
+["heute","bugün","Heute ist ein schöner Tag.","Bugün güzel bir gün.",""],
+["gestern","dün","Gestern war ich zu Hause.","Dün evdeydim.",""],
+["morgen","yarın","Morgen fahre ich nach Berlin.","Yarın Berlin'e gidiyorum.",""],
+["übermorgen","yarından sonraki gün","Übermorgen habe ich eine Prüfung.","Öbür gün bir sınavım var.",""],
+["vorgestern","dünden önceki gün","Vorgestern war das Wetter schön.","Evvelsi gün hava güzeldi.",""],
+["früher","eskiden","Früher waren wir oft zusammen im Kino.","Eskiden sık sık birlikte sinemaya giderdik.",""],
+["nächst-","sonraki, gelecek","Sehen wir uns nächste Woche?","Gelecek hafta görüşür müyüz?",""],
+["letzt-","son, geçen","Morgen ist der letzte Kurstag.","Yarın son kurs günü.",""],
+["spät","geç","Es ist schon spät, ich muss gehen.","Vakit çok geç oldu, gitmem lazım.",""],
+["später","daha sonra","Wir sprechen später darüber.","Bunun hakkında daha sonra konuşuruz.",""],
+["pünktlich","dakik, zamanında","Der Bus fährt pünktlich um acht Uhr.","Otobüs tam sekizde kalkıyor.",""],
+["unpünktlich","dakik olmayan","Er kommt oft unpünktlich.","O sık sık geç geliyor.",""],
+["der Termin","randevu","Am besten machen wir sofort einen Termin.","En iyisi hemen bir randevu alalım.","m"],
+["dauern","sürmek","Wie lange dauert der Film?","Film ne kadar sürüyor?",""],
+["die Währung","para birimi","In Deutschland ist die Währung der Euro.","Almanya'da para birimi Euro'dur.","f"],
+["der Cent","sent","Ein Euro hat hundert Cent.","Bir avro yüz sentten oluşur.","m"],
+["das Gewicht","ağırlık, ölçü","Bei Gewicht schreibst du: 62 Kilo.","Ağırlık kısmına 62 kilo yazarsın.","n"],
+];
+
+const EXAM_QA = [["Wie beginnt Ihre Telefonnummer?","Telefon numaranız neyle başlıyor?","Sie beginnt mit null.","Sıfırla başlıyor."],
+["Wie viele Geschwister hast du?","Kaç kardeşin var?","Ich habe nur eins.","Sadece bir tane var."],
+["Wie viele Kinder haben Sie?","Kaç çocuğunuz var?","Ich habe zwei Kinder.","İki çocuğum var."],
+["Wie viele seid ihr?","Kaç kişisiniz?","Wir sind zu dritt.","Üç kişiyiz."],
+["Wie viele Stühle hat der Tisch?","Masanın kaç sandalyesi var?","Er hat vier Stühle.","Dört sandalyesi var."],
+["Wie viele Minuten brauchst du?","Kaç dakikaya ihtiyacın var?","Ich brauche fünf Minuten.","Beş dakikaya ihtiyacım var."],
+["Wann beginnt der Kurs?","Kurs ne zaman başlıyor?","Er beginnt um sechs Uhr.","Saat altıda başlıyor."],
+["Wann stehst du auf?","Ne zaman kalkıyorsun?","Ich stehe um sieben Uhr auf.","Saat yedide kalkıyorum."],
+["Wann trefft ihr euch?","Ne zaman buluşuyorsunuz?","Wir treffen uns um acht Uhr.","Saat sekizde buluşuyoruz."],
+["Wann beginnt die Schule?","Okul ne zaman başlıyor?","Sie beginnt um neun Uhr.","Saat dokuzda başlıyor."],
+["Wie viel Geld hast du dabei?","Yanında ne kadar para var?","Ich habe zehn Euro dabei.","Yanımda on avro var."],
+["Wie spät ist es schon?","Saat kaç oldu?","Es ist schon elf Uhr.","Saat çoktan on bir oldu."],
+["Wann esst ihr Mittag?","Öğle yemeğini ne zaman yiyorsunuz?","Um zwölf Uhr.","Saat on ikide."],
+["Wie alt ist dein Bruder?","Erkek kardeşin kaç yaşında?","Er ist dreizehn Jahre alt.","On üç yaşında."],
+["Wie lange dauert der Kurs?","Kurs ne kadar sürüyor?","Er dauert vierzehn Tage.","On dört gün sürüyor."],
+["Wie lange wartest du schon?","Ne zamandır bekliyorsun?","Seit fünfzehn Minuten.","On beş dakikadır."],
+["Wie alt wird sie bald?","O yakında kaç yaşına giriyor?","Sie wird bald sechzehn.","Yakında on altı yaşına giriyor."],
+["Wie alt ist er?","O kaç yaşında?","Er ist siebzehn Jahre alt.","O on yedi yaşında."],
+["Ab wann darf man Auto fahren?","Kaç yaşından itibaren araba kullanılabilir?","Ab achtzehn.","On sekizinden itibaren."],
+["Wie alt ist sie?","O kaç yaşında?","Sie ist neunzehn Jahre alt.","O on dokuz yaşında."],
+["Wie lange arbeitest du schon hier?","Ne zamandır burada çalışıyorsun?","Seit zwanzig Jahren.","Yirmi yıldır."],
+["Wie alt wird er?","O kaç yaşına giriyor?","Er wird einundzwanzig.","Yirmi bir yaşına giriyor."],
+["Wie lange dauert die Fahrt?","Yolculuk ne kadar sürüyor?","Sie dauert dreißig Minuten.","Otuz dakika sürüyor."],
+["Wie alt ist dein Vater?","Baban kaç yaşında?","Er ist vierzig Jahre alt.","O kırk yaşında."],
+["Was kostet das?","Bu ne kadar tutuyor?","Das kostet fünfzig Euro.","Bu elli avro tutuyor."],
+["Wie alt ist deine Oma?","Büyükannen kaç yaşında?","Sie ist sechzig Jahre alt.","O altmış yaşında."],
+["Wie viel wiegt er?","O kaç kilo geliyor?","Er wiegt siebzig Kilo.","O yetmiş kilo geliyor."],
+["Wie alt ist der Opa?","Dede kaç yaşında?","Er ist achtzig Jahre alt.","O seksen yaşında."],
+["Wie schnell fährt das Auto?","Araba ne kadar hızlı gidiyor?","Neunzig Kilometer pro Stunde.","Saatte doksan kilometre."],
+["Wie hoch ist die Rechnung?","Fatura ne kadar?","Sie ist hundert Euro.","Yüz avro."],
+["Wie hoch ist die Miete?","Kira ne kadar?","Sie ist tausend Euro.","Bin avro."],
+["Wie viele Einwohner hat die Stadt?","Şehrin nüfusu ne kadar?","Eine Million Einwohner.","Bir milyon nüfus."],
+["Welches Datum ist heute?","Bugün ayın kaçı?","Heute ist der erste Mai.","Bugün 1 Mayıs."],
+["In welchem Stock wohnt er?","O hangi katta oturuyor?","Im zweiten Stock.","İkinci katta."],
+["Der wievielte Versuch ist das?","Bu kaçıncı deneme?","Das ist mein dritter Versuch.","Bu benim üçüncü denemem."],
+["Welches Datum ist heute?","Bugün ayın kaçı?","Heute ist der vierte April.","Bugün 4 Nisan."],
+["In welchem Stock wohnt ihr?","Hangi katta oturuyorsunuz?","Im fünften Stock.","Beşinci katta."],
+["Der wievielte Gast ist er?","O kaçıncı misafir?","Er wird der sechste Gast.","O altıncı misafir oluyor."],
+["Der wievielte Tag ist heute?","Bugün kaçıncı gün?","Heute ist der siebte Tag.","Bugün yedinci gün."],
+["Welchen Geburtstag feiert sie?","O kaçıncı doğum gününü kutluyor?","Ihren achten Geburtstag.","Sekizinci doğum gününü."],
+["Der wievielte Monat ist das?","Bu kaçıncı ay?","Das ist der neunte Monat.","Bu dokuzuncu ay."],
+["Welches Datum ist heute?","Bugün ayın kaçı?","Heute ist der zehnte Januar.","Bugün 10 Ocak."],
+["Wann endet der Kurs?","Kurs ne zaman bitiyor?","Am zwanzigsten Juni.","20 Haziran'da."],
+["Wann ist sein Geburtstag?","Onun doğum günü ne zaman?","Am dreißigsten August.","30 Ağustos'ta."],
+["Wie lange soll ich warten?","Ne kadar beklemeliyim?","Warte nur eine Sekunde.","Sadece bir saniye bekle."],
+["Wann bist du fertig?","Ne zaman hazır olursun?","In einer Minute.","Bir dakikaya."],
+["Wann bist du zurück?","Ne zaman dönersin?","Ich bin in einer Stunde zurück.","Bir saat sonra dönerim."],
+["Wie oft hast du Deutschkurs?","Ne sıklıkla Almanca kursun var?","Ich habe jeden Tag Deutschkurs.","Her gün Almanca kursum var."],
+["Wann sehen wir uns?","Ne zaman görüşürüz?","Wir sehen uns nächste Woche.","Gelecek hafta görüşürüz."],
+["Wann bezahlst du die Miete?","Kirayı ne zaman ödüyorsun?","Ich bezahle sie jeden Monat.","Her ay ödüyorum."],
+["Wie lange lernst du schon Deutsch?","Ne zamandır Almanca öğreniyorsun?","Seit einem Jahr.","Bir yıldır."],
+["Wann beginnt der Kurs?","Kurs ne zaman başlıyor?","Am Montag.","Pazartesi."],
+["Hast du am Dienstag Zeit?","Salı günü vaktin var mı?","Nein, am Dienstag habe ich keine Zeit.","Hayır, salı günü vaktim yok."],
+["Wann trefft ihr euch?","Ne zaman buluşuyorsunuz?","Am Mittwoch.","Çarşamba."],
+["Wie arbeitest du am Donnerstag?","Perşembe günü nasıl çalışıyorsun?","Ich arbeite lange.","Uzun çalışıyorum."],
+["Was macht ihr am Freitag?","Cuma günü ne yapıyorsunuz?","Wir gehen einkaufen.","Alışverişe gidiyoruz."],
+["Was machst du am Samstag?","Cumartesi günü ne yapıyorsun?","Ich schlafe lange.","Geç saate kadar uyuyorum."],
+["Was macht ihr am Sonntag?","Pazar günü ne yapıyorsunuz?","Wir besuchen die Familie.","Aileyi ziyaret ediyoruz."],
+["Welcher Wochentag ist heute?","Bugün haftanın hangi günü?","Heute ist Montag.","Bugün pazartesi."],
+["Was habt ihr am Wochenende vor?","Hafta sonu ne yapıyorsunuz?","Wir haben Gäste.","Misafirlerimiz var."],
+["Wie ist das Wetter im Januar?","Ocak ayında hava nasıl?","Im Januar ist es sehr kalt.","Ocak ayında hava çok soğuk."],
+["Wann ist dein Geburtstag?","Doğum günün ne zaman?","Mein Geburtstag ist im Februar.","Doğum günüm şubatta."],
+["Wann beginnt der Frühling?","İlkbahar ne zaman başlıyor?","Im März.","Martta."],
+["Wie ist das Wetter im April?","Nisan ayında hava nasıl?","Im April regnet es oft.","Nisan ayında sık sık yağmur yağar."],
+["Was passiert im Mai?","Mayıs ayında ne oluyor?","Im Mai blühen die Blumen.","Mayıs ayında çiçekler açar."],
+["Wann endet die Schule?","Okul ne zaman bitiyor?","Im Juni.","Haziranda."],
+["Wann fahrt ihr in Urlaub?","Tatile ne zaman gidiyorsunuz?","Im Juli.","Temmuzda."],
+["Wie ist das Wetter im August?","Ağustos ayında hava nasıl?","Im August ist es sehr heiß.","Ağustos ayında hava çok sıcak."],
+["Wann beginnt die Schule?","Okul ne zaman başlıyor?","Im September.","Eylülde."],
+["Was passiert im Oktober?","Ekim ayında ne oluyor?","Die Blätter werden bunt.","Yapraklar renkleniyor."],
+["Wie wird das Wetter im November?","Kasım ayında hava nasıl oluyor?","Im November wird es kalt.","Kasım ayında hava soğuyor."],
+["Was feiert ihr im Dezember?","Aralık ayında ne kutluyorsunuz?","Wir feiern Weihnachten.","Noel'i kutluyoruz."],
+["Wie wird das Wetter im Frühling?","İlkbaharda hava nasıl oluyor?","Es wird wärmer.","Hava ısınıyor."],
+["Wohin fahrt ihr im Sommer?","Yazın nereye gidiyorsunuz?","Wir fahren ans Meer.","Denize gidiyoruz."],
+["Was passiert im Herbst?","Sonbaharda ne oluyor?","Die Blätter fallen.","Yapraklar dökülüyor."],
+["Wie ist das Wetter im Winter?","Kışın hava nasıl?","Im Winter ist es kalt.","Kışın hava soğuk oluyor."],
+["Was trinkst du am Morgen?","Sabahları ne içersin?","Am Morgen trinke ich Kaffee.","Sabahları kahve içerim."],
+["Wann arbeitest du?","Ne zaman çalışıyorsun?","Ich arbeite am Vormittag.","Öğleden önce çalışıyorum."],
+["Was gibt es zu Mittag?","Öğle yemeğinde ne var?","Es gibt Suppe.","Çorba var."],
+["Hast du am Nachmittag Zeit?","Öğleden sonra vaktin var mı?","Ja, am Nachmittag habe ich Zeit.","Evet, öğleden sonra vaktim var."],
+["Was machst du am Abend?","Akşamları ne yaparsın?","Am Abend sehe ich fern.","Akşamları televizyon izlerim."],
+["Schläfst du gut in der Nacht?","Gece iyi uyur musun?","Ja, in der Nacht schlafe ich gut.","Evet, gece iyi uyurum."],
+["Wie spät ist es?","Saat kaç?","Es ist vier Uhr.","Saat dört."],
+["Wie ist die Uhrzeit?","Saat kaç?","Es ist halb neun.","Saat sekiz buçuk."],
+["Wie spät ist es?","Saat kaç?","Es ist drei Uhr.","Saat üç."],
+["Wann fährt der Zug ab?","Tren ne zaman kalkıyor?","Punkt acht Uhr.","Tam saat sekizde."],
+["Wie spät ist es?","Saat kaç?","Es ist Viertel nach neun.","Saat dokuzu çeyrek geçiyor."],
+["Wie spät ist es?","Saat kaç?","Es ist Viertel vor zehn.","Saat ona çeyrek var."],
+["Wie spät ist es?","Saat kaç?","Es ist halb sechs.","Saat beş buçuk."],
+["Wie weit ist es von Mainz nach Frankfurt?","Mainz'dan Frankfurt'a ne kadar uzaklık var?","Circa fünfzig Kilometer.","Yaklaşık elli kilometre."],
+["Was soll ich auf das Formular schreiben?","Forma ne yazmalıyım?","Bitte schreiben Sie das Datum.","Lütfen tarihi yazın."],
+["Hast du heute Zeit?","Bugün vaktin var mı?","Nein, ich habe heute keine Zeit.","Hayır, bugün zamanım yok."],
+["Hast du gerade viel zu tun?","Şu sıralar çok mu işin var?","Ja, zurzeit habe ich sehr viel zu tun.","Evet, şu sıralar çok işim var."],
+["Wann kommst du?","Ne zaman geliyorsun?","Ich komme bald.","Yakında geliyorum."],
+["Was machen wir jetzt?","Şimdi ne yapıyoruz?","Jetzt machen wir eine Pause.","Şimdi bir mola veriyoruz."],
+["Wie ist heute der Tag?","Bugün nasıl bir gün?","Heute ist ein schöner Tag.","Bugün güzel bir gün."],
+["Wo warst du gestern?","Dün neredeydin?","Gestern war ich zu Hause.","Dün evdeydim."],
+["Wohin fährst du morgen?","Yarın nereye gidiyorsun?","Morgen fahre ich nach Berlin.","Yarın Berlin'e gidiyorum."],
+["Was hast du übermorgen?","Öbür gün ne var?","Übermorgen habe ich eine Prüfung.","Öbür gün bir sınavım var."],
+["Wie war das Wetter vorgestern?","Evvelsi gün hava nasıldı?","Vorgestern war das Wetter schön.","Evvelsi gün hava güzeldi."],
+["Wart ihr früher oft im Kino?","Eskiden sık sık sinemaya gider miydiniz?","Ja, früher waren wir oft zusammen im Kino.","Evet, eskiden sık sık birlikte giderdik."],
+["Sehen wir uns nächste Woche?","Gelecek hafta görüşür müyüz?","Ja, nächste Woche.","Evet, gelecek hafta."],
+["Wann ist der letzte Kurstag?","Son kurs günü ne zaman?","Morgen ist der letzte Kurstag.","Yarın son kurs günü."],
+["Musst du schon gehen?","Gitmen mi lazım?","Ja, es ist schon spät.","Evet, vakit çok geç oldu."],
+["Wann sprechen wir darüber?","Bunun hakkında ne zaman konuşuruz?","Wir sprechen später darüber.","Daha sonra konuşuruz."],
+["Fährt der Bus pünktlich?","Otobüs zamanında mı kalkıyor?","Ja, pünktlich um acht Uhr.","Evet, tam sekizde."],
+["Kommt er oft zu spät?","O sık sık geç mi gelir?","Ja, er kommt oft unpünktlich.","Evet, sık sık geç gelir."],
+["Wann machen wir am besten einen Termin?","En iyisi ne zaman randevu alalım?","Am besten sofort.","En iyisi hemen."],
+["Wie lange dauert der Film?","Film ne kadar sürüyor?","Er dauert zwei Stunden.","İki saat sürüyor."],
+["Was ist die Währung in Deutschland?","Almanya'da para birimi nedir?","Die Währung ist der Euro.","Para birimi Euro'dur."],
+["Wie viele Cent hat ein Euro?","Bir avro kaç sentten oluşur?","Ein Euro hat hundert Cent.","Bir avro yüz sentten oluşur."],
+["Was schreibst du bei Gewicht?","Ağırlık kısmına ne yazıyorsun?","Ich schreibe 62 Kilo.","62 kilo yazıyorum."]
+];
+
+const GENDER_META = {
+  m: { color: "var(--der-blue)", hex: "#2E5FA3", label: "der" },
+  f: { color: "var(--die-red)", hex: "#C0392B", label: "die" },
+  n: { color: "var(--das-green)", hex: "#1E8449", label: "das" },
+  p: { color: "var(--plural-orange)", hex: "#D9791C", label: "die (çoğul)" },
+  "": { color: "var(--neutral-grey)", hex: "#5A6B63", label: "" }
+};
+
+const $ = sel => document.querySelector(sel);
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+// ---------- WORD HIGHLIGHTING ----------
+const CORE_OVERRIDE = {
+  "Wie spät ist es?": "spät",
+  "Punkt (Uhrzeit)": "Punkt",
+  "Viertel nach": "Viertel",
+  "Viertel vor": "Viertel",
+  "circa / ca.": "circa",
+  "nächst-": "nächste",
+  "letzt-": "letzte"
+};
+
+function coreForm(de){
+  if (CORE_OVERRIDE[de]) return CORE_OVERRIDE[de];
+  let w = de.replace(/^(der|die|das)\s+/, "");
+  w = w.split(" / ")[0];
+  w = w.replace(/[()–-]/g, " ").trim().split(" ")[0];
+  return w;
+}
+function stemOf(w){
+  if (w.length > 5 && w.endsWith("en")) return w.slice(0, -2);
+  if (w.length > 4 && w.endsWith("e")) return w.slice(0, -1);
+  if (w.length > 4 && w.endsWith("n")) return w.slice(0, -1);
+  return w;
+}
+function escapeHtml(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+// Eski telefon tarayıcılarıyla da uyumlu olsun diye lookbehind/\p{L} yerine
+// klasik bir "harf sınıfı" ile kelime kelime tarama yapılır (Almanca ö/ü/ä/ß dahil).
+const LETTER_CLASS = "A-Za-zÀ-ÖØ-öø-ÿ";
+const SPLIT_RE = new RegExp("([^" + LETTER_CLASS + "]+)");
+const HAS_LETTER_RE = new RegExp("[" + LETTER_CLASS + "]");
+
+function findTargetWord(de, gender, sentence){
+  const core = coreForm(de);
+  const st = stemOf(core);
+  const isNoun = gender === "m" || gender === "f" || gender === "n" || gender === "p";
+  const tokens = sentence.split(SPLIT_RE);
+  for (const t of tokens){
+    if (!t || !HAS_LETTER_RE.test(t)) continue;
+    // isimlerde büyük/küçük harf duyarlı arama (örn. "Ei" kelimesi "ein" ile karışmasın diye)
+    const matches = isNoun ? t.indexOf(st) === 0 : t.toLowerCase().indexOf(st.toLowerCase()) === 0;
+    if (matches) return t;
+  }
+  return null;
+}
+function highlightSentence(de, gender, sentence){
+  const target = findTargetWord(de, gender, sentence);
+  const safe = escapeHtml(sentence);
+  if (!target) return safe;
+  const escapedMatch = escapeHtml(target);
+  const idx = safe.indexOf(escapedMatch);
+  if (idx === -1) return safe;
+  return safe.slice(0, idx) + "<b>" + escapedMatch + "</b>" + safe.slice(idx + escapedMatch.length);
+}
+
+// ---------- AUDIO ----------
+let germanVoice = null;
+function pickGermanVoice(){
+  const voices = speechSynthesis.getVoices ? speechSynthesis.getVoices() : [];
+  germanVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("de")) || null;
+}
+if (typeof speechSynthesis !== "undefined") {
+  pickGermanVoice();
+  speechSynthesis.onvoiceschanged = pickGermanVoice;
+}
+function speakGerman(text){
+  try{
+    if (typeof speechSynthesis === "undefined") {
+      alert("Bu tarayıcı sesli okumayı desteklemiyor.");
+      return;
+    }
+    speechSynthesis.cancel();
+    // artikel (der/die/das) korunur, sadece alternatif yazımlar ve parantezler temizlenir
+    const clean = text.split(" / ")[0].replace(/[()]/g, "");
+    const utter = new SpeechSynthesisUtterance(clean);
+    utter.lang = "de-DE";
+    if (germanVoice) utter.voice = germanVoice;
+    utter.rate = 0.9;
+    speechSynthesis.speak(utter);
+  }catch(e){ console.warn("TTS error", e); }
+}
+
+// ---------- BACKEND (Google Apps Script + Google Sheets) ----------
+// Kurulum sonrası Apps Script "Web App URL"nizi aşağıya yapıştırın.
+// Örnek: "https://script.google.com/macros/s/AKfycb.../exec"
+const CONFIG = {
+  API_URL: "https://script.google.com/macros/s/AKfycbyGZWVGtjDukKHizQagXYXDJ8m4tNtrBiLMb8X5ootsy-WzkaNQHzew3k7wrUwkAnM4fA/exec",
+  THEMA: "Zahlen-Datum-Uhrzeit"
+};
+
+function apiConfigured(){
+  return CONFIG.API_URL && CONFIG.API_URL.indexOf("script.google.com") !== -1;
+}
+
+async function apiCall(action, payload){
+  if (!apiConfigured()) return null;
+  try{
+    const res = await fetch(CONFIG.API_URL, {
+      method: "POST",
+      // "text/plain" kullanılır ki tarayıcı CORS ön-kontrolü (preflight) göndermesin;
+      // Apps Script Web App'ler OPTIONS isteklerine yanıt vermediği için bu şart.
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(Object.assign({ action: action }, payload))
+    });
+    return await res.json();
+  }catch(e){
+    console.warn("API error", e);
+    return null;
+  }
+}
+
+let storageAvailable = false; // apiConfigured() kontrolüyle çalışma anında güncellenir
+
+// ---------- IDENTITY ----------
+let student = { name: "", date: "" };
+
+function todayStr(){
+  const d = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate());
+}
+$("#gate-date").value = todayStr();
+
+$("#gate-submit").addEventListener("click", async ()=>{
+  const name = $("#gate-name").value.trim();
+  const date = $("#gate-date").value || todayStr();
+  if (!name) { $("#gate-name").focus(); return; }
+  student = { name, date };
+  $("#identity-gate").style.display = "none";
+  renderStudentLine();
+  await renderHistoryPanel();
+});
+
+function renderStudentLine(){
+  $("#student-line").innerHTML =
+    "👤 " + escapeHtml(student.name) + " · " + student.date +
+    ' <button id="change-student">Değiştir</button>';
+  $("#change-student").addEventListener("click", ()=>{
+    $("#identity-gate").style.display = "flex";
+  });
+}
+
+async function renderHistoryPanel(){
+  const existing = document.getElementById("history-panel");
+  if (existing) existing.remove();
+  if (!apiConfigured()) return;
+  const res = await apiCall("getHistory", { name: student.name, thema: CONFIG.THEMA });
+  if (!res || !res.records || !res.records.length) return;
+  const top = res.records.slice(0, 5);
+  const panel = document.createElement("div");
+  panel.id = "history-panel";
+  panel.className = "topic-tags";
+  panel.style.marginTop = "10px";
+  panel.innerHTML = '<span class="tag" style="background:rgba(227,169,58,0.18);">📊 Geçmiş sonuçların:</span>' +
+    top.map(r => '<span class="tag">Quiz ' + r.quizSet + ": " + r.score + "/" + r.total + " (%" + r.pct + ")</span>").join("");
+  $("#student-line").insertAdjacentElement("afterend", panel);
+}
+
+// allow Enter key to submit gate
+$("#gate-name").addEventListener("keydown", e=>{ if(e.key==="Enter") $("#gate-submit").click(); });
+
+// ---------- TABS ----------
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    if (btn.dataset.tab === "quiz") showQuizSelect();
+  });
+});
+
+// ---------- FLASHCARDS ----------
+let order = WORDS.map((_, i) => i);
+let idx = 0;
+let flipped = false;
+let knowSet = new Set();
+let unsureSet = new Set();
+let reviewOnly = false;
+let fcDirection = "de-tr";
+let articleRevealed = false;
+let lastWIndexForArticle = -1;
+
+function currentList(){
+  return reviewOnly ? order.filter(i => unsureSet.has(i)) : order;
+}
+
+// Uzun bir açıklama parantez içindeyse ("sahip olmak (benim ... var/yok)" gibi),
+// ana kelimeyi büyük satırda, parantez içini ayrı ve daha küçük bir alt satırda gösterir.
+function setWordDisplay(el, text){
+  const idx = text.indexOf("(");
+  if (idx > 0){
+    const main = text.slice(0, idx).trim();
+    const secondary = text.slice(idx).trim();
+    el.innerHTML = main + '<span class="word-sub">' + secondary + '</span>';
+  } else {
+    el.textContent = text;
+  }
+}
+
+// Almanca kelimenin artikelini gizler; öğrenci artikeli tahmin etsin diye.
+// Rozet (❔ Artikel) tıklanana kadar artikel gösterilmez.
+function setGermanWordDisplay(el, text, revealed){
+  const m = text.match(/^(der|die|das)\s+/);
+  let displayText = text;
+  if (m && !revealed){
+    displayText = text.slice(m[0].length);
+  }
+  setWordDisplay(el, displayText);
+}
+
+function renderCard(){
+  const list = currentList();
+  if (list.length === 0){
+    $("#fc-de").textContent = "Tekrar listesi boş 🎉";
+    $("#fc-tr").textContent = "";
+    $("#fc-ex").textContent = "Tüm kelimeleri biliyorsun!";
+    $("#fc-ex-front").textContent = "";
+    $("#fc-examqa").style.display = "none";
+    $("#fc-examqa-front").style.display = "none";
+    $("#fc-count").textContent = "0 / 0";
+    return;
+  }
+  $("#fc-examqa").style.display = "block";
+  $("#fc-examqa-front").style.display = "block";
+  if (idx >= list.length) idx = 0;
+  if (idx < 0) idx = list.length - 1;
+  const wIndex = list[idx];
+  if (wIndex !== lastWIndexForArticle){
+    articleRevealed = false;
+    lastWIndexForArticle = wIndex;
+  }
+  const [de, tr, deS, trS, gender] = WORDS[wIndex];
+  const meta = GENDER_META[gender] || GENDER_META[""];
+
+  const frontLabelEl = $("#fc-front-label");
+  const backLabelEl = $("#fc-back-label");
+  let front, back;
+  if (fcDirection === "de-tr"){
+    frontLabelEl.textContent = "Almanca";
+    backLabelEl.textContent = "Türkçe";
+    front = de; back = tr;
+  } else {
+    frontLabelEl.textContent = "Türkçe";
+    backLabelEl.textContent = "Almanca";
+    front = tr; back = de;
+  }
+  if (fcDirection === "de-tr"){
+    // Almanca göster: öğrenme modu, artikel her zaman görünür
+    setWordDisplay($("#fc-de"), front);
+    setWordDisplay($("#fc-tr"), back);
+  } else {
+    // Türkçe göster: zorlayıcı mod, Almanca kelime (arka yüz) artikelsiz gösterilir
+    setWordDisplay($("#fc-de"), front);
+    setGermanWordDisplay($("#fc-tr"), back, articleRevealed);
+  }
+  $("#fc-de").style.color = meta.hex;
+
+  {
+    const badgeEls = [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")];
+    if (!meta.label){
+      badgeEls.forEach(el=>{ el.style.display = "none"; el.onclick = null; });
+    } else if (fcDirection === "de-tr"){
+      // Almanca göster: öğrenme modu, rozet her iki yüzde de normal (açık) görünür
+      badgeEls.forEach(el=>{
+        el.style.display = "inline-block";
+        el.style.cursor = "default";
+        el.textContent = meta.label;
+        el.style.background = meta.hex;
+        el.onclick = null;
+      });
+    } else {
+      // Türkçe göster: her iki yüzde de "❔ Artikel" gösterilir,
+      // öğrenci tahmin etsin diye; tıklanınca ikisi birden açılır/kapanır (toggle)
+      badgeEls.forEach(el=>{
+        el.style.display = "inline-block";
+        el.style.cursor = "pointer";
+        if (articleRevealed){
+          el.textContent = meta.label;
+          el.style.background = meta.hex;
+        } else {
+          el.textContent = "❔ Artikel";
+          el.style.background = "#8a9992";
+        }
+        el.onclick = (e)=>{
+          e.stopPropagation();
+          articleRevealed = !articleRevealed;
+          renderCard();
+        };
+      });
+    }
+  }
+
+  // Her yüz sadece kendi dilindeki cümleyi gösterir (çapraz dil karışmaz)
+  if (fcDirection === "de-tr"){
+    $("#fc-ex-front").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex-front").style.color = meta.hex;
+    $("#fc-ex").textContent = trS;
+    $("#fc-ex").style.color = "var(--ink)";
+  } else {
+    $("#fc-ex-front").textContent = trS;
+    $("#fc-ex-front").style.color = "var(--ink)";
+    $("#fc-ex").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex").style.color = meta.hex;
+  }
+
+  const qa = EXAM_QA[wIndex];
+  if (qa){
+    if (fcDirection === "de-tr"){
+      $("#fc-qa-q-front").textContent = qa[0];
+      $("#fc-qa-a-front").textContent = qa[2];
+      $("#fc-qa-q").textContent = qa[1];
+      $("#fc-qa-a").textContent = qa[3];
+    } else {
+      $("#fc-qa-q-front").textContent = qa[1];
+      $("#fc-qa-a-front").textContent = qa[3];
+      $("#fc-qa-q").textContent = qa[0];
+      $("#fc-qa-a").textContent = qa[2];
+    }
+  }
+
+  const numLabel = "#" + (wIndex + 1);
+  $("#fc-number-front").textContent = numLabel;
+  $("#fc-number-back").textContent = numLabel;
+
+  $("#fc-count").textContent = (idx+1) + " / " + list.length;
+  $("#fc-progress").style.width = (((idx+1)/list.length)*100) + "%";
+  $("#fc-mode-label").textContent = reviewOnly ? "Tekrar listesi" : "Tüm kartlar";
+  const card = $("#flip-card");
+  card.classList.remove("flipped");
+  flipped = false;
+  updateStats();
+}
+
+function updateStats(){
+  $("#stat-know").textContent = knowSet.size;
+  $("#stat-unsure").textContent = unsureSet.size;
+  $("#fc-review-count").textContent = unsureSet.size;
+
+  const total = WORDS.length;
+  const reviewed = knowSet.size + unsureSet.size;
+  $("#mastery-count").textContent = reviewed + "/" + total;
+  $("#mastery-progress").style.width = ((reviewed/total)*100) + "%";
+
+  const badge = $("#mastery-badge");
+  if (reviewed === 0){
+    badge.style.display = "none";
+  } else {
+    const pct = Math.round((knowSet.size/total)*100);
+    const grade = gradeFor(pct);
+    badge.style.display = "inline-block";
+    badge.textContent = "Öğrenme Oranı: %" + pct + " — " + grade.label;
+    badge.style.background = grade.color + "22";
+    badge.style.color = grade.color;
+    badge.style.border = "2px solid " + grade.color;
+  }
+}
+
+$("#flip-card").addEventListener("click", ()=>{
+  flipped = !flipped;
+  $("#flip-card").classList.toggle("flipped", flipped);
+});
+$("#audio-btn-front").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentWord(); });
+$("#audio-btn-back").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentSentence(); });
+function speakCurrentWord(){
+  const list = currentList();
+  if (list.length === 0) return;
+  const wIndex = list[idx];
+  speakGerman(WORDS[wIndex][0]); // artikel + kelime, örn. "der Apfel"
+}
+function speakCurrentSentence(){
+  const list = currentList();
+  if (list.length === 0) return;
+  const wIndex = list[idx];
+  speakGerman(WORDS[wIndex][2]); // sadece Almanca örnek cümle (deS), Türkçesi okunmaz
+}
+
+function goNext(){
+  const list = currentList();
+  const wasFullPassEnd = !reviewOnly && list.length > 0 && idx === list.length - 1;
+  idx++;
+  renderCard();
+  if (wasFullPassEnd) handleFullPassComplete();
+}
+function goPrev(){ idx--; renderCard(); }
+
+$("#fc-next").addEventListener("click", goNext);
+$("#fc-prev").addEventListener("click", goPrev);
+
+// ---- Telefonda parmakla kaydırarak kart değiştirme ----
+let swipeHandled = false;
+(function setupSwipe(){
+  const el = $("#flip-card");
+  let startX = 0, startY = 0;
+  el.addEventListener("touchstart", (e)=>{
+    const t = e.changedTouches[0];
+    startX = t.screenX; startY = t.screenY;
+  }, { passive: true });
+  el.addEventListener("touchend", (e)=>{
+    const t = e.changedTouches[0];
+    const dx = t.screenX - startX;
+    const dy = t.screenY - startY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4){
+      swipeHandled = true;
+      if (dx < 0) goNext(); else goPrev();
+    }
+  }, { passive: true });
+})();
+
+async function handleFullPassComplete(){
+  if (!apiConfigured() || !student.name) return;
+  const res = await apiCall("completeCardPass", { name: student.name, thema: CONFIG.THEMA });
+  if (res && res.count) showCardCompletionBanner(res.count);
+}
+
+function showCardCompletionBanner(count){
+  const existing = document.getElementById("card-complete-banner");
+  if (existing) existing.remove();
+  const banner = document.createElement("div");
+  banner.id = "card-complete-banner";
+  banner.className = "resume-banner";
+  const waMsg = "Merhaba! Ben " + student.name + ". Essen/Trinken/Einkaufen kartlar bölümünü " + count + ". kez bitirdim. (" + student.date + ")";
+  banner.innerHTML = "🎉 Kartlar bölümünü <b>" + count + ". kez</b> bitirdin! " +
+    '<a class="whatsapp-btn" style="margin-left:8px;padding:6px 14px;font-size:13px;" href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank">📤 Hocama Bildir</a>';
+  const stage = document.querySelector(".card-stage");
+  stage.parentNode.insertBefore(banner, stage);
+  setTimeout(()=>{ if (banner.parentNode) banner.remove(); }, 15000);
+}
+
+$("#fc-know").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; knowSet.add(wIndex); unsureSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-unsure").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; unsureSet.add(wIndex); knowSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-shuffle").addEventListener("click", ()=>{ order = shuffle(order); idx = 0; renderCard(); });
+$("#fc-review").addEventListener("click", ()=>{
+  reviewOnly = !reviewOnly; idx = 0;
+  $("#fc-review").innerHTML = reviewOnly
+    ? "⬅ Tüm Kartlara Dön"
+    : '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">' + unsureSet.size + '</span>)';
+  renderCard();
+});
+$("#fc-reset").addEventListener("click", ()=>{
+  knowSet.clear(); unsureSet.clear(); reviewOnly = false;
+  order = WORDS.map((_,i)=>i); idx = 0;
+  $("#fc-review").innerHTML = '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)';
+  renderCard();
+});
+document.querySelectorAll("#fc-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#fc-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    fcDirection = btn.dataset.dir;
+    renderCard();
+  });
+});
+
+renderCard();
+
+// ---------- QUIZ ----------
+const COGNATE_EXCLUDE = new Set([
+  "der Cent", "die Million"
+]);
+
+const ELIGIBLE_POOL = WORDS.map((_, i) => i).filter(i => !COGNATE_EXCLUDE.has(WORDS[i][0]));
+// Havuzu tam olarak QUIZ_COUNT parçaya böler; bölünemeyen kalan kelimeler
+// otomatik olarak son quize eklenir.
+const QUIZ_COUNT = 4;
+const baseSize = Math.floor(ELIGIBLE_POOL.length / QUIZ_COUNT);
+const QUIZ_SETS = [];
+for (let i = 0; i < QUIZ_COUNT; i++) {
+  const start = i * baseSize;
+  const end = (i === QUIZ_COUNT - 1) ? ELIGIBLE_POOL.length : start + baseSize;
+  QUIZ_SETS.push(ELIGIBLE_POOL.slice(start, end));
+}
+
+let activeQuizSet = null;
+let quizDirection = "de-tr";
+let quizOrder = [];
+let quizDirs = [];
+let quizIdx = 0;
+let quizScore = 0;
+let quizWrong = [];
+let answered = false;
+
+const GRADE_BANDS = [
+  { min: 90, label: "Pekiyi 🏆", color: "#2E7D46" },
+  { min: 75, label: "İyi 👍", color: "#5C8C52" },
+  { min: 60, label: "Orta 🙂", color: "#E3A93A" },
+  { min: 45, label: "Geçer 📘", color: "#D98C2B" },
+  { min: 0,  label: "Tekrar Çalış 💪", color: "#C1442C" },
+];
+function gradeFor(pct){ return GRADE_BANDS.find(b => pct >= b.min); }
+
+document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    quizDirection = btn.dataset.dir;
+    if (activeQuizSet !== null) startQuiz();
+  });
+});
+document.querySelectorAll(".quiz-set-btn").forEach(btn=>{
+  btn.addEventListener("click", async ()=>{
+    activeQuizSet = parseInt(btn.dataset.set, 10);
+    $("#quiz-select").style.display = "none";
+    $("#quiz-area").style.display = "block";
+    const resumed = await tryResumeQuiz();
+    if (!resumed) startQuiz();
+  });
+});
+
+function showQuizSelect(){
+  activeQuizSet = null;
+  $("#quiz-select").style.display = "block";
+  $("#quiz-area").style.display = "none";
+  storageAvailable = apiConfigured();
+  $("#storage-note").textContent = storageAvailable
+    ? "✔ Sonuçların ve ilerlemen kaydediliyor — istediğin zaman kaldığın yerden devam edebilirsin."
+    : "Not: Öğretmenin henüz sonuç kaydını aktif etmedi; quiz'i tek oturumda bitirmen gerekiyor. Sonucu bitince WhatsApp butonuyla gönderebilirsin.";
+}
+
+async function saveQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("saveProgress", {
+    name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection,
+    quizOrder, quizDirs, quizIdx, quizScore, quizWrong
+  });
+}
+async function clearQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("clearProgress", { name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection });
+}
+async function tryResumeQuiz(){
+  if (!apiConfigured()) return false;
+  const res = await apiCall("getProgress", { name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection });
+  if (!res || !res.found) return false;
+  if (!res.quizOrder || res.quizIdx >= res.quizOrder.length) return false;
+  quizOrder = res.quizOrder; quizDirs = res.quizDirs;
+  quizIdx = res.quizIdx; quizScore = res.quizScore; quizWrong = res.quizWrong;
+  renderResumeBanner(res.quizIdx, res.quizScore);
+  renderQuizQuestion();
+  return true;
+}
+function renderResumeBanner(qIdx, score){
+  const area = $("#quiz-area");
+  const banner = document.createElement("div");
+  banner.className = "resume-banner";
+  banner.innerHTML = "📌 Kaldığın yerden devam ediyorsun: Soru " + (qIdx+1) + ", şu ana kadar " + score + " doğru. " +
+    '<button class="btn btn-ghost" id="resume-restart-instead" style="padding:4px 10px;font-size:12px;">Baştan Başla</button>';
+  area.parentNode.insertBefore(banner, area);
+  $("#resume-restart-instead").addEventListener("click", ()=>{
+    banner.remove();
+    startQuiz();
+  });
+  setTimeout(()=>{ if(banner.parentNode) banner.remove(); }, 6000);
+}
+
+function buildQuizOrder(){ return shuffle(QUIZ_SETS[activeQuizSet]); }
+
+function startQuiz(){
+  quizOrder = buildQuizOrder();
+  quizDirs = quizOrder.map(()=> quizDirection === "mixed" ? (Math.random()<0.5 ? "de-tr" : "tr-de") : quizDirection);
+  quizIdx = 0; quizScore = 0; quizWrong = [];
+  renderQuizQuestion();
+}
+
+function pickDistractors(correctIndex, count){
+  const pool = WORDS.map((_,i)=>i).filter(i => i !== correctIndex);
+  return shuffle(pool).slice(0, count);
+}
+
+function renderQuizQuestion(){
+  answered = false;
+  const area = $("#quiz-area");
+  if (quizIdx >= quizOrder.length){ renderQuizResult(); return; }
+  const wIndex = quizOrder[quizIdx];
+  const dir = quizDirs[quizIdx];
+  const [de, tr] = WORDS[wIndex];
+  const askWord = dir === "de-tr" ? de : tr;
+  const questionLabel = dir === "de-tr" ? "Bu kelimenin Türkçesi ne?" : "Bu kelimenin Almancası ne?";
+  const dirTag = dir === "de-tr" ? "🇩🇪 → 🇹🇷" : "🇹🇷 → 🇩🇪";
+
+  const distractorIdx = pickDistractors(wIndex, 3);
+  const optionsIdx = shuffle([wIndex, ...distractorIdx]);
+
+  area.innerHTML =
+    '<div class="quiz-top">' +
+      '<span><button class="back-link" id="quiz-back-link">◀ Quiz ' + (activeQuizSet+1) + '</button> &nbsp; Soru ' + (quizIdx+1) + ' / ' + quizOrder.length + ' &nbsp; ' + dirTag + '</span>' +
+      '<span class="quiz-live-score">Puan: ' + quizScore + ' / ' + quizOrder.length + '</span>' +
+    '</div>' +
+    '<div class="quiz-question">' +
+      '<div class="eyebrow">' + questionLabel + '</div>' +
+      '<div class="word">' + escapeHtml(askWord) + '</div>' +
+    '</div>' +
+    '<div class="options" id="quiz-options"></div>' +
+    '<div class="quiz-feedback" id="quiz-feedback"></div>' +
+    '<div class="quiz-next" id="quiz-next-wrap"></div>';
+
+  $("#quiz-back-link").addEventListener("click", ()=>{ saveQuizProgress(); showQuizSelect(); });
+
+  const optsWrap = $("#quiz-options");
+  optionsIdx.forEach(oi=>{
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = dir === "de-tr" ? WORDS[oi][1] : WORDS[oi][0];
+    btn.addEventListener("click", ()=> handleAnswer(oi, wIndex, btn, dir));
+    optsWrap.appendChild(btn);
+  });
+
+  saveQuizProgress();
+}
+
+function handleAnswer(chosenIdx, correctIdx, btnEl, dir){
+  if (answered) return;
+  answered = true;
+  const correctText = dir === "de-tr" ? WORDS[correctIdx][1] : WORDS[correctIdx][0];
+  document.querySelectorAll(".option").forEach(opt=>{
+    opt.setAttribute("disabled","true");
+    if (opt.textContent === correctText) opt.classList.add("correct");
+  });
+  const feedback = $("#quiz-feedback");
+  if (chosenIdx === correctIdx){
+    quizScore++;
+    feedback.textContent = "✔ Doğru!";
+    feedback.className = "quiz-feedback correct";
+  } else {
+    btnEl.classList.add("wrong");
+    feedback.textContent = "✘ Doğrusu: " + correctText;
+    feedback.className = "quiz-feedback wrong";
+    quizWrong.push(correctIdx);
+  }
+  const nextWrap = $("#quiz-next-wrap");
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "btn btn-know";
+  nextBtn.textContent = (quizIdx === quizOrder.length - 1) ? "Sonuçları Gör →" : "Sonraki Soru →";
+  nextBtn.addEventListener("click", ()=>{ quizIdx++; renderQuizQuestion(); });
+  nextWrap.appendChild(nextBtn);
+  saveQuizProgress();
+}
+
+function buildWhatsAppLink(pct, total, grade){
+  const msg = "Merhaba! Ben " + student.name + ". " + student.date + " tarihinde Quiz " + (activeQuizSet+1) +
+    "'i çözdüm. Sonucum: " + quizScore + "/" + total + " doğru = " + pct + "/100 puan (" + grade.label + ").";
+  return "https://wa.me/?text=" + encodeURIComponent(msg);
+}
+
+function renderQuizResult(){
+  clearQuizProgress();
+  const area = $("#quiz-area");
+  const total = quizOrder.length;
+  const pct = Math.round((quizScore/total)*100);
+  const grade = gradeFor(pct);
+
+  let reviewHtml = "";
+  if (quizWrong.length){
+    reviewHtml = '<div class="review-list">' + quizWrong.map(i=>{
+      const [de,tr] = WORDS[i];
+      return '<div class="review-item"><b>' + escapeHtml(de) + '</b><span>' + escapeHtml(tr) + '</span></div>';
+    }).join("") + '</div>';
+  }
+
+  area.innerHTML =
+    '<div class="result-card">' +
+      '<div class="result-max-badge">100 puan üzerinden</div>' +
+      '<div class="eyebrow">Quiz ' + (activeQuizSet+1) + ' Sonucu</div>' +
+      '<div class="big-score">' + pct + '<span style="font-size:22px;">/100 puan</span></div>' +
+      '<div class="points-row">' +
+        '<span>Doğru: <b>' + quizScore + '</b> / ' + total + '</span>' +
+        '<span>Yanlış: <b>' + quizWrong.length + '</b></span>' +
+      '</div>' +
+      '<div class="grade-badge" style="background:' + grade.color + '22; color:' + grade.color + '; border:2px solid ' + grade.color + ';">' + grade.label + '</div>' +
+      (reviewHtml ? '<div style="margin-top:16px; font-size:13px; color:var(--muted); text-align:left;">Tekrar edilmesi gerekenler:</div>' + reviewHtml : '') +
+      '<div class="controls-row" style="margin-top:20px;">' +
+        '<button class="btn btn-know" id="quiz-restart">🔄 Bu Quizi Tekrarla</button>' +
+        '<button class="btn btn-nav" id="quiz-back-to-select">◀ Başka Quiz Seç</button>' +
+      '</div>' +
+      '<div style="margin-top:14px;">' +
+        '<a class="whatsapp-btn" id="whatsapp-share" href="#" target="_blank" rel="noopener">📤 Sonucu WhatsApp\'tan Gönder</a>' +
+      '</div>' +
+    '</div>';
+
+  $("#quiz-restart").addEventListener("click", startQuiz);
+  $("#quiz-back-to-select").addEventListener("click", showQuizSelect);
+  $("#whatsapp-share").addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.open(buildWhatsAppLink(pct, total, grade), "_blank");
+  });
+
+  logAttempt(pct, total, grade);
+}
+
+async function logAttempt(pct, total, grade){
+  const wrongWords = quizWrong.map(i => WORDS[i][0] + " (" + WORDS[i][1] + ")").join(", ");
+  await apiCall("completeQuiz", {
+    name: student.name, thema: CONFIG.THEMA, date: student.date, quizSet: activeQuizSet+1,
+    direction: quizDirection, score: quizScore, total, pct, grade: grade.label,
+    wrongWords
+  });
+}
+</script>
+</body>
+</html>
