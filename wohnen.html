@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Hadi Almanca Kelime Sepeti – Wohnen (Ev / Konut)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#1E3B2F;
+    --green-mid:#2F5D45;
+    --paper:#FBF3E1;
+    --paper-shadow:#E9DCBB;
+    --mustard:#E3A93A;
+    --tomato:#C1442C;
+    --leaf:#5C8C52;
+    --ink:#26332B;
+    --muted:#6b7568;
+    /* gender colors */
+    --der-blue:#2E5FA3;
+    --die-red:#C0392B;
+    --das-green:#1E8449;
+    --plural-orange:#D9791C;
+    --neutral-grey:#5A6B63;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Karla',sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,0.05), transparent 40%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 40px),
+      var(--green-deep);
+    color:var(--paper);
+    min-height:100vh;
+    padding:20px 14px 50px;
+    font-size:16px;
+  }
+  .wrap{max-width:1200px;margin:0 auto;}
+
+  /* ---- IDENTITY GATE ---- */
+  #identity-gate{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(15,30,25,0.96);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .gate-box{
+    background:var(--paper); color:var(--ink);
+    border-radius:20px; padding:34px 28px; max-width:380px; width:100%;
+    text-align:center;
+    box-shadow:0 16px 0 var(--paper-shadow);
+  }
+  .gate-box h2{
+    font-family:'Baloo 2',sans-serif; color:var(--green-mid); margin:8px 0 6px; font-size:24px;
+  }
+  .gate-box p{font-size:14px; color:var(--muted); margin:0 0 20px;}
+  .gate-field{text-align:left; margin-bottom:14px;}
+  .gate-field label{font-size:13px; font-weight:700; color:var(--green-mid); display:block; margin-bottom:5px;}
+  .gate-field input{
+    width:100%; padding:10px 12px; border-radius:10px; border:2px solid #DCCB9E;
+    font-size:15px; font-family:'Karla',sans-serif;
+  }
+  .gate-submit{
+    width:100%; margin-top:8px;
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
+    padding:12px; border-radius:12px; border:none;
+    background:var(--mustard); color:var(--green-deep); cursor:pointer;
+  }
+  .gate-note{font-size:11.5px; color:#9a9a8a; margin-top:14px; line-height:1.4;}
+
+  header{text-align:center;margin-bottom:14px;}
+  .basket{font-size:38px;line-height:1;}
+  h1{
+    font-family:'Baloo 2',sans-serif; font-weight:800;
+    font-size:clamp(24px,5vw,36px); margin:6px 0 4px; color:var(--mustard);
+  }
+  .subtitle{font-size:15px;color:#CFE3D4;font-style:italic;}
+  .topic-line{font-size:16px;font-weight:700;color:var(--mustard);margin-top:6px;}
+  .student-line{
+    margin-top:10px; font-size:13.5px; color:#CFE3D4;
+    display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+  }
+  .student-line button{
+    background:none;border:none;color:var(--mustard);text-decoration:underline;
+    font-size:12.5px;cursor:pointer;padding:0;
+  }
+  .topic-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .tag{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);padding:5px 13px;border-radius:999px;font-size:13px;color:var(--paper);}
+
+  nav.tabs{display:flex;justify-content:center;gap:10px;margin:24px 0 20px;flex-wrap:wrap;}
+  .tab-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:17px;
+    padding:11px 24px;border-radius:12px;border:2px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.04);color:var(--paper);cursor:pointer;
+  }
+  .tab-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+  section{display:none;}
+  section.active{display:block;}
+
+  /* legend */
+  .gender-legend{
+    display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+    margin-bottom:18px; font-size:12.5px; color:#CFE3D4;
+  }
+  .legend-chip{display:flex; align-items:center; gap:5px;}
+  .legend-dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+
+  .direction-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 16px;}
+  .dir-btn{
+    font-family:'Karla',sans-serif;font-weight:700;font-size:13.5px;
+    padding:8px 15px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.22);
+    background:rgba(255,255,255,0.05);color:var(--paper);cursor:pointer;
+  }
+  .dir-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+
+  .progress-row{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:760px;margin:0 auto 14px;font-size:16px;color:#CFE3D4;
+  }
+  .progress-bar{flex:1;height:7px;background:rgba(255,255,255,0.12);border-radius:4px;margin:0 10px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--mustard);width:0%;transition:width .3s ease;}
+
+  /* ---- FLASHCARD ---- */
+  .card-stage{perspective:1400px;max-width:760px;margin:0 auto;height:680px;}
+  .card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.3,1.1);cursor:pointer;}
+  .card.flipped{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;
+    background:var(--paper);color:var(--ink);display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-start;padding:26px 24px;text-align:center;
+    box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);
+    border:1px dashed rgba(38,51,43,0.25);
+    overflow-y:auto;
+  }
+  .face.front{justify-content:center;}
+  .face.back{transform:rotateY(180deg);}
+  .card-number{
+    position:absolute; top:12px; left:14px;
+    background:var(--green-deep); color:var(--mustard);
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:13px;
+    padding:3px 10px; border-radius:999px;
+  }
+  .audio-btn{
+    position:absolute; top:10px; right:12px;
+    background:var(--mustard); color:var(--green-deep);
+    border:none; border-radius:50%; width:38px; height:38px;
+    font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+  }
+  .audio-btn:active{transform:scale(0.92);}
+  .gender-badge{
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    padding:3px 11px; border-radius:999px; color:#fff; margin-bottom:10px; margin-top:30px;
+  }
+  .eyebrow{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700;}
+  .de-word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(30px,6vw,48px);line-height:1.2;}
+  .tr-word{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:clamp(26px,5vw,42px);color:var(--tomato);margin-bottom:12px;line-height:1.2;}
+  .word-sub{
+    display:block; font-family:'Karla',sans-serif; font-weight:600;
+    font-size:0.4em; color:var(--muted); margin-top:8px; line-height:1.35;
+    letter-spacing:0; text-transform:none;
+  }
+  .example{font-size:18.5px;line-height:1.6;color:var(--ink);}
+  .example b{color:#000; font-weight:800;}
+  .example-tr{font-size:15.5px; color:var(--muted); font-style:italic; margin-top:6px;}
+  .exam-qa-box{
+    margin-top:16px; padding-top:14px; border-top:2px dashed #DCCB9E;
+    width:100%; text-align:left;
+  }
+  .exam-qa-warning{
+    font-size:13.5px; font-weight:800; color:var(--tomato); text-transform:uppercase;
+    letter-spacing:0.5px; margin-bottom:9px; text-align:center;
+  }
+  .exam-qa-line{font-size:17.5px; color:var(--ink); margin-bottom:5px; line-height:1.5;}
+  .exam-qa-line b{color:var(--green-mid);}
+  .exam-qa-tr{font-size:14.5px; color:var(--muted); font-style:italic; margin-bottom:10px;}
+  .hint{margin-top:12px;font-size:13.5px;color:var(--muted);}
+
+  .controls-row{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .btn{font-family:'Karla',sans-serif;font-weight:700;font-size:15px;padding:11px 20px;border-radius:10px;border:none;cursor:pointer;transition:transform .12s ease, filter .15s ease;}
+  .btn:hover{transform:translateY(-2px); filter:brightness(1.08);}
+  .btn:active{transform:translateY(0);}
+  .btn-nav{background:rgba(255,255,255,0.12);color:var(--paper);}
+  .btn-know{background:var(--leaf);color:white;}
+  .btn-unsure{background:var(--tomato);color:white;}
+  .btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:var(--paper);}
+
+  .stat-row{display:flex;justify-content:center;gap:22px;margin-top:18px;font-size:14px;color:#CFE3D4;}
+  .stat-row b{color:var(--mustard);}
+
+  .mastery-panel .progress-row{max-width:760px;margin:16px auto 8px;}
+  .grade-badge{display:inline-block;margin-top:6px;padding:7px 20px;border-radius:999px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;}
+
+  /* ---- QUIZ ---- */
+  .quiz-select{max-width:760px;margin:0 auto;text-align:center;}
+  .quiz-select-label{font-size:14.5px;color:#CFE3D4;margin-bottom:14px;}
+  .quiz-set-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .quiz-set-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:21px;padding:22px 10px;
+    border-radius:14px;border:2px solid var(--mustard);background:var(--paper);color:var(--green-mid);
+    cursor:pointer;box-shadow:0 8px 0 var(--paper-shadow);
+  }
+  .quiz-select-hint{margin-top:16px;font-size:12.5px;color:#9FB8A6;font-style:italic;}
+  .back-link{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;padding:0;}
+
+  .quiz-card{background:var(--paper);color:var(--ink);border-radius:18px;max-width:800px;margin:0 auto;padding:34px 30px;box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);}
+  .quiz-top{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:700;flex-wrap:wrap; gap:6px;}
+  .quiz-live-score{color:var(--leaf); font-weight:800;}
+  .quiz-question{text-align:center;margin-bottom:22px;}
+  .quiz-question .word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:32px;color:var(--green-mid);}
+  .options{display:flex;flex-direction:column;gap:11px;}
+  .option{text-align:left;padding:13px 17px;border-radius:11px;border:2px solid #E3D6B4;background:#FFFDF8;font-size:16px;font-weight:500;cursor:pointer;transition:all .15s ease;color:var(--ink);}
+  .option:hover{border-color:var(--mustard);}
+  .option.correct{background:#DCEEDA;border-color:var(--leaf);color:#274423;font-weight:700;}
+  .option.wrong{background:#F6DCD6;border-color:var(--tomato);color:#6B231A;font-weight:700;}
+  .option[disabled]{cursor:default;}
+  .quiz-feedback{margin-top:16px;text-align:center;min-height:22px;font-weight:700;font-size:15px;}
+  .quiz-feedback.correct{color:var(--leaf);}
+  .quiz-feedback.wrong{color:var(--tomato);}
+  .quiz-next{display:flex;justify-content:center;margin-top:16px;}
+
+  .result-card{text-align:center; position:relative;}
+  .result-max-badge{
+    position:absolute; top:-14px; right:-10px;
+    background:var(--green-deep); color:var(--mustard);
+    font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px;
+  }
+  .result-card .big-score{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:56px;color:var(--tomato);margin:8px 0;}
+  .points-row{display:flex;justify-content:center;gap:26px;margin:10px 0 4px;font-size:15px;color:var(--muted);}
+  .points-row b{font-size:16px;}
+  .review-list{text-align:left;margin-top:18px;max-height:220px;overflow-y:auto;border-top:1px dashed #D8C79A;padding-top:12px;}
+  .review-item{display:flex;justify-content:space-between;font-size:14.5px;padding:6px 4px;border-bottom:1px solid #F0E6CC;}
+  .review-item b{color:var(--green-mid);}
+  .whatsapp-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:#25D366; color:#fff; font-weight:700; font-family:'Karla',sans-serif;
+    font-size:14.5px; padding:11px 20px; border-radius:10px; border:none; cursor:pointer; margin-top:6px;
+    text-decoration:none;
+  }
+  .resume-banner{
+    max-width:760px; margin:0 auto 14px; background:rgba(227,169,58,0.15);
+    border:1.5px solid var(--mustard); border-radius:12px; padding:12px 16px;
+    text-align:center; font-size:14px; color:var(--mustard);
+  }
+  .resume-banner button{margin-left:8px;}
+
+  footer{text-align:center;margin-top:40px;font-size:12.5px;color:#9FB8A6;}
+  .storage-note{
+    max-width:760px; margin:16px auto 0; font-size:11.5px; color:#7c9992;
+    text-align:center; line-height:1.5; font-style:italic;
+  }
+
+  @media (prefers-reduced-motion: reduce){.card{transition:none;} .btn,.option{transition:none;}}
+</style>
+</head>
+<body>
+
+<div id="identity-gate">
+  <div class="gate-box">
+    <div style="font-size:34px;">🧺</div>
+    <h2>Hoş Geldin!</h2>
+    <p>Kelime çalışmasına başlamadan önce adını ve tarihi gir.</p>
+    <div class="gate-field">
+      <label for="gate-name">Adın / Nickname</label>
+      <input type="text" id="gate-name" placeholder="örn. Ahmet Y.">
+    </div>
+    <div class="gate-field">
+      <label for="gate-date">Tarih</label>
+      <input type="date" id="gate-date">
+    </div>
+    <button class="gate-submit" id="gate-submit">Başla →</button>
+    <div class="gate-note">Adın ve tarihin, öğretmenine quiz sonuçlarını ve ilerlemeni kaydetmek için kullanılıyor. Böylece kaldığın yerden devam edebilir ve geçmiş sonuçlarını görebilirsin.</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="basket">🧺</div>
+    <h1>Hadi Almanca Kelime Sepeti</h1>
+    <div class="subtitle">Goethe A1 Kelime Çalışması</div>
+    <div class="topic-line">Konu: Wohnen (Ev / Konut)</div>
+    <div class="student-line" id="student-line"></div>
+    <div class="topic-tags">
+      <span class="tag">242 kelime</span>
+      <span class="tag">Goethe · Telc · Cornelsen</span>
+      <span class="tag">Kartlar + Quiz</span>
+    </div>
+  </header>
+
+  <div class="gender-legend">
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--der-blue);"></span>der</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--die-red);"></span>die</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--das-green);"></span>das</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--plural-orange);"></span>die (çoğul)</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--neutral-grey);"></span>fiil / sıfat</span>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="flash">🃏 Kartlar</button>
+    <button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+  </nav>
+
+  <!-- FLASHCARDS -->
+  <section id="flash" class="active">
+    <div class="direction-row" id="fc-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca göster</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe göster</button>
+    </div>
+    <div class="progress-row">
+      <span id="fc-count">1 / 135</span>
+      <div class="progress-bar"><div class="progress-fill" id="fc-progress"></div></div>
+      <span id="fc-mode-label">Tüm kartlar</span>
+    </div>
+
+    <div class="card-stage">
+      <div class="card" id="flip-card">
+        <div class="face front">
+          <div class="card-number" id="fc-number-front">#1</div>
+          <button class="audio-btn" id="audio-btn-front" title="Kelimeyi artikeliyle dinle (der/die/das + kelime)">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-front"></div>
+          <div class="eyebrow" id="fc-front-label">Almanca</div>
+          <div class="de-word" id="fc-de"></div>
+          <div class="example" id="fc-ex-front"></div>
+          <div class="exam-qa-box" id="fc-examqa-front">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q-front"></span></div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a-front"></span></div>
+          </div>
+          <div class="hint">Çevirmek için karta dokun</div>
+        </div>
+        <div class="face back">
+          <div class="card-number" id="fc-number-back">#1</div>
+          <button class="audio-btn" id="audio-btn-back" title="Örnek cümleyi (Almanca) dinle">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-back"></div>
+          <div class="eyebrow" id="fc-back-label">Türkçe</div>
+          <div class="tr-word" id="fc-tr"></div>
+          <div class="example" id="fc-ex"></div>
+          <div class="exam-qa-box" id="fc-examqa">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q"></span></div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <button class="btn btn-nav" id="fc-prev">← Önceki</button>
+      <button class="btn btn-unsure" id="fc-unsure">🔁 Tekrar Gerekli</button>
+      <button class="btn btn-know" id="fc-know">✔ Biliyorum</button>
+      <button class="btn btn-nav" id="fc-next">Sonraki →</button>
+    </div>
+    <div class="controls-row">
+      <button class="btn btn-ghost" id="fc-shuffle">🔀 Karıştır</button>
+      <button class="btn btn-ghost" id="fc-review">🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)</button>
+      <button class="btn btn-ghost" id="fc-reset">↺ Sıfırla</button>
+    </div>
+
+    <div class="stat-row">
+      <span>✔ Biliyorum: <b id="stat-know">0</b></span>
+      <span>🔁 Tekrar: <b id="stat-unsure">0</b></span>
+    </div>
+
+    <div class="mastery-panel">
+      <div class="progress-row" style="max-width:760px; margin:16px auto 8px;">
+        <span>Değerlendirilen</span>
+        <div class="progress-bar"><div class="progress-fill" id="mastery-progress" style="background:var(--leaf);"></div></div>
+        <span id="mastery-count">0/135</span>
+      </div>
+      <div style="text-align:center;">
+        <div class="grade-badge" id="mastery-badge" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz">
+    <div class="direction-row" id="quiz-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca sorulsun</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe sorulsun</button>
+      <button class="dir-btn" data-dir="mixed">🔀 Karışık</button>
+    </div>
+    <div class="quiz-select" id="quiz-select">
+      <div class="quiz-select-label">Bir quiz seçin (her biri 25 soru)</div>
+      <div class="quiz-set-grid">
+        <button class="quiz-set-btn" data-set="0">Quiz 1</button>
+        <button class="quiz-set-btn" data-set="1">Quiz 2</button>
+        <button class="quiz-set-btn" data-set="2">Quiz 3</button>
+        <button class="quiz-set-btn" data-set="3">Quiz 4</button>
+      </div>
+      <div class="quiz-select-hint">Türkçede de neredeyse aynı olan kelimeler (Joghurt, Keks, Kasse vb.) quizlere dahil edilmedi.</div>
+    </div>
+    <div class="quiz-card" id="quiz-area" style="display:none;"></div>
+    <div class="storage-note" id="storage-note"></div>
+  </section>
+
+  <footer>Hadi Almanca — DTZ / Telc / ÖSD Sınav Hazırlık • youtube.com/@hadialmanca</footer>
+</div>
+
+<script>
+const WORDS = [
+["wohnen","oturmak, ikamet etmek","Ich wohne in Berlin.","Berlin'de oturuyorum.",""],
+["die Wohnung","ev, daire","Seit wann haben Sie diese Wohnung?","Bu daireye ne zamandır sahipsiniz?","f"],
+["das Haus","ev","In welchem Haus wohnst du?","Hangi evde oturuyorsun?","n"],
+["das Apartment","apartman dairesi","Wir haben ein Apartment gemietet.","Bir apartman dairesi kiraladık.","n"],
+["nach Hause / zu Hause","eve / evde","Ich gehe jetzt nach Hause.","Şimdi eve gidiyorum.",""],
+["das Zimmer","oda","Das Zimmer ist groß.","Oda büyük.","n"],
+["der Raum","oda, alan","Der Raum ist sehr hell.","Oda çok aydınlık.","m"],
+["das Wohnzimmer","oturma odası","Wir sitzen abends im Wohnzimmer.","Akşamları oturma odasında oturuyoruz.","n"],
+["das Schlafzimmer","yatak odası","Mein Schlafzimmer ist klein.","Yatak odam küçük.","n"],
+["das Kinderzimmer","çocuk odası","Das Kinderzimmer ist bunt.","Çocuk odası renkli.","n"],
+["die Küche","mutfak","Der neue Herd kommt in die Küche.","Yeni ocak mutfağa geliyor.","f"],
+["das Badezimmer","banyo","Das Badezimmer ist renoviert.","Banyo yenilendi.","n"],
+["das Bad","banyo","Wir haben kein großes Bad.","Büyük bir banyomuz yok.","n"],
+["baden","banyo yapmak","Die Kinder baden gern.","Çocuklar banyo yapmayı sever.",""],
+["duschen","duş almak","Ich dusche lieber am Morgen.","Sabahları duş almayı tercih ederim.",""],
+["die Dusche","duş","Die Dusche ist neu.","Duş yeni.","f"],
+["die Toilette / das WC","tuvalet","Wo ist die Toilette, bitte?","Tuvalet nerede acaba?",""],
+["der Quadratmeter","metrekare","Die Wohnung hat 60 Quadratmeter.","Dairenin 60 metrekaresi var.","m"],
+["der Stock","kat","Unsere Wohnung liegt im ersten Stock.","Dairemiz birinci katta.","m"],
+["im ersten Stock wohnen","birinci katta oturmak","Wir wohnen im ersten Stock.","Birinci katta oturuyoruz.",""],
+["das Obergeschoss","üst kat","Die Schlafzimmer sind im Obergeschoss.","Yatak odaları üst katta.","n"],
+["das Erdgeschoss","zemin kat","Die Küche ist im Erdgeschoss.","Mutfak zemin katta.","n"],
+["der Keller","bodrum, mahzen","Wir haben viele Sachen im Keller.","Bodrumda çok eşyamız var.","m"],
+["der Aufzug","asansör","In diesem Haus gibt es keinen Aufzug.","Bu binada asansör yok.","m"],
+["die Treppe","merdiven","Die Treppe hoch und dann links.","Merdivenden yukarı ve sonra sola.","f"],
+["der Schlüssel","anahtar","Ich gebe Ihnen noch den Zimmerschlüssel.","Size oda anahtarını da veriyorum.","m"],
+["die Tür","kapı","Bitte mach die Tür zu.","Lütfen kapıyı kapat.","f"],
+["die Haustür","ev kapısı","Die Haustür ist abgeschlossen.","Ev kapısı kilitli.","f"],
+["das Fenster","pencere","Mach bitte das Fenster auf.","Lütfen pencereyi aç.","n"],
+["die Wand","duvar","Das Bild hängt an der Wand.","Resim duvarda asılı.","f"],
+["der Eingang","giriş","Der Eingang ist um die Ecke.","Giriş köşede.","m"],
+["der Ausgang","çıkış","Wo ist der Ausgang?","Çıkış nerede?","m"],
+["der Balkon","balkon","Die Wohnung hat auch einen kleinen Balkon.","Dairenin küçük bir balkonu da var.","m"],
+["der Garten","bahçe","Wir haben leider keinen Garten.","Maalesef bir bahçemiz yok.","m"],
+["die Garage","garaj","Das Auto steht in der Garage.","Araba garajda duruyor.","f"],
+["die Terrasse","teras","Im Sommer sitzen wir auf der Terrasse.","Yazın teraste oturuyoruz.","f"],
+["der Flur","koridor, hol","Die Schuhe stehen im Flur.","Ayakkabılar koridorda duruyor.","m"],
+["die Diele","hol","Häng deine Jacke in der Diele auf.","Ceketini holde as.","f"],
+["das Arbeitszimmer","çalışma odası","Er arbeitet im Arbeitszimmer.","O, çalışma odasında çalışıyor.","n"],
+["das Einfamilienhaus","müstakil ev","Sie wohnen in einem Einfamilienhaus.","Müstakil bir evde oturuyorlar.","n"],
+["das Mehrfamilienhaus","çok katlı ev","In diesem Mehrfamilienhaus wohnen zehn Familien.","Bu çok katlı evde on aile oturuyor.","n"],
+["das Reihenhaus","sıra ev","Unser Reihenhaus hat einen kleinen Garten.","Sıra evimizin küçük bir bahçesi var.","n"],
+["das Hochhaus","gökdelen, apartman","Sie wohnt im zwanzigsten Stock des Hochhauses.","O, gökdelenin yirminci katında oturuyor.","n"],
+["der Altbau","eski bina","Der Altbau hat hohe Decken.","Eski binanın tavanları yüksek.","m"],
+["der Bauernhof","çiftlik","Meine Großeltern haben einen Bauernhof.","Büyükanne ve büyükbabamın bir çiftliği var.","m"],
+["die Immobilie","gayrimenkul","Er arbeitet im Bereich Immobilien.","O, gayrimenkul alanında çalışıyor.","f"],
+["die Wohnungsanzeige","ev ilanı","Ich habe eine gute Wohnungsanzeige gefunden.","İyi bir ev ilanı buldum.","f"],
+["die Anzeige","ilan","Die Anzeige steht in der Zeitung.","İlan gazetede.","f"],
+["die Wohnungssuche","ev arama","Die Wohnungssuche dauert oft lange.","Ev arama genelde uzun sürer.","f"],
+["der Besichtigungstermin","görme randevusu","Wir haben morgen einen Besichtigungstermin.","Yarın bir görme randevumuz var.","m"],
+["die Miete","kira","Die Miete für diese Wohnung ist 600 Euro.","Bu dairenin kirası 600 avro.","f"],
+["mieten","kiralamak","Wir mieten eine Wohnung in der Stadt.","Şehirde bir daire kiralıyoruz.",""],
+["vermieten","kiraya vermek","Unser Nachbar vermietet sein Zimmer.","Komşumuz odasını kiraya veriyor.",""],
+["der Vermieter","ev sahibi (kiraya veren)","Unser Vermieter heißt Huber.","Ev sahibimizin adı Huber.","m"],
+["die Kaution","depozito","Die Kaution beträgt zwei Monatsmieten.","Depozito iki aylık kiraya denk.","f"],
+["die Nebenkosten","yan giderler, aidat","Die Nebenkosten sind im Preis enthalten.","Yan giderler fiyata dahildir.","p"],
+["die Monatsmiete","aylık kira","Die Monatsmiete steigt jedes Jahr.","Aylık kira her yıl artıyor.","f"],
+["möbliert","eşyalı","Die Wohnung ist voll möbliert.","Daire tamamen eşyalı.",""],
+["umziehen","taşınmak","Nächsten Monat ziehen wir um.","Gelecek ay taşınıyoruz.",""],
+["wegziehen","taşınıp gitmek","Meine Freundin ist letztes Jahr weggezogen.","Arkadaşım geçen yıl taşınıp gitti.",""],
+["das Sonderangebot","özel fırsat","Das Möbelhaus hat ein Sonderangebot.","Mobilya mağazasında özel bir fırsat var.","n"],
+["die Traumwohnung","hayalindeki daire","Endlich haben wir unsere Traumwohnung gefunden.","Sonunda hayalimizdeki daireyi bulduk.","f"],
+["zahlen","ödemek","Wir zahlen die Miete am Monatsanfang.","Kirayı ayın başında ödüyoruz.",""],
+["bekommen","almak, elde etmek","Wir haben die Wohnung schnell bekommen.","Daireyi çabuk aldık.",""],
+["ersetzen","yenisiyle değiştirmek","Wir müssen den alten Herd ersetzen.","Eski ocağı değiştirmemiz lazım.",""],
+["einkaufen","alışveriş yapmak","Ich kaufe im Supermarkt in der Nähe ein.","Yakındaki süpermarketten alışveriş yapıyorum.",""],
+["der Teppich","halı","Der Teppich liegt im Wohnzimmer.","Halı oturma odasında duruyor.","m"],
+["der Fernseher","televizyon","Der Fernseher hängt an der Wand.","Televizyon duvarda asılı.","m"],
+["der Tisch","masa","Die Fotos liegen auf dem Tisch.","Fotoğraflar masanın üzerinde duruyor.","m"],
+["der Stuhl","sandalye","Der Stuhl steht am Tisch.","Sandalye masanın yanında duruyor.","m"],
+["der Sessel","tekli koltuk","Opa sitzt im Sessel.","Dede tekli koltukta oturuyor.","m"],
+["der Vorhang","perde","Der Vorhang ist zu.","Perde kapalı.","m"],
+["die Gardine","tül perde","Die Gardine ist weiß.","Tül perde beyaz.","f"],
+["der Hocker","tabure","Der Hocker steht in der Ecke.","Tabure köşede duruyor.","m"],
+["die Couch","kanepe","Wir sitzen abends auf der Couch.","Akşamları kanepede oturuyoruz.","f"],
+["das Sofa","kanepe, sofa","Das Sofa ist neu.","Kanepe yeni.","n"],
+["die Vitrine","vitrin","Die Gläser stehen in der Vitrine.","Bardaklar vitrinde duruyor.","f"],
+["die Blume","çiçek","Die Blume steht am Fenster.","Çiçek pencerede duruyor.","f"],
+["die Pflanze","bitki","Die Pflanze braucht viel Wasser.","Bitkinin çok suya ihtiyacı var.","f"],
+["die Topfpflanze","saksı bitkisi","Die Topfpflanze steht auf dem Balkon.","Saksı bitkisi balkonda duruyor.","f"],
+["die Stehlampe","ayaklı lamba","Die Stehlampe steht neben dem Sofa.","Ayaklı lamba kanepenin yanında duruyor.","f"],
+["die Lampe","lamba","Mach bitte die Lampe an.","Lütfen lambayı aç.","f"],
+["die Decke","örtü, battaniye, tavan","Die Decke liegt auf dem Bett.","Battaniye yatağın üzerinde duruyor.","f"],
+["das Regal","raf","Die Bücher stehen im Regal.","Kitaplar rafta duruyor.","n"],
+["das Bücherregal","kitaplık","Das Bücherregal ist voll.","Kitaplık dolu.","n"],
+["das Bild","resim, tablo","Das Bild hängt im Wohnzimmer.","Tablo oturma odasında asılı.","n"],
+["das Kissen","yastık","Auf der Couch liegen viele Kissen.","Kanepenin üzerinde çok yastık var.","n"],
+["die Heizung","kalorifer, ısıtma","Die Heizung ist kaputt.","Kalorifer bozuk.","f"],
+["der Kühlschrank","buzdolabı","Haben wir noch Milch? – Ja, im Kühlschrank.","Süt kaldı mı? – Evet, buzdolabında.","m"],
+["der Herd","ocak","In der neuen Küche fehlt noch der Herd.","Yeni mutfakta ocak hâlâ eksik.","m"],
+["der Backofen","fırın","Der Kuchen ist im Backofen.","Kek fırında.","m"],
+["der Wasserkocher","su ısıtıcısı","Der Wasserkocher ist sehr schnell.","Su ısıtıcısı çok hızlı.","m"],
+["der Küchentisch","mutfak masası","Wir essen am Küchentisch.","Mutfak masasında yemek yiyoruz.","m"],
+["der Hängeschrank","asma dolap","Die Teller sind im Hängeschrank.","Tabaklar asma dolapta.","m"],
+["der Unterschrank","alt dolap","Die Töpfe stehen im Unterschrank.","Tencereler alt dolapta duruyor.","m"],
+["der Toaster","tost makinesi","Der Toaster steht auf der Arbeitsplatte.","Tost makinesi tezgahın üzerinde duruyor.","m"],
+["der Mülleimer","çöp kovası","Der Mülleimer ist voll.","Çöp kovası dolu.","m"],
+["der Müll","çöp","Bring bitte den Müll raus.","Lütfen çöpü dışarı çıkar.","m"],
+["die Spülmaschine","bulaşık makinesi","Die Spülmaschine läuft schon.","Bulaşık makinesi çalışıyor bile.","f"],
+["die Mikrowelle","mikrodalga fırın","Ich wärme die Suppe in der Mikrowelle auf.","Çorbayı mikrodalga fırında ısıtıyorum.","f"],
+["die Arbeitsplatte","mutfak tezgahı","Die Arbeitsplatte ist aus Holz.","Mutfak tezgahı ahşaptan.","f"],
+["die Eckbank","köşe bank","Wir sitzen gern an der Eckbank.","Köşe bankta oturmayı severiz.","f"],
+["die Teekanne","çaydanlık","Die Teekanne steht auf dem Herd.","Çaydanlık ocakta duruyor.","f"],
+["die Fritteuse","fritöz","Die Fritteuse macht knusprige Pommes.","Fritöz çıtır patates kızartması yapıyor.","f"],
+["die Vase","vazo","Die Blumen stehen in der Vase.","Çiçekler vazoda duruyor.","f"],
+["die Kaffeemaschine","kahve makinesi","Die Kaffeemaschine ist kaputt.","Kahve makinesi bozuk.","f"],
+["der Kochtopf","tencere","Der Kochtopf steht auf dem Herd.","Tencere ocakta duruyor.","m"],
+["der Löffel","kaşık","Gib mir bitte einen Löffel.","Bana bir kaşık ver lütfen.","m"],
+["der Teelöffel","çay kaşığı","Ein Teelöffel Zucker, bitte.","Bir çay kaşığı şeker, lütfen.","m"],
+["der Esslöffel","yemek kaşığı","Nimm einen Esslöffel Öl.","Bir yemek kaşığı yağ al.","m"],
+["der Teller","tabak","Der Teller ist leer.","Tabak boş.","m"],
+["der Zucker","şeker","Kein Zucker für mich, bitte.","Bana şeker olmasın, lütfen.","m"],
+["die Zuckerdose","şekerlik","Die Zuckerdose steht auf dem Tisch.","Şekerlik masanın üzerinde duruyor.","f"],
+["der Brotkorb","ekmek sepeti","Der Brotkorb ist leer.","Ekmek sepeti boş.","m"],
+["der Flaschenöffner","şişe açacağı","Hast du einen Flaschenöffner?","Şişe açacağın var mı?","m"],
+["der Dosenöffner","konserve açacağı","Der Dosenöffner liegt in der Schublade.","Konserve açacağı çekmecede duruyor.","m"],
+["die Pfanne","tava","Das Ei ist in der Pfanne.","Yumurta tavada.","f"],
+["die Gabel","çatal","Die Gabel liegt neben dem Teller.","Çatal tabağın yanında duruyor.","f"],
+["die Tasse","fincan, kupa","Die Tasse ist heiß.","Kupa sıcak.","f"],
+["die Schüssel","kâse, kap","Die Salat ist in der Schüssel.","Salata kâsede.","f"],
+["die Karaffe","sürahi","Die Karaffe ist voll mit Wasser.","Sürahi suyla dolu.","f"],
+["die Schale","kase, geniş kap","Die Nüsse sind in der Schale.","Fındıklar kasede.","f"],
+["das Messer","bıçak","Das Messer ist scharf.","Bıçak keskin.","n"],
+["das Glas","bardak","Das Glas ist voll.","Bardak dolu.","n"],
+["das Salz","tuz","Reich mir bitte das Salz.","Bana tuzu uzatır mısın.","n"],
+["das Besteck","çatal-bıçak takımı","Das Besteck liegt in der Schublade.","Çatal-bıçak takımı çekmecede duruyor.","n"],
+["das Feuerzeug","çakmak","Hast du ein Feuerzeug?","Çakmağın var mı?","n"],
+["das Geschirrtuch","kurulama bezi","Das Geschirrtuch hängt am Haken.","Kurulama bezi askıda asılı.","n"],
+["das Spülmittel","bulaşık deterjanı","Wir brauchen neues Spülmittel.","Yeni bulaşık deterjanına ihtiyacımız var.","n"],
+["spülen","durulamak","Ich spüle noch das Geschirr.","Bulaşıkları hâlâ durulayorum.",""],
+["der Schrank","dolap","Die Gläser stehen im Schrank.","Bardaklar dolapta duruyor.","m"],
+["der Kleiderschrank","elbise dolabı","Die Jacken hängen im Kleiderschrank.","Ceketler elbise dolabında asılı.","m"],
+["der Nachttisch","komodin","Das Buch liegt auf dem Nachttisch.","Kitap komodinin üzerinde duruyor.","m"],
+["der Spiegel","ayna","Der Spiegel hängt im Flur.","Ayna koridorda asılı.","m"],
+["der Kleiderbügel","elbise askısı","Häng das Hemd auf den Kleiderbügel.","Gömleği elbise askısına as.","m"],
+["der Wecker","çalar saat","Der Wecker klingelt um sieben.","Çalar saat yedide çalıyor.","m"],
+["die Kommode","çekmeceli dolap","Die Socken sind in der Kommode.","Çoraplar çekmeceli dolapta.","f"],
+["die Matratze","yatak minderi","Die Matratze ist neu.","Yatak minderi yeni.","f"],
+["die Bettdecke","yorgan","Die Bettdecke ist warm.","Yorgan sıcak.","f"],
+["die Bettwäsche","nevresim takımı","Ich wechsle die Bettwäsche jede Woche.","Nevresim takımını her hafta değiştiriyorum.","f"],
+["das Bett","yatak","Wir brauchen noch ein Kinderbett.","Bir çocuk yatağına daha ihtiyacımız var.","n"],
+["das Einzelbett","tek kişilik yatak","Im Gästezimmer steht ein Einzelbett.","Misafir odasında tek kişilik bir yatak var.","n"],
+["das Doppelbett","çift kişilik yatak","Wir haben ein großes Doppelbett.","Büyük bir çift kişilik yatağımız var.","n"],
+["das Etagenbett","ranzalı yatak","Die Kinder schlafen im Etagenbett.","Çocuklar ranzalı yatakta uyuyor.","n"],
+["das Bügeleisen","ütü","Das Bügeleisen ist heiß.","Ütü sıcak.","n"],
+["das Bügelbrett","ütü masası","Stell das Bügelbrett auf.","Ütü masasını kur.","n"],
+["das Kopfkissen","yastık","Das Kopfkissen ist weich.","Yastık yumuşak.","n"],
+["der Wäschekorb","çamaşır sepeti","Die schmutzige Wäsche liegt im Wäschekorb.","Kirli çamaşırlar çamaşır sepetinde.","m"],
+["der Föhn","saç kurutma makinesi","Der Föhn ist im Badezimmer.","Saç kurutma makinesi banyoda.","m"],
+["der Trockner","kurutma makinesi","Die Handtücher sind im Trockner.","Havlular kurutma makinesinde.","m"],
+["der Mopp","paspas (sopalı)","Der Mopp steht hinter der Tür.","Paspas kapının arkasında duruyor.","m"],
+["der Kamm","tarak","Wo ist mein Kamm?","Tarağım nerede?","m"],
+["die Badewanne","küvet","Die Kinder baden in der Badewanne.","Çocuklar küvette banyo yapıyor.","f"],
+["die Seife","sabun","Die Seife riecht nach Lavendel.","Sabun lavanta kokuyor.","f"],
+["die Zahnbürste","diş fırçası","Meine Zahnbürste ist neu.","Diş fırçam yeni.","f"],
+["die Zahnpasta","diş macunu","Die Zahnpasta ist fast leer.","Diş macunu neredeyse bitmiş.","f"],
+["die Bürste","fırça","Die Bürste liegt auf dem Waschbecken.","Fırça lavabonun üzerinde duruyor.","f"],
+["die Waschmaschine","çamaşır makinesi","Die Waschmaschine ist günstig.","Çamaşır makinesi ucuz.","f"],
+["waschen","yıkamak","Ich wasche die Wäsche am Wochenende.","Hafta sonu çamaşır yıkıyorum.",""],
+["sich waschen","yıkanmak","Ich wasche mich jeden Morgen.","Her sabah yıkanıyorum.",""],
+["das Handtuch","havlu","Das Handtuch hängt im Bad.","Havlu banyoda asılı.","n"],
+["das Shampoo","şampuan","Das Shampoo riecht gut.","Şampuanın kokusu güzel.","n"],
+["das Waschbecken","lavabo","Das Waschbecken ist sauber.","Lavabo temiz.","n"],
+["das Toilettenpapier","tuvalet kağıdı","Wir brauchen mehr Toilettenpapier.","Daha fazla tuvalet kağıdına ihtiyacımız var.","n"],
+["das Waschmittel","çamaşır deterjanı","Das Waschmittel ist alle.","Çamaşır deterjanı bitti.","n"],
+["das Putzmittel","temizlik malzemesi","Die Putzmittel stehen unter der Spüle.","Temizlik malzemeleri lavabonun altında duruyor.","n"],
+["das Ladegerät","şarj aleti","Mein Ladegerät funktioniert nicht mehr.","Şarj aletim artık çalışmıyor.","n"],
+["der Grill","mangal, ızgara","Am Wochenende benutzen wir den Grill.","Hafta sonu mangal kullanıyoruz.","m"],
+["der Sonnenschirm","güneş şemsiyesi","Der Sonnenschirm steht auf der Terrasse.","Güneş şemsiyesi teraste duruyor.","m"],
+["der Staubsauger","elektrikli süpürge","Der Staubsauger ist laut.","Elektrikli süpürge gürültülü.","m"],
+["der Koffer","bavul","Der Koffer ist zu schwer.","Bavul çok ağır.","m"],
+["der Kinderwagen","bebek arabası","Der Kinderwagen steht im Flur.","Bebek arabası koridorda duruyor.","m"],
+["der Schreibtisch","çalışma masası","Der Laptop steht auf dem Schreibtisch.","Dizüstü bilgisayar çalışma masasında duruyor.","m"],
+["der Schuhschrank","ayakkabı dolabı","Die Schuhe stehen im Schuhschrank.","Ayakkabılar ayakkabı dolabında duruyor.","m"],
+["die Matte","paspas (kapı önü)","Die Matte liegt vor der Tür.","Paspas kapının önünde duruyor.","f"],
+["die Uhr","saat","Die Uhr hängt an der Wand.","Saat duvarda asılı.","f"],
+["die Wanduhr","duvar saati","Die Wanduhr geht nicht mehr.","Duvar saati artık çalışmıyor.","f"],
+["die Spielzeugkiste","oyuncak kutusu","Die Spielzeugkiste ist voll.","Oyuncak kutusu dolu.","f"],
+["das Fahrrad","bisiklet","Das Fahrrad steht im Flur.","Bisiklet koridorda duruyor.","n"],
+["das Spielzeug","oyuncak","Das Kind spielt mit dem Spielzeug.","Çocuk oyuncakla oynuyor.","n"],
+["das Elektrogerät","elektrikli alet","Das Elektrogerät ist neu.","Elektrikli alet yeni.","n"],
+["das Gerät","cihaz","Das Gerät funktioniert nicht.","Cihaz çalışmıyor.","n"],
+["sitzen","oturmak","Er sitzt am Tisch.","Masada oturuyor.",""],
+["sich setzen","kendini oturtmak","Setz dich bitte hin.","Lütfen otur.",""],
+["sich hinlegen","uzanmak","Ich lege mich kurz hin.","Kısaca uzanıyorum.",""],
+["liegen","yatar vaziyette durmak","Das Buch liegt auf dem Tisch.","Kitap masanın üzerinde duruyor.",""],
+["stehen","dik bir şekilde durmak","Die Flasche steht auf dem Tisch.","Şişe masanın üzerinde duruyor.",""],
+["stellen","dik koymak","Stell die Tasche rechts in die Ecke.","Çantayı sağdaki köşeye koy.",""],
+["legen","yatay koymak","Leg das Buch auf den Tisch.","Kitabı masaya koy.",""],
+["hängen","asmak","Häng das Bild an die Wand.","Resmi duvara as.",""],
+["fernsehen","televizyon izlemek","Wir sehen abends fern.","Akşamları televizyon izliyoruz.",""],
+["anmachen","açmak (ışık/TV)","Mach bitte das Licht an.","Lütfen ışığı aç.",""],
+["ausmachen","kapatmak","Mach bitte das Licht aus.","Lütfen ışığı kapat.",""],
+["aufräumen","toparlamak","Ich räume mein Zimmer auf.","Odamı toparlıyorum.",""],
+["putzen / reinigen","temizlemek","Ich putze die Wohnung am Samstag.","Cumartesi evi temizliyorum.",""],
+["sich kämmen","taranmak","Ich kämme mich vor dem Spiegel.","Aynanın önünde taranıyorum.",""],
+["sich rasieren","tıraş olmak","Er rasiert sich jeden Tag.","O her gün tıraş oluyor.",""],
+["schlafen","uyumak","Ich schlafe acht Stunden.","Sekiz saat uyuyorum.",""],
+["aufstehen","kalkmak, uyanmak","Ich stehe um sieben auf.","Saat yedide kalkıyorum.",""],
+["sich anziehen","giyinmek","Ich ziehe mich schnell an.","Çabuk giyiniyorum.",""],
+["sich ausziehen","soyunmak","Zieh dich bitte aus.","Lütfen soyun.",""],
+["spielen","oynamak","Die Kinder spielen im Zimmer.","Çocuklar odada oynuyor.",""],
+["reinkommen","içeri girmek","Komm bitte rein.","Lütfen içeri gel.",""],
+["rausgehen","dışarı çıkmak","Ich gehe kurz raus.","Kısaca dışarı çıkıyorum.",""],
+["lassen","bırakmak, izin vermek","Lass uns in einem anderen Geschäft schauen.","Başka bir mağazaya bakalım.",""],
+["hell","aydınlık","Das Zimmer ist sehr hell.","Oda çok aydınlık.",""],
+["dunkel","karanlık","Der Keller ist dunkel.","Bodrum karanlık.",""],
+["ruhig","sakin","Die Straße ist sehr ruhig.","Sokak çok sakin.",""],
+["laut","yüksek sesli, gürültülü","Die Musik ist zu laut.","Müzik çok yüksek sesli.",""],
+["ungemütlich","rahatsız edici","Der Stuhl ist ungemütlich.","Sandalye rahatsız edici.",""],
+["gemütlich","rahat, keyifli","Das Wohnzimmer ist sehr gemütlich.","Oturma odası çok rahat.",""],
+["gepflegt","bakımlı","Der Garten ist gepflegt.","Bahçe bakımlı.",""],
+["schmal","dar","Der Flur ist sehr schmal.","Koridor çok dar.",""],
+["wunderschön","çok güzel","Die Aussicht ist wunderschön.","Manzara çok güzel.",""],
+["billig","ucuz","Die Miete ist billig.","Kira ucuz.",""],
+["modern","modern","Die Küche ist sehr modern.","Mutfak çok modern.",""],
+["interessant","ilginç","Das Angebot ist interessant.","Teklif ilginç.",""],
+["hässlich","çirkin","Die Tapete ist hässlich.","Duvar kağıdı çirkin.",""],
+["die Firma","şirket","Mein Vater arbeitet bei einer Firma.","Babam bir şirkette çalışıyor.","f"],
+["der Gast","konuk, misafir","Wir haben heute Gäste.","Bugün misafirlerimiz var.","m"],
+["das Geld","para","Ich habe nicht genug Geld.","Yeterince param yok.","n"],
+["das Geschäft","dükkan, mağaza","Das Geschäft schließt um acht.","Mağaza sekizde kapanıyor.","n"],
+["das Gespräch","konuşma, görüşme","Das Gespräch war sehr nett.","Görüşme çok hoştu.","n"],
+["die Größe","boyut","Die Größe der Wohnung passt uns.","Dairenin boyutu bize uyuyor.","f"],
+["die Stadt","şehir","Wir wohnen in der Stadt.","Şehirde oturuyoruz.","f"],
+["das Zentrum","merkez","Die Wohnung liegt im Zentrum.","Daire merkezde.","n"],
+["die Sprachschule","dil okulu","Ich lerne Deutsch in der Sprachschule.","Almancayı dil okulunda öğreniyorum.","f"],
+["singen","şarkı söylemek","Sie singt sehr gerne.","O şarkı söylemeyi çok seviyor.",""],
+["suchen","aramak","Ich suche eine neue Wohnung.","Yeni bir daire arıyorum.",""],
+["wünschen","dilemek, arzulamak","Ich wünsche mir eine größere Küche.","Daha büyük bir mutfak diliyorum.",""],
+["der Plan","plan","Wir haben einen Plan für die Wohnung.","Daire için bir planımız var.","m"],
+["der Platz","yer","Wir brauchen mehr Platz.","Daha fazla yere ihtiyacımız var.","m"],
+["der Ort","yer","Das ist ein schöner Ort zum Wohnen.","Burası oturmak için güzel bir yer.","m"],
+["der Mietvertrag","kira sözleşmesi","Wir unterschreiben den Mietvertrag.","Kira sözleşmesini imzalıyoruz.","m"],
+["die Steckdose","priz","Die Steckdose ist neben dem Bett.","Priz yatağın yanında.","f"],
+["der Schalter","elektrik düğmesi","Der Schalter ist neben der Tür.","Düğme kapının yanında.","m"],
+["die Glühbirne","ampul","Die Glühbirne ist kaputt.","Ampul bozuk.","f"],
+["der Dachboden","çatı katı","Alte Möbel stehen auf dem Dachboden.","Eski mobilyalar çatı katında duruyor.","m"],
+["der Briefkasten","posta kutusu","Der Briefkasten ist voll.","Posta kutusu dolu.","m"],
+["die Lage","konum","Die Lage der Wohnung ist perfekt.","Dairenin konumu mükemmel.","f"],
+["der Nachbar / die Nachbarin","komşu","Unser Nachbar ist sehr freundlich.","Komşumuz çok arkadaş canlısı.",""],
+["die Klimaanlage","klima","Die Klimaanlage macht das Zimmer kühl.","Klima odayı serinletiyor.","f"],
+];
+
+const EXAM_QA = [["Wo wohnen Sie?","Nerede oturuyorsunuz?","Ich wohne in Berlin.","Berlin'de oturuyorum."],
+["Seit wann haben Sie diese Wohnung?","Bu daireye ne zamandır sahipsiniz?","Seit drei Jahren.","Üç yıldır."],
+["In welchem Haus wohnst du?","Hangi evde oturuyorsun?","Im weißen Haus dort.","Şuradaki beyaz evde."],
+["Haben Sie ein Apartment gemietet?","Bir apartman dairesi mi kiraladınız?","Ja, seit letztem Monat.","Evet, geçen aydan beri."],
+["Gehst du jetzt nach Hause?","Şimdi eve mi gidiyorsun?","Ja, ich gehe nach Hause.","Evet, eve gidiyorum."],
+["Wie groß ist das Zimmer?","Oda ne kadar büyük?","Das Zimmer ist groß.","Oda büyük."],
+["Ist der Raum hell?","Oda aydınlık mı?","Ja, der Raum ist sehr hell.","Evet, oda çok aydınlık."],
+["Wo sitzt ihr abends?","Akşamları nerede oturuyorsunuz?","Wir sitzen im Wohnzimmer.","Oturma odasında oturuyoruz."],
+["Wie ist dein Schlafzimmer?","Yatak odan nasıl?","Mein Schlafzimmer ist klein.","Yatak odam küçük."],
+["Wie sieht das Kinderzimmer aus?","Çocuk odası nasıl görünüyor?","Das Kinderzimmer ist bunt.","Çocuk odası renkli."],
+["Wo kommt der neue Herd hin?","Yeni ocak nereye geliyor?","Er kommt in die Küche.","Mutfağa geliyor."],
+["Ist das Badezimmer renoviert?","Banyo yenilendi mi?","Ja, es ist renoviert.","Evet, yenilendi."],
+["Habt ihr ein großes Bad?","Büyük bir banyonuz var mı?","Nein, wir haben kein großes Bad.","Hayır, büyük bir banyomuz yok."],
+["Baden die Kinder gern?","Çocuklar banyo yapmayı sever mi?","Ja, sie baden sehr gern.","Evet, çok severler."],
+["Duschst du morgens oder abends?","Sabah mı akşam mı duş alıyorsun?","Ich dusche lieber am Morgen.","Sabahları duş almayı tercih ederim."],
+["Ist die Dusche neu?","Duş yeni mi?","Ja, die Dusche ist neu.","Evet, duş yeni."],
+["Wo ist die Toilette, bitte?","Tuvalet nerede acaba?","Die Toilette ist links.","Tuvalet solda."],
+["Wie viele Quadratmeter hat die Wohnung?","Dairenin kaç metrekaresi var?","Sie hat 60 Quadratmeter.","60 metrekaresi var."],
+["In welchem Stock wohnt ihr?","Hangi katta oturuyorsunuz?","Wir wohnen im ersten Stock.","Birinci katta oturuyoruz."],
+["Wohnt ihr im ersten Stock?","Birinci katta mı oturuyorsunuz?","Ja, im ersten Stock.","Evet, birinci katta."],
+["Wo sind die Schlafzimmer?","Yatak odaları nerede?","Sie sind im Obergeschoss.","Üst katta."],
+["Wo ist die Küche?","Mutfak nerede?","Die Küche ist im Erdgeschoss.","Mutfak zemin katta."],
+["Was habt ihr im Keller?","Bodrumda neniz var?","Wir haben viele Sachen im Keller.","Bodrumda çok eşyamız var."],
+["Gibt es einen Aufzug im Haus?","Binada asansör var mı?","Nein, es gibt keinen Aufzug.","Hayır, asansör yok."],
+["Wo geht es zur Wohnung?","Daireye nereden gidilir?","Die Treppe hoch und dann links.","Merdivenden yukarı ve sonra sola."],
+["Können Sie mir den Schlüssel geben?","Bana anahtarı verebilir misiniz?","Ja, hier ist der Zimmerschlüssel.","Evet, işte oda anahtarı."],
+["Ist die Tür offen?","Kapı açık mı?","Nein, mach bitte die Tür zu.","Hayır, lütfen kapıyı kapat."],
+["Ist die Haustür abgeschlossen?","Ev kapısı kilitli mi?","Ja, sie ist abgeschlossen.","Evet, kilitli."],
+["Kannst du das Fenster aufmachen?","Pencereyi açabilir misin?","Ja, ich mache es auf.","Evet, açıyorum."],
+["Wo hängt das Bild?","Resim nerede asılı?","Es hängt an der Wand.","Duvarda asılı."],
+["Wo ist der Eingang?","Giriş nerede?","Der Eingang ist um die Ecke.","Giriş köşede."],
+["Wo ist der Ausgang?","Çıkış nerede?","Der Ausgang ist dort links.","Çıkış şurada, solda."],
+["Hat die Wohnung einen Balkon?","Dairenin balkonu var mı?","Ja, einen kleinen Balkon.","Evet, küçük bir balkon."],
+["Habt ihr einen Garten?","Bahçeniz var mı?","Nein, leider keinen Garten.","Hayır, maalesef bir bahçemiz yok."],
+["Wo steht das Auto?","Araba nerede duruyor?","Es steht in der Garage.","Garajda duruyor."],
+["Wo sitzt ihr im Sommer?","Yazın nerede oturuyorsunuz?","Wir sitzen auf der Terrasse.","Teraste oturuyoruz."],
+["Wo stehen die Schuhe?","Ayakkabılar nerede duruyor?","Sie stehen im Flur.","Koridorda duruyor."],
+["Wo hänge ich meine Jacke auf?","Ceketimi nereye asayım?","Häng sie in der Diele auf.","Holde as."],
+["Wo arbeitet er?","O nerede çalışıyor?","Er arbeitet im Arbeitszimmer.","Çalışma odasında çalışıyor."],
+["Wo wohnen sie?","Onlar nerede oturuyor?","In einem Einfamilienhaus.","Bir müstakil evde."],
+["Wie viele Familien wohnen dort?","Orada kaç aile oturuyor?","Zehn Familien wohnen dort.","On aile oturuyor."],
+["Hat euer Reihenhaus einen Garten?","Sıra evinizin bahçesi var mı?","Ja, einen kleinen Garten.","Evet, küçük bir bahçe."],
+["In welchem Stock wohnt sie?","O hangi katta oturuyor?","Im zwanzigsten Stock.","Yirminci katta."],
+["Wie sind die Decken im Altbau?","Eski binadaki tavanlar nasıl?","Sie sind sehr hoch.","Çok yüksek."],
+["Haben deine Großeltern einen Bauernhof?","Büyükanne ve büyükbaban çiftlik sahibi mi?","Ja, sie haben einen Bauernhof.","Evet, bir çiftlikleri var."],
+["Wo arbeitet er?","O nerede çalışıyor?","Im Bereich Immobilien.","Gayrimenkul alanında."],
+["Hast du eine gute Wohnungsanzeige gefunden?","İyi bir ev ilanı buldun mu?","Ja, eine sehr gute.","Evet, çok iyi bir tane."],
+["Wo steht die Anzeige?","İlan nerede?","Sie steht in der Zeitung.","Gazetede."],
+["Dauert die Wohnungssuche lange?","Ev arama uzun mu sürüyor?","Ja, oft sehr lange.","Evet, genelde çok uzun."],
+["Wann habt ihr den Besichtigungstermin?","Görme randevunuz ne zaman?","Morgen früh.","Yarın sabah."],
+["Wie hoch ist die Miete?","Kira ne kadar?","Die Miete ist 600 Euro.","Kira 600 avro."],
+["Mietet ihr eine Wohnung?","Bir daire mi kiralıyorsunuz?","Ja, in der Stadt.","Evet, şehirde."],
+["Vermietet euer Nachbar sein Zimmer?","Komşunuz odasını kiraya mı veriyor?","Ja, das stimmt.","Evet, doğru."],
+["Wie heißt euer Vermieter?","Ev sahibinizin adı ne?","Er heißt Huber.","Adı Huber."],
+["Wie hoch ist die Kaution?","Depozito ne kadar?","Zwei Monatsmieten.","İki aylık kira."],
+["Sind die Nebenkosten im Preis enthalten?","Yan giderler fiyata dahil mi?","Ja, sie sind enthalten.","Evet, dahil."],
+["Steigt die Monatsmiete jedes Jahr?","Aylık kira her yıl artıyor mu?","Ja, leider jedes Jahr.","Evet, maalesef her yıl."],
+["Ist die Wohnung möbliert?","Daire eşyalı mı?","Ja, voll möbliert.","Evet, tamamen eşyalı."],
+["Wann zieht ihr um?","Ne zaman taşınıyorsunuz?","Nächsten Monat.","Gelecek ay."],
+["Ist deine Freundin weggezogen?","Arkadaşın taşınıp gitti mi?","Ja, letztes Jahr.","Evet, geçen yıl."],
+["Was für ein Angebot hat das Möbelhaus?","Mobilya mağazasının ne teklifi var?","Ein Sonderangebot.","Özel bir fırsat."],
+["Habt ihr eure Traumwohnung gefunden?","Hayalinizdeki daireyi buldunuz mu?","Ja, endlich.","Evet, sonunda."],
+["Wann zahlt ihr die Miete?","Kirayı ne zaman ödüyorsunuz?","Am Monatsanfang.","Ayın başında."],
+["Habt ihr die Wohnung schnell bekommen?","Daireyi çabuk mu aldınız?","Ja, sehr schnell.","Evet, çok çabuk."],
+["Was müsst ihr ersetzen?","Neyi değiştirmeniz gerekiyor?","Den alten Herd.","Eski ocağı."],
+["Wo kaufst du ein?","Nereden alışveriş yapıyorsun?","Im Supermarkt in der Nähe.","Yakındaki süpermarketten."],
+["Wo liegt der Teppich?","Halı nerede duruyor?","Im Wohnzimmer.","Oturma odasında."],
+["Wo hängt der Fernseher?","Televizyon nerede asılı?","An der Wand.","Duvarda."],
+["Wo liegen die Fotos?","Fotoğraflar nerede duruyor?","Auf dem Tisch.","Masanın üzerinde."],
+["Wo steht der Stuhl?","Sandalye nerede duruyor?","Am Tisch.","Masanın yanında."],
+["Wo sitzt Opa?","Dede nerede oturuyor?","Im Sessel.","Tekli koltukta."],
+["Ist der Vorhang zu?","Perde kapalı mı?","Ja, er ist zu.","Evet, kapalı."],
+["Welche Farbe hat die Gardine?","Tül perdenin rengi ne?","Sie ist weiß.","Beyaz."],
+["Wo steht der Hocker?","Tabure nerede duruyor?","In der Ecke.","Köşede."],
+["Wo sitzt ihr abends?","Akşamları nerede oturuyorsunuz?","Auf der Couch.","Kanepede."],
+["Ist das Sofa neu?","Kanepe yeni mi?","Ja, das Sofa ist neu.","Evet, kanepe yeni."],
+["Wo stehen die Gläser?","Bardaklar nerede duruyor?","In der Vitrine.","Vitrinde."],
+["Wo steht die Blume?","Çiçek nerede duruyor?","Am Fenster.","Pencerede."],
+["Braucht die Pflanze viel Wasser?","Bitkinin çok suya ihtiyacı var mı?","Ja, sehr viel.","Evet, çok fazla."],
+["Wo steht die Topfpflanze?","Saksı bitkisi nerede duruyor?","Auf dem Balkon.","Balkonda."],
+["Wo steht die Stehlampe?","Ayaklı lamba nerede duruyor?","Neben dem Sofa.","Kanepenin yanında."],
+["Kannst du die Lampe anmachen?","Lambayı açabilir misin?","Ja, sofort.","Evet, hemen."],
+["Wo liegt die Decke?","Battaniye nerede duruyor?","Auf dem Bett.","Yatağın üzerinde."],
+["Wo stehen die Bücher?","Kitaplar nerede duruyor?","Im Regal.","Rafta."],
+["Ist das Bücherregal voll?","Kitaplık dolu mu?","Ja, es ist voll.","Evet, dolu."],
+["Wo hängt das Bild?","Tablo nerede asılı?","Im Wohnzimmer.","Oturma odasında."],
+["Wie viele Kissen liegen auf der Couch?","Kanepenin üzerinde kaç yastık var?","Viele Kissen.","Çok yastık."],
+["Ist die Heizung kaputt?","Kalorifer bozuk mu?","Ja, leider kaputt.","Evet, maalesef bozuk."],
+["Haben wir noch Milch?","Süt kaldı mı?","Ja, im Kühlschrank.","Evet, buzdolabında."],
+["Was fehlt noch in der Küche?","Mutfakta hâlâ ne eksik?","Der Herd fehlt noch.","Ocak hâlâ eksik."],
+["Wo ist der Kuchen?","Kek nerede?","Im Backofen.","Fırında."],
+["Ist der Wasserkocher schnell?","Su ısıtıcısı hızlı mı?","Ja, sehr schnell.","Evet, çok hızlı."],
+["Wo esst ihr?","Nerede yemek yiyorsunuz?","Am Küchentisch.","Mutfak masasında."],
+["Wo sind die Teller?","Tabaklar nerede?","Im Hängeschrank.","Asma dolapta."],
+["Wo stehen die Töpfe?","Tencereler nerede duruyor?","Im Unterschrank.","Alt dolapta."],
+["Wo steht der Toaster?","Tost makinesi nerede duruyor?","Auf der Arbeitsplatte.","Tezgahın üzerinde."],
+["Ist der Mülleimer voll?","Çöp kovası dolu mu?","Ja, ganz voll.","Evet, tamamen dolu."],
+["Kannst du den Müll rausbringen?","Çöpü dışarı çıkarabilir misin?","Ja, sofort.","Evet, hemen."],
+["Läuft die Spülmaschine schon?","Bulaşık makinesi çalışıyor mu?","Ja, sie läuft schon.","Evet, çalışıyor bile."],
+["Wie wärmst du die Suppe auf?","Çorbayı nasıl ısıtıyorsun?","In der Mikrowelle.","Mikrodalga fırında."],
+["Aus was ist die Arbeitsplatte?","Tezgah neden yapılmış?","Aus Holz.","Ahşaptan."],
+["Wo sitzt ihr gern?","Nerede oturmayı seviyorsunuz?","An der Eckbank.","Köşe bankta."],
+["Wo steht die Teekanne?","Çaydanlık nerede duruyor?","Auf dem Herd.","Ocakta."],
+["Was macht die Fritteuse?","Fritöz ne yapıyor?","Knusprige Pommes.","Çıtır patates kızartması."],
+["Wo stehen die Blumen?","Çiçekler nerede duruyor?","In der Vase.","Vazoda."],
+["Ist die Kaffeemaschine kaputt?","Kahve makinesi bozuk mu?","Ja, leider kaputt.","Evet, maalesef bozuk."],
+["Wo steht der Kochtopf?","Tencere nerede duruyor?","Auf dem Herd.","Ocakta."],
+["Kannst du mir einen Löffel geben?","Bana bir kaşık verebilir misin?","Ja, hier bitte.","Evet, buyur."],
+["Wie viel Zucker brauchst du?","Ne kadar şeker gerekiyor?","Einen Teelöffel.","Bir çay kaşığı."],
+["Wie viel Öl soll ich nehmen?","Ne kadar yağ almalıyım?","Einen Esslöffel.","Bir yemek kaşığı."],
+["Ist der Teller leer?","Tabak boş mu?","Ja, ganz leer.","Evet, tamamen boş."],
+["Möchtest du Zucker im Kaffee?","Kahvende şeker ister misin?","Nein, keinen Zucker.","Hayır, şeker olmasın."],
+["Wo steht die Zuckerdose?","Şekerlik nerede duruyor?","Auf dem Tisch.","Masanın üzerinde."],
+["Ist der Brotkorb leer?","Ekmek sepeti boş mu?","Ja, ganz leer.","Evet, tamamen boş."],
+["Hast du einen Flaschenöffner?","Şişe açacağın var mı?","Ja, hier ist einer.","Evet, işte bir tane."],
+["Wo liegt der Dosenöffner?","Konserve açacağı nerede duruyor?","In der Schublade.","Çekmecede."],
+["Was ist in der Pfanne?","Tavada ne var?","Das Ei ist in der Pfanne.","Yumurta tavada."],
+["Wo liegt die Gabel?","Çatal nerede duruyor?","Neben dem Teller.","Tabağın yanında."],
+["Ist die Tasse heiß?","Kupa sıcak mı?","Ja, sehr heiß.","Evet, çok sıcak."],
+["Wo ist der Salat?","Salata nerede?","In der Schüssel.","Kâsede."],
+["Ist die Karaffe voll?","Sürahi dolu mu?","Ja, voll mit Wasser.","Evet, suyla dolu."],
+["Wo sind die Nüsse?","Fındıklar nerede?","In der Schale.","Kasede."],
+["Ist das Messer scharf?","Bıçak keskin mi?","Ja, sehr scharf.","Evet, çok keskin."],
+["Ist das Glas voll?","Bardak dolu mu?","Ja, ganz voll.","Evet, tamamen dolu."],
+["Kannst du mir das Salz reichen?","Bana tuzu uzatabilir misin?","Ja, hier bitte.","Evet, buyur."],
+["Wo liegt das Besteck?","Çatal-bıçak takımı nerede duruyor?","In der Schublade.","Çekmecede."],
+["Hast du ein Feuerzeug?","Çakmağın var mı?","Ja, hier ist eins.","Evet, işte bir tane."],
+["Wo hängt das Geschirrtuch?","Kurulama bezi nerede asılı?","Am Haken.","Askıda."],
+["Brauchen wir neues Spülmittel?","Yeni bulaşık deterjanına ihtiyacımız var mı?","Ja, wir brauchen es.","Evet, ihtiyacımız var."],
+["Spülst du das Geschirr?","Bulaşıkları durulayor musun?","Ja, ich spüle es noch.","Evet, hâlâ durulayorum."],
+["Wo stehen die Gläser?","Bardaklar nerede duruyor?","Im Schrank.","Dolapta."],
+["Wo hängen die Jacken?","Ceketler nerede asılı?","Im Kleiderschrank.","Elbise dolabında."],
+["Wo liegt das Buch?","Kitap nerede duruyor?","Auf dem Nachttisch.","Komodinin üzerinde."],
+["Wo hängt der Spiegel?","Ayna nerede asılı?","Im Flur.","Koridorda."],
+["Wohin hänge ich das Hemd?","Gömleği nereye asmalıyım?","Auf den Kleiderbügel.","Elbise askısına."],
+["Wann klingelt der Wecker?","Çalar saat ne zaman çalıyor?","Um sieben Uhr.","Saat yedide."],
+["Wo sind die Socken?","Çoraplar nerede?","In der Kommode.","Çekmeceli dolapta."],
+["Ist die Matratze neu?","Yatak minderi yeni mi?","Ja, ganz neu.","Evet, tamamen yeni."],
+["Ist die Bettdecke warm?","Yorgan sıcak mı?","Ja, sehr warm.","Evet, çok sıcak."],
+["Wie oft wechselst du die Bettwäsche?","Nevresim takımını ne sıklıkla değiştiriyorsun?","Jede Woche.","Her hafta."],
+["Was braucht ihr noch?","Daha neye ihtiyacınız var?","Noch ein Kinderbett.","Bir çocuk yatağına daha."],
+["Wo steht ein Einzelbett?","Tek kişilik yatak nerede duruyor?","Im Gästezimmer.","Misafir odasında."],
+["Was für ein Bett habt ihr?","Nasıl bir yatağınız var?","Ein großes Doppelbett.","Büyük bir çift kişilik yatak."],
+["Wo schlafen die Kinder?","Çocuklar nerede uyuyor?","Im Etagenbett.","Ranzalı yatakta."],
+["Ist das Bügeleisen heiß?","Ütü sıcak mı?","Ja, sehr heiß.","Evet, çok sıcak."],
+["Was soll ich aufstellen?","Neyi kurmalıyım?","Das Bügelbrett.","Ütü masasını."],
+["Ist das Kopfkissen weich?","Yastık yumuşak mı?","Ja, sehr weich.","Evet, çok yumuşak."],
+["Wo liegt die schmutzige Wäsche?","Kirli çamaşırlar nerede?","Im Wäschekorb.","Çamaşır sepetinde."],
+["Wo ist der Föhn?","Saç kurutma makinesi nerede?","Im Badezimmer.","Banyoda."],
+["Wo sind die Handtücher?","Havlular nerede?","Im Trockner.","Kurutma makinesinde."],
+["Wo steht der Mopp?","Paspas nerede duruyor?","Hinter der Tür.","Kapının arkasında."],
+["Wo ist mein Kamm?","Tarağım nerede?","Auf dem Regal.","Rafta."],
+["Wo baden die Kinder?","Çocuklar nerede banyo yapıyor?","In der Badewanne.","Küvette."],
+["Wonach riecht die Seife?","Sabun ne kokuyor?","Nach Lavendel.","Lavanta kokuyor."],
+["Ist deine Zahnbürste neu?","Diş fırçan yeni mi?","Ja, ganz neu.","Evet, tamamen yeni."],
+["Ist die Zahnpasta fast leer?","Diş macunu neredeyse bitmiş mi?","Ja, fast leer.","Evet, neredeyse bitmiş."],
+["Wo liegt die Bürste?","Fırça nerede duruyor?","Auf dem Waschbecken.","Lavabonun üzerinde."],
+["Ist die Waschmaschine günstig?","Çamaşır makinesi ucuz mu?","Ja, sehr günstig.","Evet, çok ucuz."],
+["Wann wäschst du die Wäsche?","Çamaşırı ne zaman yıkıyorsun?","Am Wochenende.","Hafta sonu."],
+["Wie oft wäschst du dich?","Kendini ne sıklıkla yıkıyorsun?","Jeden Morgen.","Her sabah."],
+["Wo hängt das Handtuch?","Havlu nerede asılı?","Im Bad.","Banyoda."],
+["Riecht das Shampoo gut?","Şampuanın kokusu güzel mi?","Ja, sehr gut.","Evet, çok güzel."],
+["Ist das Waschbecken sauber?","Lavabo temiz mi?","Ja, ganz sauber.","Evet, tamamen temiz."],
+["Brauchen wir mehr Toilettenpapier?","Daha fazla tuvalet kağıdına ihtiyacımız var mı?","Ja, wir brauchen mehr.","Evet, daha fazlasına ihtiyacımız var."],
+["Ist das Waschmittel alle?","Çamaşır deterjanı bitti mi?","Ja, es ist alle.","Evet, bitti."],
+["Wo stehen die Putzmittel?","Temizlik malzemeleri nerede duruyor?","Unter der Spüle.","Lavabonun altında."],
+["Funktioniert dein Ladegerät?","Şarj aletin çalışıyor mu?","Nein, es funktioniert nicht mehr.","Hayır, artık çalışmıyor."],
+["Wann benutzt ihr den Grill?","Mangalı ne zaman kullanıyorsunuz?","Am Wochenende.","Hafta sonu."],
+["Wo steht der Sonnenschirm?","Güneş şemsiyesi nerede duruyor?","Auf der Terrasse.","Teraste."],
+["Ist der Staubsauger laut?","Elektrikli süpürge gürültülü mü?","Ja, sehr laut.","Evet, çok gürültülü."],
+["Ist der Koffer schwer?","Bavul ağır mı?","Ja, zu schwer.","Evet, çok ağır."],
+["Wo steht der Kinderwagen?","Bebek arabası nerede duruyor?","Im Flur.","Koridorda."],
+["Wo steht der Laptop?","Dizüstü bilgisayar nerede duruyor?","Auf dem Schreibtisch.","Çalışma masasında."],
+["Wo stehen die Schuhe?","Ayakkabılar nerede duruyor?","Im Schuhschrank.","Ayakkabı dolabında."],
+["Wo liegt die Matte?","Paspas nerede duruyor?","Vor der Tür.","Kapının önünde."],
+["Wo hängt die Uhr?","Saat nerede asılı?","An der Wand.","Duvarda."],
+["Geht die Wanduhr noch?","Duvar saati hâlâ çalışıyor mu?","Nein, sie geht nicht mehr.","Hayır, artık çalışmıyor."],
+["Ist die Spielzeugkiste voll?","Oyuncak kutusu dolu mu?","Ja, ganz voll.","Evet, tamamen dolu."],
+["Wo steht das Fahrrad?","Bisiklet nerede duruyor?","Im Flur.","Koridorda."],
+["Womit spielt das Kind?","Çocuk neyle oynuyor?","Mit dem Spielzeug.","Oyuncakla."],
+["Ist das Elektrogerät neu?","Elektrikli alet yeni mi?","Ja, ganz neu.","Evet, tamamen yeni."],
+["Funktioniert das Gerät?","Cihaz çalışıyor mu?","Nein, es funktioniert nicht.","Hayır, çalışmıyor."],
+["Wo sitzt er?","O nerede oturuyor?","Am Tisch.","Masada."],
+["Kannst du dich hinsetzen?","Oturabilir misin?","Ja, ich setze mich hin.","Evet, oturuyorum."],
+["Legst du dich kurz hin?","Kısaca uzanacak mısın?","Ja, ich lege mich hin.","Evet, uzanıyorum."],
+["Wo liegt das Buch?","Kitap nerede duruyor?","Auf dem Tisch.","Masanın üzerinde."],
+["Wo steht die Flasche?","Şişe nerede duruyor?","Auf dem Tisch.","Masanın üzerinde."],
+["Wohin stellst du die Tasche?","Çantayı nereye koyuyorsun?","Rechts in die Ecke.","Sağdaki köşeye."],
+["Wohin legst du das Buch?","Kitabı nereye koyuyorsun?","Auf den Tisch.","Masaya."],
+["Wohin hängst du das Bild?","Resmi nereye asıyorsun?","An die Wand.","Duvara."],
+["Seht ihr abends fern?","Akşamları televizyon izliyor musunuz?","Ja, jeden Abend.","Evet, her akşam."],
+["Kannst du das Licht anmachen?","Işığı açabilir misin?","Ja, ich mache es an.","Evet, açıyorum."],
+["Kannst du das Licht ausmachen?","Işığı kapatabilir misin?","Ja, ich mache es aus.","Evet, kapatıyorum."],
+["Räumst du dein Zimmer auf?","Odanı toparlıyor musun?","Ja, gerade jetzt.","Evet, tam şimdi."],
+["Wann putzt du die Wohnung?","Evi ne zaman temizliyorsun?","Am Samstag.","Cumartesi."],
+["Kämmst du dich vor dem Spiegel?","Aynanın önünde mi taranıyorsun?","Ja, immer.","Evet, her zaman."],
+["Rasiert er sich jeden Tag?","O her gün tıraş oluyor mu?","Ja, jeden Tag.","Evet, her gün."],
+["Wie viele Stunden schläfst du?","Kaç saat uyuyorsun?","Acht Stunden.","Sekiz saat."],
+["Wann stehst du auf?","Ne zaman kalkıyorsun?","Um sieben Uhr.","Saat yedide."],
+["Ziehst du dich schnell an?","Çabuk mu giyiniyorsun?","Ja, sehr schnell.","Evet, çok çabuk."],
+["Kannst du dich bitte ausziehen?","Lütfen soyunabilir misin?","Ja, ich ziehe mich aus.","Evet, soyunuyorum."],
+["Wo spielen die Kinder?","Çocuklar nerede oynuyor?","Im Zimmer.","Odada."],
+["Kommst du bitte rein?","İçeri gelir misin?","Ja, ich komme rein.","Evet, geliyorum."],
+["Gehst du kurz raus?","Kısaca dışarı mı çıkıyorsun?","Ja, ich gehe raus.","Evet, çıkıyorum."],
+["Sollen wir in einem anderen Geschäft schauen?","Başka bir mağazaya mı bakalım?","Ja, lass uns schauen.","Evet, bakalım."],
+["Ist das Zimmer hell?","Oda aydınlık mı?","Ja, sehr hell.","Evet, çok aydınlık."],
+["Ist der Keller dunkel?","Bodrum karanlık mı?","Ja, ziemlich dunkel.","Evet, oldukça karanlık."],
+["Ist die Straße ruhig?","Sokak sakin mi?","Ja, sehr ruhig.","Evet, çok sakin."],
+["Ist die Musik zu laut?","Müzik çok yüksek sesli mi?","Ja, viel zu laut.","Evet, çok fazla."],
+["Ist der Stuhl ungemütlich?","Sandalye rahatsız edici mi?","Ja, sehr ungemütlich.","Evet, çok rahatsız edici."],
+["Ist das Wohnzimmer gemütlich?","Oturma odası rahat mı?","Ja, sehr gemütlich.","Evet, çok rahat."],
+["Ist der Garten gepflegt?","Bahçe bakımlı mı?","Ja, sehr gepflegt.","Evet, çok bakımlı."],
+["Ist der Flur schmal?","Koridor dar mı?","Ja, sehr schmal.","Evet, çok dar."],
+["Wie ist die Aussicht?","Manzara nasıl?","Sie ist wunderschön.","Çok güzel."],
+["Ist die Miete billig?","Kira ucuz mu?","Ja, ziemlich billig.","Evet, oldukça ucuz."],
+["Ist die Küche modern?","Mutfak modern mi?","Ja, sehr modern.","Evet, çok modern."],
+["Ist das Angebot interessant?","Teklif ilginç mi?","Ja, sehr interessant.","Evet, çok ilginç."],
+["Ist die Tapete hässlich?","Duvar kağıdı çirkin mi?","Ja, ziemlich hässlich.","Evet, oldukça çirkin."],
+["Wo arbeitet dein Vater?","Baban nerede çalışıyor?","Bei einer Firma.","Bir şirkette."],
+["Habt ihr heute Gäste?","Bugün misafiriniz var mı?","Ja, wir haben Gäste.","Evet, misafirimiz var."],
+["Hast du genug Geld?","Yeterince paran var mı?","Nein, nicht genug.","Hayır, yeterince yok."],
+["Wann schließt das Geschäft?","Mağaza ne zaman kapanıyor?","Um acht Uhr.","Sekizde."],
+["Wie war das Gespräch?","Görüşme nasıldı?","Sehr nett.","Çok hoştu."],
+["Passt die Größe der Wohnung euch?","Dairenin boyutu size uyuyor mu?","Ja, sie passt uns.","Evet, bize uyuyor."],
+["Wo wohnt ihr, in der Stadt?","Nerede oturuyorsunuz, şehirde mi?","Ja, in der Stadt.","Evet, şehirde."],
+["Liegt die Wohnung im Zentrum?","Daire merkezde mi?","Ja, im Zentrum.","Evet, merkezde."],
+["Wo lernst du Deutsch?","Almancayı nerede öğreniyorsun?","In der Sprachschule.","Dil okulunda."],
+["Singt sie gern?","O şarkı söylemeyi sever mi?","Ja, sehr gerne.","Evet, çok sever."],
+["Was suchst du?","Ne arıyorsun?","Eine neue Wohnung.","Yeni bir daire."],
+["Was wünschst du dir?","Ne diliyorsun?","Eine größere Küche.","Daha büyük bir mutfak."],
+["Habt ihr einen Plan für die Wohnung?","Daire için bir planınız var mı?","Ja, wir haben einen Plan.","Evet, bir planımız var."],
+["Braucht ihr mehr Platz?","Daha fazla yere mi ihtiyacınız var?","Ja, viel mehr Platz.","Evet, çok daha fazla."],
+["Ist das ein guter Ort zum Wohnen?","Burası oturmak için iyi bir yer mi?","Ja, ein schöner Ort.","Evet, güzel bir yer."],
+["Habt ihr den Mietvertrag unterschrieben?","Kira sözleşmesini imzaladınız mı?","Ja, gerade eben.","Evet, az önce."],
+["Wo ist die Steckdose?","Priz nerede?","Neben dem Bett.","Yatağın yanında."],
+["Wo ist der Schalter?","Düğme nerede?","Neben der Tür.","Kapının yanında."],
+["Ist die Glühbirne kaputt?","Ampul bozuk mu?","Ja, sie ist kaputt.","Evet, bozuk."],
+["Was steht auf dem Dachboden?","Çatı katında ne duruyor?","Alte Möbel.","Eski mobilyalar."],
+["Ist der Briefkasten voll?","Posta kutusu dolu mu?","Ja, ganz voll.","Evet, tamamen dolu."],
+["Wie ist die Lage der Wohnung?","Dairenin konumu nasıl?","Perfekt.","Mükemmel."],
+["Ist euer Nachbar freundlich?","Komşunuz arkadaş canlısı mı?","Ja, sehr freundlich.","Evet, çok arkadaş canlısı."],
+["Macht die Klimaanlage das Zimmer kühl?","Klima odayı serinletiyor mu?","Ja, sehr kühl.","Evet, çok serin."]
+];
+
+const GENDER_META = {
+  m: { color: "var(--der-blue)", hex: "#2E5FA3", label: "der" },
+  f: { color: "var(--die-red)", hex: "#C0392B", label: "die" },
+  n: { color: "var(--das-green)", hex: "#1E8449", label: "das" },
+  p: { color: "var(--plural-orange)", hex: "#D9791C", label: "die (çoğul)" },
+  "": { color: "var(--neutral-grey)", hex: "#5A6B63", label: "" }
+};
+
+const $ = sel => document.querySelector(sel);
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+// ---------- WORD HIGHLIGHTING ----------
+const CORE_OVERRIDE = {
+  "die Toilette / das WC": "Toilette",
+  "nach Hause / zu Hause": "Hause",
+  "im ersten Stock wohnen": "Stock",
+  "der Nachbar / die Nachbarin": "Nachbar",
+  "putzen / reinigen": "putzen"
+};
+
+function coreForm(de){
+  if (CORE_OVERRIDE[de]) return CORE_OVERRIDE[de];
+  let w = de.replace(/^(der|die|das)\s+/, "");
+  w = w.split(" / ")[0];
+  w = w.replace(/[()–-]/g, " ").trim().split(" ")[0];
+  return w;
+}
+function stemOf(w){
+  if (w.length > 5 && w.endsWith("en")) return w.slice(0, -2);
+  if (w.length > 4 && w.endsWith("e")) return w.slice(0, -1);
+  if (w.length > 4 && w.endsWith("n")) return w.slice(0, -1);
+  return w;
+}
+function escapeHtml(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+// Eski telefon tarayıcılarıyla da uyumlu olsun diye lookbehind/\p{L} yerine
+// klasik bir "harf sınıfı" ile kelime kelime tarama yapılır (Almanca ö/ü/ä/ß dahil).
+const LETTER_CLASS = "A-Za-zÀ-ÖØ-öø-ÿ";
+const SPLIT_RE = new RegExp("([^" + LETTER_CLASS + "]+)");
+const HAS_LETTER_RE = new RegExp("[" + LETTER_CLASS + "]");
+
+function findTargetWord(de, gender, sentence){
+  const core = coreForm(de);
+  const st = stemOf(core);
+  const isNoun = gender === "m" || gender === "f" || gender === "n" || gender === "p";
+  const tokens = sentence.split(SPLIT_RE);
+  for (const t of tokens){
+    if (!t || !HAS_LETTER_RE.test(t)) continue;
+    // isimlerde büyük/küçük harf duyarlı arama (örn. "Ei" kelimesi "ein" ile karışmasın diye)
+    const matches = isNoun ? t.indexOf(st) === 0 : t.toLowerCase().indexOf(st.toLowerCase()) === 0;
+    if (matches) return t;
+  }
+  return null;
+}
+function highlightSentence(de, gender, sentence){
+  const target = findTargetWord(de, gender, sentence);
+  const safe = escapeHtml(sentence);
+  if (!target) return safe;
+  const escapedMatch = escapeHtml(target);
+  const idx = safe.indexOf(escapedMatch);
+  if (idx === -1) return safe;
+  return safe.slice(0, idx) + "<b>" + escapedMatch + "</b>" + safe.slice(idx + escapedMatch.length);
+}
+
+// ---------- AUDIO ----------
+let germanVoice = null;
+function pickGermanVoice(){
+  const voices = speechSynthesis.getVoices ? speechSynthesis.getVoices() : [];
+  germanVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("de")) || null;
+}
+if (typeof speechSynthesis !== "undefined") {
+  pickGermanVoice();
+  speechSynthesis.onvoiceschanged = pickGermanVoice;
+}
+function speakGerman(text){
+  try{
+    if (typeof speechSynthesis === "undefined") {
+      alert("Bu tarayıcı sesli okumayı desteklemiyor.");
+      return;
+    }
+    speechSynthesis.cancel();
+    // artikel (der/die/das) korunur, sadece alternatif yazımlar ve parantezler temizlenir
+    const clean = text.split(" / ")[0].replace(/[()]/g, "");
+    const utter = new SpeechSynthesisUtterance(clean);
+    utter.lang = "de-DE";
+    if (germanVoice) utter.voice = germanVoice;
+    utter.rate = 0.9;
+    speechSynthesis.speak(utter);
+  }catch(e){ console.warn("TTS error", e); }
+}
+
+// ---------- BACKEND (Google Apps Script + Google Sheets) ----------
+// Kurulum sonrası Apps Script "Web App URL"nizi aşağıya yapıştırın.
+// Örnek: "https://script.google.com/macros/s/AKfycb.../exec"
+const CONFIG = {
+  API_URL: "https://script.google.com/macros/s/AKfycbyGZWVGtjDukKHizQagXYXDJ8m4tNtrBiLMb8X5ootsy-WzkaNQHzew3k7wrUwkAnM4fA/exec",
+  THEMA: "Wohnen (Ev-Konut)"
+};
+
+function apiConfigured(){
+  return CONFIG.API_URL && CONFIG.API_URL.indexOf("script.google.com") !== -1;
+}
+
+async function apiCall(action, payload){
+  if (!apiConfigured()) return null;
+  try{
+    const res = await fetch(CONFIG.API_URL, {
+      method: "POST",
+      // "text/plain" kullanılır ki tarayıcı CORS ön-kontrolü (preflight) göndermesin;
+      // Apps Script Web App'ler OPTIONS isteklerine yanıt vermediği için bu şart.
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(Object.assign({ action: action }, payload))
+    });
+    return await res.json();
+  }catch(e){
+    console.warn("API error", e);
+    return null;
+  }
+}
+
+let storageAvailable = false; // apiConfigured() kontrolüyle çalışma anında güncellenir
+
+// ---------- IDENTITY ----------
+let student = { name: "", date: "" };
+
+function todayStr(){
+  const d = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate());
+}
+$("#gate-date").value = todayStr();
+
+$("#gate-submit").addEventListener("click", async ()=>{
+  const name = $("#gate-name").value.trim();
+  const date = $("#gate-date").value || todayStr();
+  if (!name) { $("#gate-name").focus(); return; }
+  student = { name, date };
+  $("#identity-gate").style.display = "none";
+  renderStudentLine();
+  await renderHistoryPanel();
+});
+
+function renderStudentLine(){
+  $("#student-line").innerHTML =
+    "👤 " + escapeHtml(student.name) + " · " + student.date +
+    ' <button id="change-student">Değiştir</button>';
+  $("#change-student").addEventListener("click", ()=>{
+    $("#identity-gate").style.display = "flex";
+  });
+}
+
+async function renderHistoryPanel(){
+  const existing = document.getElementById("history-panel");
+  if (existing) existing.remove();
+  if (!apiConfigured()) return;
+  const res = await apiCall("getHistory", { name: student.name, thema: CONFIG.THEMA });
+  if (!res || !res.records || !res.records.length) return;
+  const top = res.records.slice(0, 5);
+  const panel = document.createElement("div");
+  panel.id = "history-panel";
+  panel.className = "topic-tags";
+  panel.style.marginTop = "10px";
+  panel.innerHTML = '<span class="tag" style="background:rgba(227,169,58,0.18);">📊 Geçmiş sonuçların:</span>' +
+    top.map(r => '<span class="tag">Quiz ' + r.quizSet + ": " + r.score + "/" + r.total + " (%" + r.pct + ")</span>").join("");
+  $("#student-line").insertAdjacentElement("afterend", panel);
+}
+
+// allow Enter key to submit gate
+$("#gate-name").addEventListener("keydown", e=>{ if(e.key==="Enter") $("#gate-submit").click(); });
+
+// ---------- TABS ----------
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    if (btn.dataset.tab === "quiz") showQuizSelect();
+  });
+});
+
+// ---------- FLASHCARDS ----------
+let order = WORDS.map((_, i) => i);
+let idx = 0;
+let flipped = false;
+let knowSet = new Set();
+let unsureSet = new Set();
+let reviewOnly = false;
+let fcDirection = "de-tr";
+let articleRevealed = false;
+let lastWIndexForArticle = -1;
+
+function currentList(){
+  return reviewOnly ? order.filter(i => unsureSet.has(i)) : order;
+}
+
+// Uzun bir açıklama parantez içindeyse ("sahip olmak (benim ... var/yok)" gibi),
+// ana kelimeyi büyük satırda, parantez içini ayrı ve daha küçük bir alt satırda gösterir.
+function setWordDisplay(el, text){
+  const idx = text.indexOf("(");
+  if (idx > 0){
+    const main = text.slice(0, idx).trim();
+    const secondary = text.slice(idx).trim();
+    el.innerHTML = main + '<span class="word-sub">' + secondary + '</span>';
+  } else {
+    el.textContent = text;
+  }
+}
+
+// Almanca kelimenin artikelini gizler; öğrenci artikeli tahmin etsin diye.
+// Rozet (❔ Artikel) tıklanana kadar artikel gösterilmez.
+function setGermanWordDisplay(el, text, revealed){
+  const m = text.match(/^(der|die|das)\s+/);
+  let displayText = text;
+  if (m && !revealed){
+    displayText = text.slice(m[0].length);
+  }
+  setWordDisplay(el, displayText);
+}
+
+function renderCard(){
+  const list = currentList();
+  if (list.length === 0){
+    $("#fc-de").textContent = "Tekrar listesi boş 🎉";
+    $("#fc-tr").textContent = "";
+    $("#fc-ex").textContent = "Tüm kelimeleri biliyorsun!";
+    $("#fc-ex-front").textContent = "";
+    $("#fc-examqa").style.display = "none";
+    $("#fc-examqa-front").style.display = "none";
+    $("#fc-count").textContent = "0 / 0";
+    return;
+  }
+  $("#fc-examqa").style.display = "block";
+  $("#fc-examqa-front").style.display = "block";
+  if (idx >= list.length) idx = 0;
+  if (idx < 0) idx = list.length - 1;
+  const wIndex = list[idx];
+  if (wIndex !== lastWIndexForArticle){
+    articleRevealed = false;
+    lastWIndexForArticle = wIndex;
+  }
+  const [de, tr, deS, trS, gender] = WORDS[wIndex];
+  const meta = GENDER_META[gender] || GENDER_META[""];
+
+  const frontLabelEl = $("#fc-front-label");
+  const backLabelEl = $("#fc-back-label");
+  let front, back;
+  if (fcDirection === "de-tr"){
+    frontLabelEl.textContent = "Almanca";
+    backLabelEl.textContent = "Türkçe";
+    front = de; back = tr;
+  } else {
+    frontLabelEl.textContent = "Türkçe";
+    backLabelEl.textContent = "Almanca";
+    front = tr; back = de;
+  }
+  if (fcDirection === "de-tr"){
+    // Almanca göster: öğrenme modu, artikel her zaman görünür
+    setWordDisplay($("#fc-de"), front);
+    setWordDisplay($("#fc-tr"), back);
+  } else {
+    // Türkçe göster: zorlayıcı mod, Almanca kelime (arka yüz) artikelsiz gösterilir
+    setWordDisplay($("#fc-de"), front);
+    setGermanWordDisplay($("#fc-tr"), back, articleRevealed);
+  }
+  $("#fc-de").style.color = meta.hex;
+
+  {
+    const badgeEls = [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")];
+    if (!meta.label){
+      badgeEls.forEach(el=>{ el.style.display = "none"; el.onclick = null; });
+    } else if (fcDirection === "de-tr"){
+      // Almanca göster: öğrenme modu, rozet her iki yüzde de normal (açık) görünür
+      badgeEls.forEach(el=>{
+        el.style.display = "inline-block";
+        el.style.cursor = "default";
+        el.textContent = meta.label;
+        el.style.background = meta.hex;
+        el.onclick = null;
+      });
+    } else {
+      // Türkçe göster: her iki yüzde de "❔ Artikel" gösterilir,
+      // öğrenci tahmin etsin diye; tıklanınca ikisi birden açılır/kapanır (toggle)
+      badgeEls.forEach(el=>{
+        el.style.display = "inline-block";
+        el.style.cursor = "pointer";
+        if (articleRevealed){
+          el.textContent = meta.label;
+          el.style.background = meta.hex;
+        } else {
+          el.textContent = "❔ Artikel";
+          el.style.background = "#8a9992";
+        }
+        el.onclick = (e)=>{
+          e.stopPropagation();
+          articleRevealed = !articleRevealed;
+          renderCard();
+        };
+      });
+    }
+  }
+
+  // Her yüz sadece kendi dilindeki cümleyi gösterir (çapraz dil karışmaz)
+  if (fcDirection === "de-tr"){
+    $("#fc-ex-front").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex-front").style.color = meta.hex;
+    $("#fc-ex").textContent = trS;
+    $("#fc-ex").style.color = "var(--ink)";
+  } else {
+    $("#fc-ex-front").textContent = trS;
+    $("#fc-ex-front").style.color = "var(--ink)";
+    $("#fc-ex").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex").style.color = meta.hex;
+  }
+
+  const qa = EXAM_QA[wIndex];
+  if (qa){
+    if (fcDirection === "de-tr"){
+      $("#fc-qa-q-front").textContent = qa[0];
+      $("#fc-qa-a-front").textContent = qa[2];
+      $("#fc-qa-q").textContent = qa[1];
+      $("#fc-qa-a").textContent = qa[3];
+    } else {
+      $("#fc-qa-q-front").textContent = qa[1];
+      $("#fc-qa-a-front").textContent = qa[3];
+      $("#fc-qa-q").textContent = qa[0];
+      $("#fc-qa-a").textContent = qa[2];
+    }
+  }
+
+  const numLabel = "#" + (wIndex + 1);
+  $("#fc-number-front").textContent = numLabel;
+  $("#fc-number-back").textContent = numLabel;
+
+  $("#fc-count").textContent = (idx+1) + " / " + list.length;
+  $("#fc-progress").style.width = (((idx+1)/list.length)*100) + "%";
+  $("#fc-mode-label").textContent = reviewOnly ? "Tekrar listesi" : "Tüm kartlar";
+  const card = $("#flip-card");
+  card.classList.remove("flipped");
+  flipped = false;
+  updateStats();
+}
+
+function updateStats(){
+  $("#stat-know").textContent = knowSet.size;
+  $("#stat-unsure").textContent = unsureSet.size;
+  $("#fc-review-count").textContent = unsureSet.size;
+
+  const total = WORDS.length;
+  const reviewed = knowSet.size + unsureSet.size;
+  $("#mastery-count").textContent = reviewed + "/" + total;
+  $("#mastery-progress").style.width = ((reviewed/total)*100) + "%";
+
+  const badge = $("#mastery-badge");
+  if (reviewed === 0){
+    badge.style.display = "none";
+  } else {
+    const pct = Math.round((knowSet.size/total)*100);
+    const grade = gradeFor(pct);
+    badge.style.display = "inline-block";
+    badge.textContent = "Öğrenme Oranı: %" + pct + " — " + grade.label;
+    badge.style.background = grade.color + "22";
+    badge.style.color = grade.color;
+    badge.style.border = "2px solid " + grade.color;
+  }
+}
+
+$("#flip-card").addEventListener("click", ()=>{
+  flipped = !flipped;
+  $("#flip-card").classList.toggle("flipped", flipped);
+});
+$("#audio-btn-front").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentWord(); });
+$("#audio-btn-back").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentSentence(); });
+function speakCurrentWord(){
+  const list = currentList();
+  if (list.length === 0) return;
+  const wIndex = list[idx];
+  speakGerman(WORDS[wIndex][0]); // artikel + kelime, örn. "der Apfel"
+}
+function speakCurrentSentence(){
+  const list = currentList();
+  if (list.length === 0) return;
+  const wIndex = list[idx];
+  speakGerman(WORDS[wIndex][2]); // sadece Almanca örnek cümle (deS), Türkçesi okunmaz
+}
+
+function goNext(){
+  const list = currentList();
+  const wasFullPassEnd = !reviewOnly && list.length > 0 && idx === list.length - 1;
+  idx++;
+  renderCard();
+  if (wasFullPassEnd) handleFullPassComplete();
+}
+function goPrev(){ idx--; renderCard(); }
+
+$("#fc-next").addEventListener("click", goNext);
+$("#fc-prev").addEventListener("click", goPrev);
+
+// ---- Telefonda parmakla kaydırarak kart değiştirme ----
+let swipeHandled = false;
+(function setupSwipe(){
+  const el = $("#flip-card");
+  let startX = 0, startY = 0;
+  el.addEventListener("touchstart", (e)=>{
+    const t = e.changedTouches[0];
+    startX = t.screenX; startY = t.screenY;
+  }, { passive: true });
+  el.addEventListener("touchend", (e)=>{
+    const t = e.changedTouches[0];
+    const dx = t.screenX - startX;
+    const dy = t.screenY - startY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4){
+      swipeHandled = true;
+      if (dx < 0) goNext(); else goPrev();
+    }
+  }, { passive: true });
+})();
+
+async function handleFullPassComplete(){
+  if (!apiConfigured() || !student.name) return;
+  const res = await apiCall("completeCardPass", { name: student.name, thema: CONFIG.THEMA });
+  if (res && res.count) showCardCompletionBanner(res.count);
+}
+
+function showCardCompletionBanner(count){
+  const existing = document.getElementById("card-complete-banner");
+  if (existing) existing.remove();
+  const banner = document.createElement("div");
+  banner.id = "card-complete-banner";
+  banner.className = "resume-banner";
+  const waMsg = "Merhaba! Ben " + student.name + ". Essen/Trinken/Einkaufen kartlar bölümünü " + count + ". kez bitirdim. (" + student.date + ")";
+  banner.innerHTML = "🎉 Kartlar bölümünü <b>" + count + ". kez</b> bitirdin! " +
+    '<a class="whatsapp-btn" style="margin-left:8px;padding:6px 14px;font-size:13px;" href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank">📤 Hocama Bildir</a>';
+  const stage = document.querySelector(".card-stage");
+  stage.parentNode.insertBefore(banner, stage);
+  setTimeout(()=>{ if (banner.parentNode) banner.remove(); }, 15000);
+}
+
+$("#fc-know").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; knowSet.add(wIndex); unsureSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-unsure").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; unsureSet.add(wIndex); knowSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-shuffle").addEventListener("click", ()=>{ order = shuffle(order); idx = 0; renderCard(); });
+$("#fc-review").addEventListener("click", ()=>{
+  reviewOnly = !reviewOnly; idx = 0;
+  $("#fc-review").innerHTML = reviewOnly
+    ? "⬅ Tüm Kartlara Dön"
+    : '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">' + unsureSet.size + '</span>)';
+  renderCard();
+});
+$("#fc-reset").addEventListener("click", ()=>{
+  knowSet.clear(); unsureSet.clear(); reviewOnly = false;
+  order = WORDS.map((_,i)=>i); idx = 0;
+  $("#fc-review").innerHTML = '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)';
+  renderCard();
+});
+document.querySelectorAll("#fc-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#fc-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    fcDirection = btn.dataset.dir;
+    renderCard();
+  });
+});
+
+renderCard();
+
+// ---------- QUIZ ----------
+const COGNATE_EXCLUDE = new Set([
+  "das Sofa", "die Firma", "der Plan", "modern", "der Balkon",
+  "die Garage", "die Vitrine", "die Terrasse", "die Fritteuse", "interessant"
+]);
+
+const ELIGIBLE_POOL = WORDS.map((_, i) => i).filter(i => !COGNATE_EXCLUDE.has(WORDS[i][0]));
+// Havuzu tam olarak QUIZ_COUNT parçaya böler; bölünemeyen kalan kelimeler
+// otomatik olarak son quize eklenir.
+const QUIZ_COUNT = 4;
+const baseSize = Math.floor(ELIGIBLE_POOL.length / QUIZ_COUNT);
+const QUIZ_SETS = [];
+for (let i = 0; i < QUIZ_COUNT; i++) {
+  const start = i * baseSize;
+  const end = (i === QUIZ_COUNT - 1) ? ELIGIBLE_POOL.length : start + baseSize;
+  QUIZ_SETS.push(ELIGIBLE_POOL.slice(start, end));
+}
+
+let activeQuizSet = null;
+let quizDirection = "de-tr";
+let quizOrder = [];
+let quizDirs = [];
+let quizIdx = 0;
+let quizScore = 0;
+let quizWrong = [];
+let answered = false;
+
+const GRADE_BANDS = [
+  { min: 90, label: "Pekiyi 🏆", color: "#2E7D46" },
+  { min: 75, label: "İyi 👍", color: "#5C8C52" },
+  { min: 60, label: "Orta 🙂", color: "#E3A93A" },
+  { min: 45, label: "Geçer 📘", color: "#D98C2B" },
+  { min: 0,  label: "Tekrar Çalış 💪", color: "#C1442C" },
+];
+function gradeFor(pct){ return GRADE_BANDS.find(b => pct >= b.min); }
+
+document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    quizDirection = btn.dataset.dir;
+    if (activeQuizSet !== null) startQuiz();
+  });
+});
+document.querySelectorAll(".quiz-set-btn").forEach(btn=>{
+  btn.addEventListener("click", async ()=>{
+    activeQuizSet = parseInt(btn.dataset.set, 10);
+    $("#quiz-select").style.display = "none";
+    $("#quiz-area").style.display = "block";
+    const resumed = await tryResumeQuiz();
+    if (!resumed) startQuiz();
+  });
+});
+
+function showQuizSelect(){
+  activeQuizSet = null;
+  $("#quiz-select").style.display = "block";
+  $("#quiz-area").style.display = "none";
+  storageAvailable = apiConfigured();
+  $("#storage-note").textContent = storageAvailable
+    ? "✔ Sonuçların ve ilerlemen kaydediliyor — istediğin zaman kaldığın yerden devam edebilirsin."
+    : "Not: Öğretmenin henüz sonuç kaydını aktif etmedi; quiz'i tek oturumda bitirmen gerekiyor. Sonucu bitince WhatsApp butonuyla gönderebilirsin.";
+}
+
+async function saveQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("saveProgress", {
+    name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection,
+    quizOrder, quizDirs, quizIdx, quizScore, quizWrong
+  });
+}
+async function clearQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("clearProgress", { name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection });
+}
+async function tryResumeQuiz(){
+  if (!apiConfigured()) return false;
+  const res = await apiCall("getProgress", { name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection });
+  if (!res || !res.found) return false;
+  if (!res.quizOrder || res.quizIdx >= res.quizOrder.length) return false;
+  quizOrder = res.quizOrder; quizDirs = res.quizDirs;
+  quizIdx = res.quizIdx; quizScore = res.quizScore; quizWrong = res.quizWrong;
+  renderResumeBanner(res.quizIdx, res.quizScore);
+  renderQuizQuestion();
+  return true;
+}
+function renderResumeBanner(qIdx, score){
+  const area = $("#quiz-area");
+  const banner = document.createElement("div");
+  banner.className = "resume-banner";
+  banner.innerHTML = "📌 Kaldığın yerden devam ediyorsun: Soru " + (qIdx+1) + ", şu ana kadar " + score + " doğru. " +
+    '<button class="btn btn-ghost" id="resume-restart-instead" style="padding:4px 10px;font-size:12px;">Baştan Başla</button>';
+  area.parentNode.insertBefore(banner, area);
+  $("#resume-restart-instead").addEventListener("click", ()=>{
+    banner.remove();
+    startQuiz();
+  });
+  setTimeout(()=>{ if(banner.parentNode) banner.remove(); }, 6000);
+}
+
+function buildQuizOrder(){ return shuffle(QUIZ_SETS[activeQuizSet]); }
+
+function startQuiz(){
+  quizOrder = buildQuizOrder();
+  quizDirs = quizOrder.map(()=> quizDirection === "mixed" ? (Math.random()<0.5 ? "de-tr" : "tr-de") : quizDirection);
+  quizIdx = 0; quizScore = 0; quizWrong = [];
+  renderQuizQuestion();
+}
+
+function pickDistractors(correctIndex, count){
+  const pool = WORDS.map((_,i)=>i).filter(i => i !== correctIndex);
+  return shuffle(pool).slice(0, count);
+}
+
+function renderQuizQuestion(){
+  answered = false;
+  const area = $("#quiz-area");
+  if (quizIdx >= quizOrder.length){ renderQuizResult(); return; }
+  const wIndex = quizOrder[quizIdx];
+  const dir = quizDirs[quizIdx];
+  const [de, tr] = WORDS[wIndex];
+  const askWord = dir === "de-tr" ? de : tr;
+  const questionLabel = dir === "de-tr" ? "Bu kelimenin Türkçesi ne?" : "Bu kelimenin Almancası ne?";
+  const dirTag = dir === "de-tr" ? "🇩🇪 → 🇹🇷" : "🇹🇷 → 🇩🇪";
+
+  const distractorIdx = pickDistractors(wIndex, 3);
+  const optionsIdx = shuffle([wIndex, ...distractorIdx]);
+
+  area.innerHTML =
+    '<div class="quiz-top">' +
+      '<span><button class="back-link" id="quiz-back-link">◀ Quiz ' + (activeQuizSet+1) + '</button> &nbsp; Soru ' + (quizIdx+1) + ' / ' + quizOrder.length + ' &nbsp; ' + dirTag + '</span>' +
+      '<span class="quiz-live-score">Puan: ' + quizScore + ' / ' + quizOrder.length + '</span>' +
+    '</div>' +
+    '<div class="quiz-question">' +
+      '<div class="eyebrow">' + questionLabel + '</div>' +
+      '<div class="word">' + escapeHtml(askWord) + '</div>' +
+    '</div>' +
+    '<div class="options" id="quiz-options"></div>' +
+    '<div class="quiz-feedback" id="quiz-feedback"></div>' +
+    '<div class="quiz-next" id="quiz-next-wrap"></div>';
+
+  $("#quiz-back-link").addEventListener("click", ()=>{ saveQuizProgress(); showQuizSelect(); });
+
+  const optsWrap = $("#quiz-options");
+  optionsIdx.forEach(oi=>{
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = dir === "de-tr" ? WORDS[oi][1] : WORDS[oi][0];
+    btn.addEventListener("click", ()=> handleAnswer(oi, wIndex, btn, dir));
+    optsWrap.appendChild(btn);
+  });
+
+  saveQuizProgress();
+}
+
+function handleAnswer(chosenIdx, correctIdx, btnEl, dir){
+  if (answered) return;
+  answered = true;
+  const correctText = dir === "de-tr" ? WORDS[correctIdx][1] : WORDS[correctIdx][0];
+  document.querySelectorAll(".option").forEach(opt=>{
+    opt.setAttribute("disabled","true");
+    if (opt.textContent === correctText) opt.classList.add("correct");
+  });
+  const feedback = $("#quiz-feedback");
+  if (chosenIdx === correctIdx){
+    quizScore++;
+    feedback.textContent = "✔ Doğru!";
+    feedback.className = "quiz-feedback correct";
+  } else {
+    btnEl.classList.add("wrong");
+    feedback.textContent = "✘ Doğrusu: " + correctText;
+    feedback.className = "quiz-feedback wrong";
+    quizWrong.push(correctIdx);
+  }
+  const nextWrap = $("#quiz-next-wrap");
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "btn btn-know";
+  nextBtn.textContent = (quizIdx === quizOrder.length - 1) ? "Sonuçları Gör →" : "Sonraki Soru →";
+  nextBtn.addEventListener("click", ()=>{ quizIdx++; renderQuizQuestion(); });
+  nextWrap.appendChild(nextBtn);
+  saveQuizProgress();
+}
+
+function buildWhatsAppLink(pct, total, grade){
+  const msg = "Merhaba! Ben " + student.name + ". " + student.date + " tarihinde Quiz " + (activeQuizSet+1) +
+    "'i çözdüm. Sonucum: " + quizScore + "/" + total + " doğru = " + pct + "/100 puan (" + grade.label + ").";
+  return "https://wa.me/?text=" + encodeURIComponent(msg);
+}
+
+function renderQuizResult(){
+  clearQuizProgress();
+  const area = $("#quiz-area");
+  const total = quizOrder.length;
+  const pct = Math.round((quizScore/total)*100);
+  const grade = gradeFor(pct);
+
+  let reviewHtml = "";
+  if (quizWrong.length){
+    reviewHtml = '<div class="review-list">' + quizWrong.map(i=>{
+      const [de,tr] = WORDS[i];
+      return '<div class="review-item"><b>' + escapeHtml(de) + '</b><span>' + escapeHtml(tr) + '</span></div>';
+    }).join("") + '</div>';
+  }
+
+  area.innerHTML =
+    '<div class="result-card">' +
+      '<div class="result-max-badge">100 puan üzerinden</div>' +
+      '<div class="eyebrow">Quiz ' + (activeQuizSet+1) + ' Sonucu</div>' +
+      '<div class="big-score">' + pct + '<span style="font-size:22px;">/100 puan</span></div>' +
+      '<div class="points-row">' +
+        '<span>Doğru: <b>' + quizScore + '</b> / ' + total + '</span>' +
+        '<span>Yanlış: <b>' + quizWrong.length + '</b></span>' +
+      '</div>' +
+      '<div class="grade-badge" style="background:' + grade.color + '22; color:' + grade.color + '; border:2px solid ' + grade.color + ';">' + grade.label + '</div>' +
+      (reviewHtml ? '<div style="margin-top:16px; font-size:13px; color:var(--muted); text-align:left;">Tekrar edilmesi gerekenler:</div>' + reviewHtml : '') +
+      '<div class="controls-row" style="margin-top:20px;">' +
+        '<button class="btn btn-know" id="quiz-restart">🔄 Bu Quizi Tekrarla</button>' +
+        '<button class="btn btn-nav" id="quiz-back-to-select">◀ Başka Quiz Seç</button>' +
+      '</div>' +
+      '<div style="margin-top:14px;">' +
+        '<a class="whatsapp-btn" id="whatsapp-share" href="#" target="_blank" rel="noopener">📤 Sonucu WhatsApp\'tan Gönder</a>' +
+      '</div>' +
+    '</div>';
+
+  $("#quiz-restart").addEventListener("click", startQuiz);
+  $("#quiz-back-to-select").addEventListener("click", showQuizSelect);
+  $("#whatsapp-share").addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.open(buildWhatsAppLink(pct, total, grade), "_blank");
+  });
+
+  logAttempt(pct, total, grade);
+}
+
+async function logAttempt(pct, total, grade){
+  const wrongWords = quizWrong.map(i => WORDS[i][0] + " (" + WORDS[i][1] + ")").join(", ");
+  await apiCall("completeQuiz", {
+    name: student.name, thema: CONFIG.THEMA, date: student.date, quizSet: activeQuizSet+1,
+    direction: quizDirection, score: quizScore, total, pct, grade: grade.label,
+    wrongWords
+  });
+}
+</script>
+</body>
+</html>
