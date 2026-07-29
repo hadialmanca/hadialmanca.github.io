@@ -681,15 +681,12 @@ function renderCard(){
   $("#fc-de").style.color = meta.hex;
 
   {
-    const germanBadgeEl = fcDirection === "de-tr" ? $("#fc-gender-badge-front") : $("#fc-gender-badge-back");
-    const turkishBadgeEl = fcDirection === "de-tr" ? $("#fc-gender-badge-back") : $("#fc-gender-badge-front");
-
+    const badgeEls = [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")];
     if (!meta.label){
-      germanBadgeEl.style.display = "none"; germanBadgeEl.onclick = null;
-      turkishBadgeEl.style.display = "none"; turkishBadgeEl.onclick = null;
+      badgeEls.forEach(el=>{ el.style.display = "none"; el.onclick = null; });
     } else if (fcDirection === "de-tr"){
-      // Almanca göster: öğrenme modu, rozet her iki yüzde de normal görünür
-      [germanBadgeEl, turkishBadgeEl].forEach(el=>{
+      // Almanca göster: öğrenme modu, rozet her iki yüzde de normal (açık) görünür
+      badgeEls.forEach(el=>{
         el.style.display = "inline-block";
         el.style.cursor = "default";
         el.textContent = meta.label;
@@ -697,23 +694,24 @@ function renderCard(){
         el.onclick = null;
       });
     } else {
-      // Türkçe göster: Türkçe yüzde rozet HİÇ görünmez; Almanca yüzde (arka) gizli/açılır
-      turkishBadgeEl.style.display = "none";
-      turkishBadgeEl.onclick = null;
-      germanBadgeEl.style.display = "inline-block";
-      germanBadgeEl.style.cursor = "pointer";
-      if (articleRevealed){
-        germanBadgeEl.textContent = meta.label;
-        germanBadgeEl.style.background = meta.hex;
-      } else {
-        germanBadgeEl.textContent = "❔ Artikel";
-        germanBadgeEl.style.background = "#8a9992";
-      }
-      germanBadgeEl.onclick = (e)=>{
-        e.stopPropagation();
-        articleRevealed = !articleRevealed;
-        renderCard();
-      };
+      // Türkçe göster: her iki yüzde de "❔ Artikel" gösterilir,
+      // öğrenci tahmin etsin diye; tıklanınca ikisi birden açılır/kapanır (toggle)
+      badgeEls.forEach(el=>{
+        el.style.display = "inline-block";
+        el.style.cursor = "pointer";
+        if (articleRevealed){
+          el.textContent = meta.label;
+          el.style.background = meta.hex;
+        } else {
+          el.textContent = "❔ Artikel";
+          el.style.background = "#8a9992";
+        }
+        el.onclick = (e)=>{
+          e.stopPropagation();
+          articleRevealed = !articleRevealed;
+          renderCard();
+        };
+      });
     }
   }
 
