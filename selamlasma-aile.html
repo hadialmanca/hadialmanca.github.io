@@ -37,7 +37,7 @@
     padding:20px 14px 50px;
     font-size:16px;
   }
-  .wrap{max-width:800px;margin:0 auto;}
+  .wrap{max-width:980px;margin:0 auto;}
 
   /* ---- IDENTITY GATE ---- */
   #identity-gate{
@@ -117,13 +117,13 @@
 
   .progress-row{
     display:flex;align-items:center;justify-content:space-between;
-    max-width:460px;margin:0 auto 14px;font-size:14px;color:#CFE3D4;
+    max-width:640px;margin:0 auto 14px;font-size:16px;color:#CFE3D4;
   }
   .progress-bar{flex:1;height:7px;background:rgba(255,255,255,0.12);border-radius:4px;margin:0 10px;overflow:hidden;}
   .progress-fill{height:100%;background:var(--mustard);width:0%;transition:width .3s ease;}
 
   /* ---- FLASHCARD ---- */
-  .card-stage{perspective:1400px;max-width:460px;margin:0 auto;height:560px;}
+  .card-stage{perspective:1400px;max-width:640px;margin:0 auto;height:620px;}
   .card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.3,1.1);cursor:pointer;}
   .card.flipped{transform:rotateY(180deg);}
   .face{
@@ -154,10 +154,15 @@
     font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
     padding:3px 11px; border-radius:999px; color:#fff; margin-bottom:10px; margin-top:30px;
   }
-  .eyebrow{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700;}
-  .de-word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(28px,7vw,38px);}
-  .tr-word{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:30px;color:var(--tomato);margin-bottom:12px;}
-  .example{font-size:16.5px;line-height:1.55;color:var(--ink);}
+  .eyebrow{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700;}
+  .de-word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(30px,6vw,48px);line-height:1.2;}
+  .tr-word{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:clamp(26px,5vw,42px);color:var(--tomato);margin-bottom:12px;line-height:1.2;}
+  .word-sub{
+    display:block; font-family:'Karla',sans-serif; font-weight:600;
+    font-size:0.4em; color:var(--muted); margin-top:8px; line-height:1.35;
+    letter-spacing:0; text-transform:none;
+  }
+  .example{font-size:18.5px;line-height:1.6;color:var(--ink);}
   .example b{color:#000; font-weight:800;}
   .example-tr{font-size:15.5px; color:var(--muted); font-style:italic; margin-top:6px;}
   .exam-qa-box{
@@ -165,13 +170,13 @@
     width:100%; text-align:left;
   }
   .exam-qa-warning{
-    font-size:12.5px; font-weight:800; color:var(--tomato); text-transform:uppercase;
+    font-size:13.5px; font-weight:800; color:var(--tomato); text-transform:uppercase;
     letter-spacing:0.5px; margin-bottom:9px; text-align:center;
   }
-  .exam-qa-line{font-size:16px; color:var(--ink); margin-bottom:3px; line-height:1.45;}
+  .exam-qa-line{font-size:17.5px; color:var(--ink); margin-bottom:5px; line-height:1.5;}
   .exam-qa-line b{color:var(--green-mid);}
   .exam-qa-tr{font-size:14.5px; color:var(--muted); font-style:italic; margin-bottom:10px;}
-  .hint{margin-top:12px;font-size:12.5px;color:var(--muted);}
+  .hint{margin-top:12px;font-size:13.5px;color:var(--muted);}
 
   .controls-row{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;}
   .btn{font-family:'Karla',sans-serif;font-weight:700;font-size:15px;padding:11px 20px;border-radius:10px;border:none;cursor:pointer;transition:transform .12s ease, filter .15s ease;}
@@ -185,11 +190,11 @@
   .stat-row{display:flex;justify-content:center;gap:22px;margin-top:18px;font-size:14px;color:#CFE3D4;}
   .stat-row b{color:var(--mustard);}
 
-  .mastery-panel .progress-row{max-width:460px;margin:16px auto 8px;}
+  .mastery-panel .progress-row{max-width:640px;margin:16px auto 8px;}
   .grade-badge{display:inline-block;margin-top:6px;padding:7px 20px;border-radius:999px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;}
 
   /* ---- QUIZ ---- */
-  .quiz-select{max-width:460px;margin:0 auto;text-align:center;}
+  .quiz-select{max-width:640px;margin:0 auto;text-align:center;}
   .quiz-select-label{font-size:14.5px;color:#CFE3D4;margin-bottom:14px;}
   .quiz-set-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   .quiz-set-btn{
@@ -200,7 +205,7 @@
   .quiz-select-hint{margin-top:16px;font-size:12.5px;color:#9FB8A6;font-style:italic;}
   .back-link{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;padding:0;}
 
-  .quiz-card{background:var(--paper);color:var(--ink);border-radius:18px;max-width:480px;margin:0 auto;padding:30px 26px;box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);}
+  .quiz-card{background:var(--paper);color:var(--ink);border-radius:18px;max-width:680px;margin:0 auto;padding:34px 30px;box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);}
   .quiz-top{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:700;flex-wrap:wrap; gap:6px;}
   .quiz-live-score{color:var(--leaf); font-weight:800;}
   .quiz-question{text-align:center;margin-bottom:22px;}
@@ -235,7 +240,7 @@
     text-decoration:none;
   }
   .resume-banner{
-    max-width:460px; margin:0 auto 14px; background:rgba(227,169,58,0.15);
+    max-width:640px; margin:0 auto 14px; background:rgba(227,169,58,0.15);
     border:1.5px solid var(--mustard); border-radius:12px; padding:12px 16px;
     text-align:center; font-size:14px; color:var(--mustard);
   }
@@ -243,7 +248,7 @@
 
   footer{text-align:center;margin-top:40px;font-size:12.5px;color:#9FB8A6;}
   .storage-note{
-    max-width:460px; margin:16px auto 0; font-size:11.5px; color:#7c9992;
+    max-width:640px; margin:16px auto 0; font-size:11.5px; color:#7c9992;
     text-align:center; line-height:1.5; font-style:italic;
   }
 
@@ -319,6 +324,12 @@
           <div class="gender-badge" id="fc-gender-badge-front"></div>
           <div class="eyebrow" id="fc-front-label">Almanca</div>
           <div class="de-word" id="fc-de"></div>
+          <div class="example" id="fc-ex-front"></div>
+          <div class="exam-qa-box" id="fc-examqa-front">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q-front"></span></div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a-front"></span></div>
+          </div>
           <div class="hint">Çevirmek için karta dokun</div>
         </div>
         <div class="face back">
@@ -328,13 +339,10 @@
           <div class="eyebrow" id="fc-back-label">Türkçe</div>
           <div class="tr-word" id="fc-tr"></div>
           <div class="example" id="fc-ex"></div>
-          <div class="example-tr" id="fc-ex-tr"></div>
           <div class="exam-qa-box" id="fc-examqa">
             <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
             <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q"></span></div>
-            <div class="exam-qa-tr">(<span id="fc-qa-q-tr"></span>)</div>
             <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a"></span></div>
-            <div class="exam-qa-tr">(<span id="fc-qa-a-tr"></span>)</div>
           </div>
         </div>
       </div>
@@ -358,7 +366,7 @@
     </div>
 
     <div class="mastery-panel">
-      <div class="progress-row" style="max-width:460px; margin:16px auto 8px;">
+      <div class="progress-row" style="max-width:640px; margin:16px auto 8px;">
         <span>Değerlendirilen</span>
         <div class="progress-bar"><div class="progress-fill" id="mastery-progress" style="background:var(--leaf);"></div></div>
         <span id="mastery-count">0/209</span>
@@ -594,9 +602,35 @@ let knowSet = new Set();
 let unsureSet = new Set();
 let reviewOnly = false;
 let fcDirection = "de-tr";
+let articleRevealed = false;
+let lastWIndexForArticle = -1;
 
 function currentList(){
   return reviewOnly ? order.filter(i => unsureSet.has(i)) : order;
+}
+
+// Uzun bir açıklama parantez içindeyse ("sahip olmak (benim ... var/yok)" gibi),
+// ana kelimeyi büyük satırda, parantez içini ayrı ve daha küçük bir alt satırda gösterir.
+function setWordDisplay(el, text){
+  const idx = text.indexOf("(");
+  if (idx > 0){
+    const main = text.slice(0, idx).trim();
+    const secondary = text.slice(idx).trim();
+    el.innerHTML = main + '<span class="word-sub">' + secondary + '</span>';
+  } else {
+    el.textContent = text;
+  }
+}
+
+// Almanca kelimenin artikelini gizler; öğrenci artikeli tahmin etsin diye.
+// Rozet (❔ Artikel) tıklanana kadar artikel gösterilmez.
+function setGermanWordDisplay(el, text, revealed){
+  const m = text.match(/^(der|die|das)\s+/);
+  let displayText = text;
+  if (m && !revealed){
+    displayText = text.slice(m[0].length);
+  }
+  setWordDisplay(el, displayText);
 }
 
 function renderCard(){
@@ -605,15 +639,21 @@ function renderCard(){
     $("#fc-de").textContent = "Tekrar listesi boş 🎉";
     $("#fc-tr").textContent = "";
     $("#fc-ex").textContent = "Tüm kelimeleri biliyorsun!";
-    $("#fc-ex-tr").textContent = "";
+    $("#fc-ex-front").textContent = "";
     $("#fc-examqa").style.display = "none";
+    $("#fc-examqa-front").style.display = "none";
     $("#fc-count").textContent = "0 / 0";
     return;
   }
   $("#fc-examqa").style.display = "block";
+  $("#fc-examqa-front").style.display = "block";
   if (idx >= list.length) idx = 0;
   if (idx < 0) idx = list.length - 1;
   const wIndex = list[idx];
+  if (wIndex !== lastWIndexForArticle){
+    articleRevealed = false;
+    lastWIndexForArticle = wIndex;
+  }
   const [de, tr, deS, trS, gender] = WORDS[wIndex];
   const meta = GENDER_META[gender] || GENDER_META[""];
 
@@ -629,30 +669,68 @@ function renderCard(){
     backLabelEl.textContent = "Almanca";
     front = tr; back = de;
   }
-  $("#fc-de").textContent = front;
+  if (fcDirection === "de-tr"){
+    // Almanca göster: öğrenme modu, artikel her zaman görünür
+    setWordDisplay($("#fc-de"), front);
+    setWordDisplay($("#fc-tr"), back);
+  } else {
+    // Türkçe göster: zorlayıcı mod, Almanca kelime (arka yüz) artikelsiz gösterilir
+    setWordDisplay($("#fc-de"), front);
+    setGermanWordDisplay($("#fc-tr"), back, articleRevealed);
+  }
   $("#fc-de").style.color = meta.hex;
-  $("#fc-tr").textContent = back;
 
   [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")].forEach(el=>{
-    if (meta.label){
+    if (!meta.label){ el.style.display = "none"; el.onclick = null; return; }
+    el.style.display = "inline-block";
+    if (fcDirection === "de-tr"){
+      el.style.cursor = "default";
       el.textContent = meta.label;
       el.style.background = meta.hex;
-      el.style.display = "inline-block";
+      el.onclick = null;
     } else {
-      el.style.display = "none";
+      el.style.cursor = "pointer";
+      if (articleRevealed){
+        el.textContent = meta.label;
+        el.style.background = meta.hex;
+      } else {
+        el.textContent = "❔ Artikel";
+        el.style.background = "#8a9992";
+      }
+      el.onclick = (e)=>{
+        e.stopPropagation();
+        articleRevealed = true;
+        renderCard();
+      };
     }
   });
 
-  $("#fc-ex").innerHTML = highlightSentence(de, gender, deS);
-  $("#fc-ex").style.color = meta.hex;
-  $("#fc-ex-tr").textContent = "(" + trS + ")";
+  // Her yüz sadece kendi dilindeki cümleyi gösterir (çapraz dil karışmaz)
+  if (fcDirection === "de-tr"){
+    $("#fc-ex-front").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex-front").style.color = meta.hex;
+    $("#fc-ex").textContent = trS;
+    $("#fc-ex").style.color = "var(--ink)";
+  } else {
+    $("#fc-ex-front").textContent = trS;
+    $("#fc-ex-front").style.color = "var(--ink)";
+    $("#fc-ex").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex").style.color = meta.hex;
+  }
 
   const qa = EXAM_QA[wIndex];
   if (qa){
-    $("#fc-qa-q").textContent = qa[0];
-    $("#fc-qa-q-tr").textContent = qa[1];
-    $("#fc-qa-a").textContent = qa[2];
-    $("#fc-qa-a-tr").textContent = qa[3];
+    if (fcDirection === "de-tr"){
+      $("#fc-qa-q-front").textContent = qa[0];
+      $("#fc-qa-a-front").textContent = qa[2];
+      $("#fc-qa-q").textContent = qa[1];
+      $("#fc-qa-a").textContent = qa[3];
+    } else {
+      $("#fc-qa-q-front").textContent = qa[1];
+      $("#fc-qa-a-front").textContent = qa[3];
+      $("#fc-qa-q").textContent = qa[0];
+      $("#fc-qa-a").textContent = qa[2];
+    }
   }
 
   const numLabel = "#" + (wIndex + 1);
