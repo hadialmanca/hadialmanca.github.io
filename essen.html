@@ -37,7 +37,7 @@
     padding:20px 14px 50px;
     font-size:16px;
   }
-  .wrap{max-width:980px;margin:0 auto;}
+  .wrap{max-width:1200px;margin:0 auto;}
 
   /* ---- IDENTITY GATE ---- */
   #identity-gate{
@@ -117,13 +117,13 @@
 
   .progress-row{
     display:flex;align-items:center;justify-content:space-between;
-    max-width:640px;margin:0 auto 14px;font-size:16px;color:#CFE3D4;
+    max-width:760px;margin:0 auto 14px;font-size:16px;color:#CFE3D4;
   }
   .progress-bar{flex:1;height:7px;background:rgba(255,255,255,0.12);border-radius:4px;margin:0 10px;overflow:hidden;}
   .progress-fill{height:100%;background:var(--mustard);width:0%;transition:width .3s ease;}
 
   /* ---- FLASHCARD ---- */
-  .card-stage{perspective:1400px;max-width:640px;margin:0 auto;height:620px;}
+  .card-stage{perspective:1400px;max-width:760px;margin:0 auto;height:680px;}
   .card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.3,1.1);cursor:pointer;}
   .card.flipped{transform:rotateY(180deg);}
   .face{
@@ -190,11 +190,11 @@
   .stat-row{display:flex;justify-content:center;gap:22px;margin-top:18px;font-size:14px;color:#CFE3D4;}
   .stat-row b{color:var(--mustard);}
 
-  .mastery-panel .progress-row{max-width:640px;margin:16px auto 8px;}
+  .mastery-panel .progress-row{max-width:760px;margin:16px auto 8px;}
   .grade-badge{display:inline-block;margin-top:6px;padding:7px 20px;border-radius:999px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;}
 
   /* ---- QUIZ ---- */
-  .quiz-select{max-width:640px;margin:0 auto;text-align:center;}
+  .quiz-select{max-width:760px;margin:0 auto;text-align:center;}
   .quiz-select-label{font-size:14.5px;color:#CFE3D4;margin-bottom:14px;}
   .quiz-set-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   .quiz-set-btn{
@@ -205,7 +205,7 @@
   .quiz-select-hint{margin-top:16px;font-size:12.5px;color:#9FB8A6;font-style:italic;}
   .back-link{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;padding:0;}
 
-  .quiz-card{background:var(--paper);color:var(--ink);border-radius:18px;max-width:680px;margin:0 auto;padding:34px 30px;box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);}
+  .quiz-card{background:var(--paper);color:var(--ink);border-radius:18px;max-width:800px;margin:0 auto;padding:34px 30px;box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);}
   .quiz-top{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:700;flex-wrap:wrap; gap:6px;}
   .quiz-live-score{color:var(--leaf); font-weight:800;}
   .quiz-question{text-align:center;margin-bottom:22px;}
@@ -240,7 +240,7 @@
     text-decoration:none;
   }
   .resume-banner{
-    max-width:640px; margin:0 auto 14px; background:rgba(227,169,58,0.15);
+    max-width:760px; margin:0 auto 14px; background:rgba(227,169,58,0.15);
     border:1.5px solid var(--mustard); border-radius:12px; padding:12px 16px;
     text-align:center; font-size:14px; color:var(--mustard);
   }
@@ -248,7 +248,7 @@
 
   footer{text-align:center;margin-top:40px;font-size:12.5px;color:#9FB8A6;}
   .storage-note{
-    max-width:640px; margin:16px auto 0; font-size:11.5px; color:#7c9992;
+    max-width:760px; margin:16px auto 0; font-size:11.5px; color:#7c9992;
     text-align:center; line-height:1.5; font-style:italic;
   }
 
@@ -365,7 +365,7 @@
     </div>
 
     <div class="mastery-panel">
-      <div class="progress-row" style="max-width:640px; margin:16px auto 8px;">
+      <div class="progress-row" style="max-width:760px; margin:16px auto 8px;">
         <span>Değerlendirilen</span>
         <div class="progress-bar"><div class="progress-fill" id="mastery-progress" style="background:var(--leaf);"></div></div>
         <span id="mastery-count">0/135</span>
@@ -675,30 +675,42 @@ function renderCard(){
   }
   $("#fc-de").style.color = meta.hex;
 
-  [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")].forEach(el=>{
-    if (!meta.label){ el.style.display = "none"; el.onclick = null; return; }
-    el.style.display = "inline-block";
-    if (fcDirection === "de-tr"){
-      el.style.cursor = "default";
-      el.textContent = meta.label;
-      el.style.background = meta.hex;
-      el.onclick = null;
-    } else {
-      el.style.cursor = "pointer";
-      if (articleRevealed){
+  {
+    const germanBadgeEl = fcDirection === "de-tr" ? $("#fc-gender-badge-front") : $("#fc-gender-badge-back");
+    const turkishBadgeEl = fcDirection === "de-tr" ? $("#fc-gender-badge-back") : $("#fc-gender-badge-front");
+
+    if (!meta.label){
+      germanBadgeEl.style.display = "none"; germanBadgeEl.onclick = null;
+      turkishBadgeEl.style.display = "none"; turkishBadgeEl.onclick = null;
+    } else if (fcDirection === "de-tr"){
+      // Almanca göster: öğrenme modu, rozet her iki yüzde de normal görünür
+      [germanBadgeEl, turkishBadgeEl].forEach(el=>{
+        el.style.display = "inline-block";
+        el.style.cursor = "default";
         el.textContent = meta.label;
         el.style.background = meta.hex;
+        el.onclick = null;
+      });
+    } else {
+      // Türkçe göster: Türkçe yüzde rozet HİÇ görünmez; Almanca yüzde (arka) gizli/açılır
+      turkishBadgeEl.style.display = "none";
+      turkishBadgeEl.onclick = null;
+      germanBadgeEl.style.display = "inline-block";
+      germanBadgeEl.style.cursor = "pointer";
+      if (articleRevealed){
+        germanBadgeEl.textContent = meta.label;
+        germanBadgeEl.style.background = meta.hex;
       } else {
-        el.textContent = "❔ Artikel";
-        el.style.background = "#8a9992";
+        germanBadgeEl.textContent = "❔ Artikel";
+        germanBadgeEl.style.background = "#8a9992";
       }
-      el.onclick = (e)=>{
+      germanBadgeEl.onclick = (e)=>{
         e.stopPropagation();
-        articleRevealed = true;
+        articleRevealed = !articleRevealed;
         renderCard();
       };
     }
-  });
+  }
 
   // Her yüz sadece kendi dilindeki cümleyi gösterir (çapraz dil karışmaz)
   if (fcDirection === "de-tr"){
