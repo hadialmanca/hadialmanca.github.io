@@ -284,7 +284,7 @@
     <div class="topic-line">Konu: Sayılar, Tarih ve Saat (Zahlen, Datum, Uhrzeit)</div>
     <div class="student-line" id="student-line"></div>
     <div class="topic-tags">
-      <span class="tag">112 kelime</span>
+      <span class="tag">123 kelime</span>
       <span class="tag">Goethe · Telc · Cornelsen</span>
       <span class="tag">Kartlar + Quiz</span>
     </div>
@@ -301,6 +301,7 @@
   <nav class="tabs">
     <button class="tab-btn active" data-tab="flash">🃏 Kartlar</button>
     <button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+    <button class="tab-btn" data-tab="numbers">🔢 Sayı Egzersizi</button>
   </nav>
 
   <!-- FLASHCARDS -->
@@ -395,6 +396,22 @@
     </div>
     <div class="quiz-card" id="quiz-area" style="display:none;"></div>
     <div class="storage-note" id="storage-note"></div>
+  </section>
+
+  <!-- SAYI EGZERSİZİ -->
+  <section id="numbers">
+    <div class="quiz-select" id="num-select">
+      <div class="quiz-select-label">Bir zorluk seviyesi seç (her tur 10 soru)</div>
+      <div class="quiz-set-grid">
+        <button class="quiz-set-btn" data-level="easy">Kolay<br><span style="font-weight:400;font-size:12px;">0–99</span></button>
+        <button class="quiz-set-btn" data-level="medium">Orta<br><span style="font-weight:400;font-size:12px;">100–999</span></button>
+        <button class="quiz-set-btn" data-level="hard">Zor<br><span style="font-weight:400;font-size:12px;">1000–9999</span></button>
+        <button class="quiz-set-btn" data-level="years">Yıllar<br><span style="font-weight:400;font-size:12px;">1900–2025</span></button>
+        <button class="quiz-set-btn" data-level="mixed">Karışık<br><span style="font-weight:400;font-size:12px;">Hepsi</span></button>
+      </div>
+      <div class="quiz-select-hint">Bazen rakam gösterip Almanca yazılışını, bazen Almanca yazılışını gösterip rakamını soracağız. Yıllarda 1100–1999 arası özel okunuşuyla (örn. 1923 → neunzehnhundertdreiundzwanzig) test edilir.</div>
+    </div>
+    <div class="quiz-card" id="num-area" style="display:none;"></div>
   </section>
 
   <footer>Hadi Almanca — DTZ / Telc / ÖSD Sınav Hazırlık • youtube.com/@hadialmanca</footer>
@@ -514,6 +531,17 @@ const WORDS = [
 ["die Währung","para birimi","In Deutschland ist die Währung der Euro.","Almanya'da para birimi Euro'dur.","f"],
 ["der Cent","sent","Ein Euro hat hundert Cent.","Bir avro yüz sentten oluşur.","m"],
 ["das Gewicht","ağırlık, ölçü","Bei Gewicht schreibst du: 62 Kilo.","Ağırlık kısmına 62 kilo yazarsın.","n"],
+["die Ziffer","rakam (0-9 arası tekli sayı)","Von null bis neun nennt man auch Ziffern.","Sıfırdan dokuza kadar olanlara rakam denir.","f"],
+["der Zehner","onluk (20, 30, 40...)","Die vollen Zehner sind nicht schwer zu lernen.","Tam onlukları öğrenmek zor değil.","m"],
+["auswendig lernen","ezberlemek","Die Zahlen von null bis zwölf muss man auswendig lernen.","Sıfırdan on ikiye kadar sayıları ezberlemek gerekir.",""],
+["die Postleitzahl","posta kodu","Wie ist die Postleitzahl?","Posta kodu nedir?","f"],
+["die Adresse","adres","Wie ist deine Adresse?","Adresin nedir?","f"],
+["die Telefonnummer","telefon numarası","Wie ist Ihre Telefonnummer?","Telefon numaranız nedir?","f"],
+["die Handynummer","cep telefonu numarası","Meine Handynummer ist 0152 3460789.","Cep telefonu numaram 0152 3460789.","f"],
+["die Linie","hat (toplu taşıma)","Welche Linie nimmst du?","Hangi hattı alıyorsun?","f"],
+["die Seite","sayfa","Welche Seite lesen wir?","Hangi sayfayı okuyoruz?","f"],
+["nach (Uhrzeit)","geçe (saat ifadesinde)","Es ist zwanzig nach elf.","Saat on biri yirmi geçiyor.",""],
+["vor (Uhrzeit)","kala (saat ifadesinde)","Es ist zehn vor neun.","Saat dokuza on var.",""],
 ];
 
 const EXAM_QA = [["Wie beginnt Ihre Telefonnummer?","Telefon numaranız neyle başlıyor?","Sie beginnt mit null.","Sıfırla başlıyor."],
@@ -627,7 +655,18 @@ const EXAM_QA = [["Wie beginnt Ihre Telefonnummer?","Telefon numaranız neyle ba
 ["Wie lange dauert der Film?","Film ne kadar sürüyor?","Er dauert zwei Stunden.","İki saat sürüyor."],
 ["Was ist die Währung in Deutschland?","Almanya'da para birimi nedir?","Die Währung ist der Euro.","Para birimi Euro'dur."],
 ["Wie viele Cent hat ein Euro?","Bir avro kaç sentten oluşur?","Ein Euro hat hundert Cent.","Bir avro yüz sentten oluşur."],
-["Was schreibst du bei Gewicht?","Ağırlık kısmına ne yazıyorsun?","Ich schreibe 62 Kilo.","62 kilo yazıyorum."]
+["Was schreibst du bei Gewicht?","Ağırlık kısmına ne yazıyorsun?","Ich schreibe 62 Kilo.","62 kilo yazıyorum."],
+["Was nennt man auch Ziffern?","Rakam olarak da adlandırılan nedir?","Die Zahlen von null bis neun.","Sıfırdan dokuza kadar olan sayılar."],
+["Sind die Zehner schwer zu lernen?","Onlukları öğrenmek zor mu?","Nein, sie sind nicht schwer.","Hayır, zor değil."],
+["Muss man die Zahlen null bis zwölf auswendig lernen?","Sıfırdan on ikiye kadar sayıları ezberlemek gerekir mi?","Ja, das muss man auswendig lernen.","Evet, bunları ezberlemek gerekir."],
+["Wie ist die Postleitzahl?","Posta kodu nedir?","Die Postleitzahl ist 75325.","Posta kodu 75325."],
+["Wie ist deine Adresse?","Adresin nedir?","Meine Adresse ist Goethestraße 17.","Adresim Goethestraße 17."],
+["Wie ist Ihre Telefonnummer?","Telefon numaranız nedir?","Meine Telefonnummer ist 01233567891.","Telefon numaram 01233567891."],
+["Wie ist deine Handynummer?","Cep telefonu numaran nedir?","Meine Handynummer ist 0152 3460789.","Cep telefonu numaram 0152 3460789."],
+["Welche Linie nimmst du?","Hangi hattı alıyorsun?","Linie fünfzehn.","On beş numaralı hat."],
+["Welche Seite lesen wir?","Hangi sayfayı okuyoruz?","Seite sechsundsiebzig.","Sayfa yetmiş altı."],
+["Wie spät ist es?","Saat kaç?","Es ist zwanzig nach elf.","Saat on biri yirmi geçiyor."],
+["Wie spät ist es?","Saat kaç?","Es ist zehn vor neun.","Saat dokuza on var."]
 ];
 
 const GENDER_META = {
@@ -657,7 +696,10 @@ const CORE_OVERRIDE = {
   "Viertel vor": "Viertel",
   "circa / ca.": "circa",
   "nächst-": "nächste",
-  "letzt-": "letzte"
+  "letzt-": "letzte",
+  "nach (Uhrzeit)": "nach",
+  "vor (Uhrzeit)": "vor",
+  "auswendig lernen": "auswendig"
 };
 
 function coreForm(de){
@@ -1355,6 +1397,208 @@ async function logAttempt(pct, total, grade){
     wrongWords
   });
 }
+
+// ================= SAYI EGZERSİZİ =================
+const NUM_ONES = ["null","eins","zwei","drei","vier","fünf","sechs","sieben","acht","neun","zehn",
+  "elf","zwölf","dreizehn","vierzehn","fünfzehn","sechzehn","siebzehn","achtzehn","neunzehn"];
+const NUM_TENS = ["","","zwanzig","dreißig","vierzig","fünfzig","sechzig","siebzig","achtzig","neunzig"];
+
+function under100Words(n){
+  if (n < 20) return NUM_ONES[n];
+  const t = Math.floor(n/10), o = n%10;
+  if (o === 0) return NUM_TENS[t];
+  const onePart = (o === 1) ? "ein" : NUM_ONES[o];
+  return onePart + "und" + NUM_TENS[t];
+}
+function under1000Words(n){
+  if (n < 100) return under100Words(n);
+  const h = Math.floor(n/100), rest = n%100;
+  const prefix = (h === 1) ? "" : NUM_ONES[h];
+  return prefix + "hundert" + (rest > 0 ? under100Words(rest) : "");
+}
+function under1000000Words(n){
+  if (n < 1000) return under1000Words(n);
+  const th = Math.floor(n/1000), rest = n%1000;
+  const prefix = (th === 1) ? "" : under1000Words(th);
+  return prefix + "tausend" + (rest > 0 ? under1000Words(rest) : "");
+}
+// 1100-1999 arası özel yıl okunuşu (örn. 1923 -> neunzehnhundertdreiundzwanzig)
+function germanNumberToWords(n, isYear){
+  if (isYear && n >= 1100 && n < 2000){
+    const h = Math.floor(n/100), rest = n%100;
+    return under100Words(h) + "hundert" + (rest > 0 ? under100Words(rest) : "");
+  }
+  return under1000000Words(n);
+}
+
+const NUM_RANGES = {
+  easy:   { min: 0,    max: 99,   isYear: false },
+  medium: { min: 100,  max: 999,  isYear: false },
+  hard:   { min: 1000, max: 9999, isYear: false },
+  years:  { min: 1900, max: 2025, isYear: true  },
+};
+
+let numLevel = "easy";
+let numQuestions = [];
+let numQIdx = 0;
+let numScore = 0;
+let numAnswered = false;
+
+function randInt(min, max){ return min + Math.floor(Math.random() * (max - min + 1)); }
+
+function pickRangeFor(level){
+  if (level === "mixed"){
+    const keys = ["easy","medium","hard","years"];
+    return NUM_RANGES[keys[randInt(0, keys.length - 1)]];
+  }
+  return NUM_RANGES[level];
+}
+
+function numberDistractors(correct, min, max, count){
+  const set = new Set();
+  const tryAdd = (v) => { if (v >= min && v <= max && v !== correct && !set.has(v)) set.add(v); };
+  if (correct < 100){
+    const t = Math.floor(correct/10), o = correct%10;
+    tryAdd(o*10 + t); // basamak sırası karışan klasik hata
+  } else if (correct < 10000) {
+    // yakın onluk/yüzlük karışıklığı için basamak oynatmalı örnekler
+    tryAdd(correct + 10);
+    tryAdd(correct - 10);
+  }
+  tryAdd(correct + 1);
+  tryAdd(correct - 1);
+  tryAdd(correct + 100);
+  tryAdd(correct - 100);
+  let guard = 0;
+  while (set.size < count && guard < 50){
+    tryAdd(randInt(min, max));
+    guard++;
+  }
+  return shuffle([...set]).slice(0, count);
+}
+
+function buildNumQuestions(level, count){
+  const qs = [];
+  for (let i = 0; i < count; i++){
+    const range = pickRangeFor(level);
+    const n = randInt(range.min, range.max);
+    const askDigits = Math.random() < 0.5; // true: rakam göster, yazılışı sordur / false: yazılışı göster, rakamı sordur
+    qs.push({ n, isYear: range.isYear, askDigits });
+  }
+  return qs;
+}
+
+function startNumPractice(level){
+  numLevel = level;
+  numQuestions = buildNumQuestions(level, 10);
+  numQIdx = 0;
+  numScore = 0;
+  $("#num-select").style.display = "none";
+  $("#num-area").style.display = "block";
+  renderNumQuestion();
+}
+
+function renderNumQuestion(){
+  numAnswered = false;
+  const area = $("#num-area");
+  if (numQIdx >= numQuestions.length){ renderNumResult(); return; }
+  const q = numQuestions[numQIdx];
+  const correctWord = germanNumberToWords(q.n, q.isYear);
+  const correctDigit = String(q.n);
+
+  let optionsRaw, questionLabel, askDisplay;
+  if (q.askDigits){
+    // Rakam gösteriliyor, Almanca yazılışı soruluyor
+    questionLabel = "Bu sayının Almanca yazılışı nedir?";
+    askDisplay = correctDigit;
+    const distractors = numberDistractors(q.n, q.isYear ? 1900 : Math.max(0, Math.pow(10, String(q.n).length - 1)), q.isYear ? 2025 : Math.pow(10, String(q.n).length) - 1, 3);
+    optionsRaw = shuffle([correctWord, ...distractors.map(d => germanNumberToWords(d, q.isYear))]);
+  } else {
+    // Almanca yazılış gösteriliyor, rakamı soruluyor
+    questionLabel = "Bu sayı rakamla nedir?";
+    askDisplay = correctWord;
+    const distractors = numberDistractors(q.n, q.isYear ? 1900 : Math.max(0, Math.pow(10, String(q.n).length - 1)), q.isYear ? 2025 : Math.pow(10, String(q.n).length) - 1, 3);
+    optionsRaw = shuffle([correctDigit, ...distractors.map(String)]);
+  }
+
+  area.innerHTML =
+    '<div class="quiz-top">' +
+      '<span>Soru ' + (numQIdx + 1) + ' / ' + numQuestions.length + '</span>' +
+      '<span class="quiz-live-score">Puan: ' + numScore + ' / ' + numQuestions.length + '</span>' +
+    '</div>' +
+    '<div class="quiz-question">' +
+      '<div class="eyebrow">' + questionLabel + '</div>' +
+      '<div class="word">' + escapeHtml(askDisplay) + '</div>' +
+    '</div>' +
+    '<div class="options" id="num-options"></div>' +
+    '<div class="quiz-feedback" id="num-feedback"></div>' +
+    '<div class="quiz-next" id="num-next-wrap"></div>';
+
+  const optsWrap = $("#num-options");
+  optionsRaw.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = opt;
+    btn.addEventListener("click", () => handleNumAnswer(opt, q.askDigits ? correctWord : correctDigit, btn));
+    optsWrap.appendChild(btn);
+  });
+}
+
+function handleNumAnswer(chosen, correct, btnEl){
+  if (numAnswered) return;
+  numAnswered = true;
+  document.querySelectorAll("#num-options .option").forEach(opt => {
+    opt.setAttribute("disabled", "true");
+    if (opt.textContent === correct) opt.classList.add("correct");
+  });
+  const feedback = $("#num-feedback");
+  if (chosen === correct){
+    numScore++;
+    feedback.textContent = "✔ Doğru!";
+    feedback.className = "quiz-feedback correct";
+  } else {
+    btnEl.classList.add("wrong");
+    feedback.textContent = "✘ Doğrusu: " + correct;
+    feedback.className = "quiz-feedback wrong";
+  }
+  const nextWrap = $("#num-next-wrap");
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "btn btn-know";
+  nextBtn.textContent = (numQIdx === numQuestions.length - 1) ? "Sonuçları Gör →" : "Sonraki Soru →";
+  nextBtn.addEventListener("click", () => { numQIdx++; renderNumQuestion(); });
+  nextWrap.appendChild(nextBtn);
+}
+
+function renderNumResult(){
+  const total = numQuestions.length;
+  const pct = Math.round((numScore/total) * 100);
+  let grade;
+  if (pct >= 90) grade = { label: "Pekiyi 🏆", color: "#2E7D46" };
+  else if (pct >= 75) grade = { label: "İyi 👍", color: "#5C8C52" };
+  else if (pct >= 60) grade = { label: "Orta 🙂", color: "#E3A93A" };
+  else if (pct >= 50) grade = { label: "Geçer 📘", color: "#D98C2B" };
+  else grade = { label: "Tekrar Çalış 💪", color: "#C1442C" };
+
+  const area = $("#num-area");
+  area.innerHTML =
+    '<div style="text-align:center;">' +
+      '<div class="grade-badge" style="background:' + grade.color + '22; color:' + grade.color + '; border:2px solid ' + grade.color + ';">' + grade.label + '</div>' +
+      '<div style="font-family:&quot;Baloo 2&quot;,sans-serif; font-size:22px; font-weight:800; margin:14px 0 4px;">' + numScore + ' / ' + total + ' doğru</div>' +
+      '<div style="color:var(--muted); margin-bottom:20px;">%' + pct + ' puan</div>' +
+      '<button class="btn btn-know" id="num-again-btn">🔁 Aynı Seviyede Tekrar Dene</button>&nbsp;' +
+      '<button class="btn btn-nav" id="num-back-btn">◀ Seviye Seç</button>' +
+    '</div>';
+  $("#num-again-btn").addEventListener("click", () => startNumPractice(numLevel));
+  $("#num-back-btn").addEventListener("click", () => {
+    $("#num-area").style.display = "none";
+    $("#num-select").style.display = "block";
+  });
+}
+
+document.querySelectorAll("#num-select .quiz-set-btn").forEach(btn => {
+  btn.addEventListener("click", () => startNumPractice(btn.dataset.level));
+});
 </script>
+
 </body>
 </html>
