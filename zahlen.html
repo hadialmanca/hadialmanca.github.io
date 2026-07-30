@@ -284,7 +284,7 @@
     <div class="topic-line">Konu: Sayılar, Tarih ve Saat (Zahlen, Datum, Uhrzeit)</div>
     <div class="student-line" id="student-line"></div>
     <div class="topic-tags">
-      <span class="tag">123 kelime</span>
+      <span class="tag">152 kelime</span>
       <span class="tag">Goethe · Telc · Cornelsen</span>
       <span class="tag">Kartlar + Quiz</span>
     </div>
@@ -407,6 +407,7 @@
         <button class="quiz-set-btn" data-level="medium">Orta<br><span style="font-weight:400;font-size:12px;">100–999</span></button>
         <button class="quiz-set-btn" data-level="hard">Zor<br><span style="font-weight:400;font-size:12px;">1000–9999</span></button>
         <button class="quiz-set-btn" data-level="years">Yıllar<br><span style="font-weight:400;font-size:12px;">1900–2025</span></button>
+        <button class="quiz-set-btn" data-level="dates">Tarih Söyleme<br><span style="font-weight:400;font-size:12px;">am/im + -n</span></button>
         <button class="quiz-set-btn" data-level="mixed">Karışık<br><span style="font-weight:400;font-size:12px;">Hepsi</span></button>
       </div>
       <div class="quiz-select-hint">Bazen rakam gösterip Almanca yazılışını, bazen Almanca yazılışını gösterip rakamını soracağız. Yıllarda 1100–1999 arası özel okunuşuyla (örn. 1923 → neunzehnhundertdreiundzwanzig) test edilir.</div>
@@ -463,6 +464,35 @@ const WORDS = [
 ["der zehnte","onuncu","Heute ist der zehnte Januar.","Bugün 10 Ocak.","m"],
 ["der zwanzigste","yirminci","Der Kurs endet am zwanzigsten Juni.","Kurs 20 Haziran'da sona eriyor.","m"],
 ["der dreißigste","otuzuncu","Sein Geburtstag ist der dreißigste August.","Doğum günü 30 Ağustos.","m"],
+["der elfte","on birinci","Heute ist der elfte April.","Bugün 11 Nisan.","m"],
+["der zwölfte","on ikinci","Ich wohne im zwölften Stock.","On ikinci katta oturuyorum.","m"],
+["der dreizehnte","on üçüncü","Heute ist der dreizehnte Mai.","Bugün 13 Mayıs.","m"],
+["der vierzehnte","on dördüncü","Heute ist der vierzehnte März.","Bugün 14 Mart.","m"],
+["der fünfzehnte","on beşinci","Ich habe am fünfzehnten Geburtstag.","On beşinde doğum günüm var.","m"],
+["der sechzehnte","on altıncı","Der Vertrag beginnt am sechzehnten Juli.","Sözleşme 16 Temmuz'da başlıyor.","m"],
+["der siebzehnte","on yedinci","Heute ist der siebzehnte Januar.","Bugün 17 Ocak.","m"],
+["der achtzehnte","on sekizinci","Sie feiert den achtzehnten Geburtstag.","On sekizinci doğum gününü kutluyor.","m"],
+["der neunzehnte","on dokuzuncu","Heute ist der neunzehnte August.","Bugün 19 Ağustos.","m"],
+["der einundzwanzigste","yirmi birinci","Heute ist der einundzwanzigste Juni.","Bugün 21 Haziran.","m"],
+["der fünfundzwanzigste","yirmi beşinci","Morgen ist der fünfundzwanzigste Mai.","Yarın 25 Mayıs.","m"],
+["der vierzigste","kırkıncı","Er feiert seinen vierzigsten Geburtstag.","Kırkıncı doğum gününü kutluyor.","m"],
+["der fünfzigste","ellinci","Das ist unser fünfzigstes Treffen.","Bu bizim ellinci buluşmamız.","m"],
+["der sechzigste","altmışıncı","Sie feiert den sechzigsten Geburtstag.","Altmışıncı doğum gününü kutluyor.","m"],
+["der siebzigste","yetmişinci","Das Fest ist am siebzigsten Jahrestag.","Şenlik yetmişinci yıldönümünde.","m"],
+["der achtzigste","sekseninci","Er wird der achtzigste Gast.","O sekseninci misafir oluyor.","m"],
+["der neunzigste","doksanıncı","Heute ist der neunzigste Tag.","Bugün doksanıncı gün.","m"],
+["der hundertste","yüzüncü","Das ist unser hundertster Kurstag.","Bu bizim yüzüncü kurs günümüz.","m"],
+["erstens","birincisi (sayarken)","Erstens ist es zu kalt, zweitens ist es dunkel.","Birincisi çok soğuk, ikincisi hava karanlık.",""],
+["zweitens","ikincisi (sayarken)","Zweitens koche ich gern.","İkincisi, yemek pişirmeyi severim.",""],
+["drittens","üçüncüsü (sayarken)","Drittens muss ich noch Hausaufgaben machen.","Üçüncüsü, hâlâ ev ödevi yapmam lazım.",""],
+["viertens","dördüncüsü (sayarken)","Viertens müssen wir noch kochen.","Dördüncüsü, hâlâ yemek pişirmemiz lazım.",""],
+["der/die Erste","birinci (kişi/şey olarak)","Ich bin der Erste in der Klasse.","Sınıfta birinciyim.",""],
+["der/die Letzte","sonuncu (kişi/şey olarak)","Ich war der Letzte.","Sonuncuydum.",""],
+["der/die wievielte","kaçıncı","Der Wievielte ist heute?","Bugün ayın kaçı?",""],
+["die Reihe","sıra, dizi","Sie ist die Dritte in der Reihe.","O sıradaki üçüncü kişi.","f"],
+["das Rennen","yarış","Er ist der Erste im Rennen.","O yarışta birinci.","n"],
+["das Ziel","hedef, varış noktası","Sie kam als Erste ins Ziel.","O varışa ilk gelen kişiydi.","n"],
+["der Wettkämpfer","yarışmacı","Der erste Wettkämpfer gewinnt eine Medaille.","Birinci yarışmacı bir madalya kazanıyor.","m"],
 ["die Sekunde","saniye","Warte nur eine Sekunde.","Sadece bir saniye bekle.","f"],
 ["die Minute","dakika","Ich bin in einer Minute fertig.","Bir dakikaya hazır olurum.","f"],
 ["die Stunde","saat (süre)","Ich bin in einer Stunde zurück.","Bir saat sonra dönerim.","f"],
@@ -588,6 +618,35 @@ const EXAM_QA = [["Wie beginnt Ihre Telefonnummer?","Telefon numaranız neyle ba
 ["Welches Datum ist heute?","Bugün ayın kaçı?","Heute ist der zehnte Januar.","Bugün 10 Ocak."],
 ["Wann endet der Kurs?","Kurs ne zaman bitiyor?","Am zwanzigsten Juni.","20 Haziran'da."],
 ["Wann ist sein Geburtstag?","Onun doğum günü ne zaman?","Am dreißigsten August.","30 Ağustos'ta."],
+["Welches Datum ist heute?","Bugün ayın kaçı?","Heute ist der elfte April.","Bugün 11 Nisan."],
+["In welchem Stock wohnst du?","Hangi katta oturuyorsun?","Ich wohne im zwölften Stock.","On ikinci katta oturuyorum."],
+["Welches Datum ist heute?","Bugün ayın kaçı?","Heute ist der dreizehnte Mai.","Bugün 13 Mayıs."],
+["Welches Datum ist heute?","Bugün ayın kaçı?","Heute ist der vierzehnte März.","Bugün 14 Mart."],
+["Wann hast du Geburtstag?","Doğum günün ne zaman?","Ich habe am fünfzehnten Geburtstag.","On beşinde doğum günüm var."],
+["Wann beginnt der Vertrag?","Sözleşme ne zaman başlıyor?","Am sechzehnten Juli.","16 Temmuz'da."],
+["Welches Datum ist heute?","Bugün ayın kaçı?","Heute ist der siebzehnte Januar.","Bugün 17 Ocak."],
+["Welchen Geburtstag feiert sie?","O kaçıncı doğum gününü kutluyor?","Den achtzehnten Geburtstag.","On sekizinci doğum gününü."],
+["Welches Datum ist heute?","Bugün ayın kaçı?","Heute ist der neunzehnte August.","Bugün 19 Ağustos."],
+["Wann endet der Kurs?","Kurs ne zaman bitiyor?","Am einundzwanzigsten Juni.","21 Haziran'da."],
+["Welches Datum ist morgen?","Yarın ayın kaçı?","Morgen ist der fünfundzwanzigste Mai.","Yarın 25 Mayıs."],
+["Welchen Geburtstag feiert er?","O kaçıncı doğum gününü kutluyor?","Seinen vierzigsten Geburtstag.","Kırkıncı doğum gününü."],
+["Das wievielte Treffen ist das?","Bu kaçıncı buluşma?","Das ist unser fünfzigstes Treffen.","Bu bizim ellinci buluşmamız."],
+["Welchen Geburtstag feiert sie?","O kaçıncı doğum gününü kutluyor?","Den sechzigsten Geburtstag.","Altmışıncı doğum gününü."],
+["Wann ist das Fest?","Şenlik ne zaman?","Am siebzigsten Jahrestag.","Yetmişinci yıldönümünde."],
+["Der wievielte Gast ist er?","O kaçıncı misafir?","Er wird der achtzigste Gast.","O sekseninci misafir oluyor."],
+["Der wievielte Tag ist heute?","Bugün kaçıncı gün?","Heute ist der neunzigste Tag.","Bugün doksanıncı gün."],
+["Der wievielte Kurstag ist das?","Bu kaçıncı kurs günü?","Das ist unser hundertster Kurstag.","Bu bizim yüzüncü kurs günümüz."],
+["Warum willst du nicht spazieren gehen?","Neden gezmeye gitmek istemiyorsun?","Erstens ist es zu kalt, zweitens ist es dunkel.","Birincisi çok soğuk, ikincisi hava karanlık."],
+["Was machst du gern in der Freizeit?","Boş vaktinde ne yapmayı seversin?","Zweitens koche ich gern.","İkincisi, yemek pişirmeyi severim."],
+["Was musst du noch machen?","Daha ne yapman gerekiyor?","Drittens muss ich noch Hausaufgaben machen.","Üçüncüsü, hâlâ ev ödevi yapmam lazım."],
+["Was müsst ihr noch machen?","Daha ne yapmanız gerekiyor?","Viertens müssen wir noch kochen.","Dördüncüsü, hâlâ yemek pişirmemiz lazım."],
+["Bist du der Erste in der Klasse?","Sınıfta birinci misin?","Ja, ich bin der Erste.","Evet, birinciyim."],
+["Warst du der Letzte?","Sonuncu muydun?","Ja, ich war der Letzte.","Evet, sonuncuydum."],
+["Der Wievielte ist heute?","Bugün ayın kaçı?","Heute ist der elfte April.","Bugün 11 Nisan."],
+["Welche Position hat sie in der Reihe?","Sırada kaçıncı sırada?","Sie ist die Dritte in der Reihe.","O sıradaki üçüncü kişi."],
+["Wer ist der Erste im Rennen?","Yarışta birinci kim?","Er ist der Erste im Rennen.","O yarışta birinci."],
+["Wer kam als Erste ins Ziel?","Varışa ilk kim geldi?","Sie kam als Erste ins Ziel.","O varışa ilk gelen kişiydi."],
+["Was gewinnt der erste Wettkämpfer?","Birinci yarışmacı ne kazanıyor?","Er gewinnt eine Medaille.","Bir madalya kazanıyor."],
 ["Wie lange soll ich warten?","Ne kadar beklemeliyim?","Warte nur eine Sekunde.","Sadece bir saniye bekle."],
 ["Wann bist du fertig?","Ne zaman hazır olursun?","In einer Minute.","Bir dakikaya."],
 ["Wann bist du zurück?","Ne zaman dönersin?","Ich bin in einer Stunde zurück.","Bir saat sonra dönerim."],
@@ -948,7 +1007,15 @@ function renderCard(){
     setWordDisplay($("#fc-de"), front);
     setGermanWordDisplay($("#fc-tr"), back, articleRevealed);
   }
-  $("#fc-de").style.color = meta.hex;
+  // Türkçe tarafta renklendirme YOK (artikel rengi ipucu vermesin diye);
+  // Almanca tarafta cinsiyet rengi her zaman korunur.
+  if (fcDirection === "de-tr"){
+    $("#fc-de").style.color = meta.hex;      // Almanca (ön yüz)
+    $("#fc-tr").style.color = "var(--ink)";  // Türkçe (arka yüz) - renksiz
+  } else {
+    $("#fc-de").style.color = "var(--ink)";  // Türkçe (ön yüz) - renksiz
+    $("#fc-tr").style.color = meta.hex;      // Almanca (arka yüz)
+  }
 
   {
     const badgeEls = [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")];
@@ -1431,6 +1498,35 @@ function germanNumberToWords(n, isYear){
   return under1000000Words(n);
 }
 
+// ---------- Sıra sayısı (Ordinalzahl) çevirici ----------
+// Kural: 1-19 arası "+te" (düzensizler: erste, dritte, siebte, achte), 20+ "+ste"
+// Dativ (am/im ile): sıra sayısına ek olarak "-n" gelir (ersten, zweiten, dreißigsten...)
+const ORDINAL_IRREGULAR = { 1: "erste", 3: "dritte", 7: "siebte", 8: "achte" };
+function ordinalWord(n){
+  if (ORDINAL_IRREGULAR[n]) return ORDINAL_IRREGULAR[n];
+  const base = under1000000Words(n);
+  return n < 20 ? base + "te" : base + "ste";
+}
+function ordinalDativeWord(n){
+  return ordinalWord(n) + "n"; // am ersten, im zweiten, am dreißigsten...
+}
+
+const MONTHS_DE = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+function buildDateQuestion(){
+  const day = randInt(1, 28);
+  const month = MONTHS_DE[randInt(0, 11)];
+  const correct = "am " + ordinalDativeWord(day) + " " + month;
+  const wrongNoN = "am " + ordinalWord(day) + " " + month;              // -n eki unutulmuş
+  const wrongNominative = "der " + ordinalWord(day) + " " + month;      // yanlışlıkla nominativ kullanılmış
+  let otherDay = day + (Math.random() < 0.5 ? 1 : -1);
+  if (otherDay < 1) otherDay = day + 2;
+  if (otherDay > 28) otherDay = day - 2;
+  const wrongDay = "am " + ordinalDativeWord(otherDay) + " " + month;    // yanlış gün
+  const options = shuffle([correct, wrongNoN, wrongNominative, wrongDay]);
+  return { day, month, correct, options };
+}
+
 const NUM_RANGES = {
   easy:   { min: 0,    max: 99,   isYear: false },
   medium: { min: 100,  max: 999,  isYear: false },
@@ -1480,6 +1576,11 @@ function numberDistractors(correct, min, max, count){
 function buildNumQuestions(level, count){
   const qs = [];
   for (let i = 0; i < count; i++){
+    if (level === "dates"){
+      const dq = buildDateQuestion();
+      qs.push({ isDate: true, day: dq.day, month: dq.month, correct: dq.correct, options: dq.options });
+      continue;
+    }
     const range = pickRangeFor(level);
     const n = randInt(range.min, range.max);
     const askDigits = Math.random() < 0.5; // true: rakam göster, yazılışı sordur / false: yazılışı göster, rakamı sordur
@@ -1503,22 +1604,30 @@ function renderNumQuestion(){
   const area = $("#num-area");
   if (numQIdx >= numQuestions.length){ renderNumResult(); return; }
   const q = numQuestions[numQIdx];
-  const correctWord = germanNumberToWords(q.n, q.isYear);
-  const correctDigit = String(q.n);
 
-  let optionsRaw, questionLabel, askDisplay;
-  if (q.askDigits){
-    // Rakam gösteriliyor, Almanca yazılışı soruluyor
-    questionLabel = "Bu sayının Almanca yazılışı nedir?";
-    askDisplay = correctDigit;
-    const distractors = numberDistractors(q.n, q.isYear ? 1900 : Math.max(0, Math.pow(10, String(q.n).length - 1)), q.isYear ? 2025 : Math.pow(10, String(q.n).length) - 1, 3);
-    optionsRaw = shuffle([correctWord, ...distractors.map(d => germanNumberToWords(d, q.isYear))]);
+  let optionsRaw, questionLabel, askDisplay, correctAnswer;
+
+  if (q.isDate){
+    questionLabel = "Bu tarihi 'am ... + sıra sayısı + -n' kuralıyla doğru söyleyen hangisi?";
+    askDisplay = q.day + ". " + q.month;
+    optionsRaw = q.options;
+    correctAnswer = q.correct;
   } else {
-    // Almanca yazılış gösteriliyor, rakamı soruluyor
-    questionLabel = "Bu sayı rakamla nedir?";
-    askDisplay = correctWord;
-    const distractors = numberDistractors(q.n, q.isYear ? 1900 : Math.max(0, Math.pow(10, String(q.n).length - 1)), q.isYear ? 2025 : Math.pow(10, String(q.n).length) - 1, 3);
-    optionsRaw = shuffle([correctDigit, ...distractors.map(String)]);
+    const correctWord = germanNumberToWords(q.n, q.isYear);
+    const correctDigit = String(q.n);
+    if (q.askDigits){
+      questionLabel = "Bu sayının Almanca yazılışı nedir?";
+      askDisplay = correctDigit;
+      const distractors = numberDistractors(q.n, q.isYear ? 1900 : Math.max(0, Math.pow(10, String(q.n).length - 1)), q.isYear ? 2025 : Math.pow(10, String(q.n).length) - 1, 3);
+      optionsRaw = shuffle([correctWord, ...distractors.map(d => germanNumberToWords(d, q.isYear))]);
+      correctAnswer = correctWord;
+    } else {
+      questionLabel = "Bu sayı rakamla nedir?";
+      askDisplay = correctWord;
+      const distractors = numberDistractors(q.n, q.isYear ? 1900 : Math.max(0, Math.pow(10, String(q.n).length - 1)), q.isYear ? 2025 : Math.pow(10, String(q.n).length) - 1, 3);
+      optionsRaw = shuffle([correctDigit, ...distractors.map(String)]);
+      correctAnswer = correctDigit;
+    }
   }
 
   area.innerHTML =
@@ -1539,7 +1648,7 @@ function renderNumQuestion(){
     const btn = document.createElement("button");
     btn.className = "option";
     btn.textContent = opt;
-    btn.addEventListener("click", () => handleNumAnswer(opt, q.askDigits ? correctWord : correctDigit, btn));
+    btn.addEventListener("click", () => handleNumAnswer(opt, correctAnswer, btn));
     optsWrap.appendChild(btn);
   });
 }

@@ -673,7 +673,15 @@ function renderCard(){
     setWordDisplay($("#fc-de"), front);
     setGermanWordDisplay($("#fc-tr"), back, articleRevealed);
   }
-  $("#fc-de").style.color = meta.hex;
+  // Türkçe tarafta renklendirme YOK (artikel rengi ipucu vermesin diye);
+  // Almanca tarafta cinsiyet rengi her zaman korunur.
+  if (fcDirection === "de-tr"){
+    $("#fc-de").style.color = meta.hex;      // Almanca (ön yüz)
+    $("#fc-tr").style.color = "var(--ink)";  // Türkçe (arka yüz) - renksiz
+  } else {
+    $("#fc-de").style.color = "var(--ink)";  // Türkçe (ön yüz) - renksiz
+    $("#fc-tr").style.color = meta.hex;      // Almanca (arka yüz)
+  }
 
   {
     const badgeEls = [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")];
