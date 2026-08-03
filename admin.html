@@ -118,6 +118,7 @@
   .group-select{font-size:12px; padding:3px 6px; border-radius:6px; border:1px solid #DCCB9E; background:#fff; max-width:100px;}
   .sparkline{margin:8px 0 4px; display:block;}
   .missing-thema{font-size:12px; color:var(--tomato); margin-top:6px;}
+  .completed-thema{font-size:12px; color:var(--leaf); margin-top:6px;}
   .karne-btn{
     margin-top:10px; width:100%; background:var(--green-mid); color:#fff; border:none;
     border-radius:9px; padding:8px; font-weight:700; cursor:pointer; font-size:13px; font-family:'Karla',sans-serif;
@@ -335,6 +336,36 @@ function parseWrongWords(str){
   return matches.map(s => s.trim()).filter(Boolean);
 }
 
+// Google Sheets'ten gelen ham tarih değerini ("2026-08-02T22:00:00.000Z" gibi)
+// okunabilir bir Türkçe tarihe çevirir (örn. "3 Ağustos 2026").
+function formatTarih(dateStr){
+  if (!dateStr) return "—";
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return String(dateStr);
+  return d.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Berlin" });
+}
+
+// Google Sheets'in "saat" hücrelerini 1899-12-30 tarihli sahte bir gün olarak
+// döndürmesinden dolayı, burada sadece saat:dakika kısmını doğrudan metinden alıyoruz
+// (Date nesnesine çevirip saat dilimi hesaplamaya gerek yok, zaten saat dilimi anlamı yok).
+function formatSaat(timeStr){
+  if (!timeStr) return "—";
+  const s = String(timeStr);
+  const m = s.match(/T(\d{2}):(\d{2})/);
+  if (m) return m[1] + "." + m[2];
+  return s;
+}
+
+// Bazı kayıtlarda "tema" alanı bozuk şekilde bir tarih değeri içerebiliyor
+// (backend/Google Sheets tarafında sütun kayması sorunu). Bu, böyle değerleri
+// tema listelerinde göstermemek için basit bir güvenlik filtresi.
+function looksLikeDate(str){
+  return /^\d{4}-\d{2}-\d{2}T/.test(String(str||""));
+}
+function cleanThema(t){
+  return (t && !looksLikeDate(t)) ? t : "";
+}
+
 const GRADE_COLORS = {
   "Pekiyi 🏆": "#2E7D46", "İyi 👍": "#5C8C52", "Orta 🙂": "#E3A93A",
   "Geçer 📘": "#D98C2B", "Tekrar Çalış 💪": "#C1442C"
@@ -368,7 +399,7 @@ async function loadAll(){
 function populateFilters(){
   const themaSel = $("#filter-thema");
   const quizSel = $("#filter-quiz");
-  const themas = [...new Set(allResults.map(r => r.thema).filter(Boolean))].sort();
+  const themas = [...new Set(allResults.map(r => cleanThema(r.thema)).filter(Boolean))].sort();
   const quizzes = [...new Set(allResults.map(r => r.quizSet).filter(q => q !== "" && q !== undefined))].sort();
   themaSel.innerHTML = '<option value="">Tüm temalar</option>' + themas.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
   quizSel.innerHTML = '<option value="">Tüm quizler</option>' + quizzes.map(q => `<option value="${escapeHtml(q)}">Quiz ${escapeHtml(q)}</option>`).join("");
@@ -380,7 +411,7 @@ function populateFilters(){
 
 function renderStats(){
   const studentSet = new Set(allResults.map(r => r.name.trim().toLowerCase()));
-  const themaSet = new Set(allResults.map(r => r.thema).filter(Boolean));
+  const themaSet = new Set(allResults.map(r => cleanThema(r.thema)).filter(Boolean));
   const avgPct = allResults.length ? Math.round(allResults.reduce((s,r)=>s+Number(r.pct||0),0) / allResults.length) : 0;
   $("#stat-cards").innerHTML = `
     <div class="stat-card"><div class="num">${allResults.length}</div><div class="lbl">Toplam Çözülen Quiz</div></div>
@@ -413,8 +444,8 @@ function studentAggregate(name){
   const avg = Math.round(recs.reduce((s,r)=>s+Number(r.pct||0),0) / recs.length) || 0;
   const sorted = recs.slice().sort((a,b)=> new Date(a.timestamp) - new Date(b.timestamp));
   const last = sorted[sorted.length-1];
-  const themas = new Set(recs.map(r=>r.thema).filter(Boolean));
-  const allThemas = new Set(allResults.map(r=>r.thema).filter(Boolean));
+  const themas = new Set(recs.map(r=>cleanThema(r.thema)).filter(Boolean));
+  const allThemas = new Set(allResults.map(r=>cleanThema(r.thema)).filter(Boolean));
   const missingThemas = [...allThemas].filter(t => !themas.has(t));
 
   const wrongFreq = {};
@@ -448,8 +479,10 @@ function renderStudents(){
 
     const agg = studentAggregate(name);
     const spark = sparklineSvg(agg.sparkPcts, 220, 40);
+    const completedHtml = agg.themas.size
+      ? `<div class="completed-thema">✅ Tamamlanan temalar: ${[...agg.themas].map(escapeHtml).join(", ")}</div>` : "";
     const missingHtml = agg.missingThemas.length
-      ? `<div class="missing-thema">⚠️ Çalışmadı: ${agg.missingThemas.map(escapeHtml).join(", ")}</div>` : "";
+      ? `<div class="missing-thema">⚠️ Henüz çalışılmamış temalar: ${agg.missingThemas.map(escapeHtml).join(", ")}</div>` : "";
 
     return `<div class="student-card">
       <div class="s-top">
@@ -465,9 +498,9 @@ function renderStudents(){
       </div>
       <div class="s-row"><span>Çözülen quiz</span><b>${agg.recs.length}</b></div>
       <div class="s-row"><span>Ortalama puan</span><b>%${agg.avg}</b></div>
-      <div class="s-row"><span>Tema sayısı</span><b>${agg.themas.size}</b></div>
-      <div class="s-row"><span>Son aktivite</span><b>${escapeHtml(agg.last ? agg.last.date : "—")}</b></div>
+      <div class="s-row"><span>Son aktivite</span><b>${agg.last ? escapeHtml(formatTarih(agg.last.date)) : "—"}</b></div>
       ${spark}
+      ${completedHtml}
       ${missingHtml}
       <button class="karne-btn" data-name="${escapeHtml(name)}">🎓 Karne Oluştur</button>
     </div>`;
@@ -548,9 +581,9 @@ function renderResults(){
     const rowId = "res-" + i;
     return `<tr>
       <td>${escapeHtml(r.name)}</td>
-      <td>${escapeHtml(r.thema || "—")}</td>
-      <td>${escapeHtml(r.date || "—")}</td>
-      <td>${escapeHtml(r.time || "—")}</td>
+      <td>${escapeHtml(cleanThema(r.thema) || "—")}</td>
+      <td>${escapeHtml(formatTarih(r.date))}</td>
+      <td>${escapeHtml(formatSaat(r.time))}</td>
       <td>Quiz ${escapeHtml(r.quizSet)}</td>
       <td>${escapeHtml(r.direction)}</td>
       <td><span class="attempt-badge">${escapeHtml(r.attemptNo || 1)}. deneme</span></td>
@@ -586,10 +619,10 @@ function renderCards(){
   $("#cards-empty").style.display = "none";
   tbody.innerHTML = allCards.map(c => `<tr>
     <td>${escapeHtml(c.name)}</td>
-    <td>${escapeHtml(c.thema || "—")}</td>
+    <td>${escapeHtml(cleanThema(c.thema) || "—")}</td>
     <td>${escapeHtml(c.count)}. kez</td>
-    <td>${escapeHtml(c.date || "—")}</td>
-    <td>${escapeHtml(c.time || "—")}</td>
+    <td>${escapeHtml(formatTarih(c.date))}</td>
+    <td>${escapeHtml(formatSaat(c.time))}</td>
   </tr>`).join("");
 }
 
@@ -597,7 +630,7 @@ function exportCsv(){
   const list = filteredResults();
   const headers = ["İsim","Tema","Tarih","Saat","Quiz","Yön","Deneme","Doğru","Toplam","Puan","Değerlendirme","Yanlış Kelimeler"];
   const rows = list.map(r => [
-    r.name, r.thema, r.date, r.time, r.quizSet, r.direction, r.attemptNo || 1, r.score, r.total, r.pct, r.grade, r.wrongWords || ""
+    r.name, cleanThema(r.thema) || "—", formatTarih(r.date), formatSaat(r.time), r.quizSet, r.direction, r.attemptNo || 1, r.score, r.total, r.pct, r.grade, r.wrongWords || ""
   ]);
   const csv = [headers, ...rows].map(row =>
     row.map(v => `"${String(v==null?"":v).replace(/"/g,'""')}"`).join(",")

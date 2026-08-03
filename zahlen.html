@@ -315,6 +315,7 @@
       <div class="progress-bar"><div class="progress-fill" id="fc-progress"></div></div>
       <span id="fc-mode-label">Tüm kartlar</span>
     </div>
+    <div style="text-align:center; font-size:12px; color:#9FB8A6; margin-bottom:10px;">👉 Telefonda sağa/sola kaydırarak da kart değiştirebilirsin</div>
 
     <div class="card-stage">
       <div class="card" id="flip-card">
@@ -350,8 +351,8 @@
 
     <div class="controls-row">
       <button class="btn btn-nav" id="fc-prev">← Önceki</button>
-      <button class="btn btn-unsure" id="fc-unsure">🔁 Tekrar Gerekli</button>
       <button class="btn btn-know" id="fc-know">✔ Biliyorum</button>
+      <button class="btn btn-unsure" id="fc-unsure">🔁 Tekrar Gerekli</button>
       <button class="btn btn-nav" id="fc-next">Sonraki →</button>
     </div>
     <div class="controls-row">
@@ -931,9 +932,6 @@ let knowSet = new Set();
 let unsureSet = new Set();
 let reviewOnly = false;
 let fcDirection = "de-tr";
-let articleRevealed = false;
-let lastWIndexForArticle = -1;
-
 function currentList(){
   return reviewOnly ? order.filter(i => unsureSet.has(i)) : order;
 }
@@ -949,17 +947,6 @@ function setWordDisplay(el, text){
   } else {
     el.textContent = text;
   }
-}
-
-// Almanca kelimenin artikelini gizler; öğrenci artikeli tahmin etsin diye.
-// Rozet (❔ Artikel) tıklanana kadar artikel gösterilmez.
-function setGermanWordDisplay(el, text, revealed){
-  const m = text.match(/^(der|die|das)\s+/);
-  let displayText = text;
-  if (m && !revealed){
-    displayText = text.slice(m[0].length);
-  }
-  setWordDisplay(el, displayText);
 }
 
 function renderCard(){
@@ -979,10 +966,6 @@ function renderCard(){
   if (idx >= list.length) idx = 0;
   if (idx < 0) idx = list.length - 1;
   const wIndex = list[idx];
-  if (wIndex !== lastWIndexForArticle){
-    articleRevealed = false;
-    lastWIndexForArticle = wIndex;
-  }
   const [de, tr, deS, trS, gender] = WORDS[wIndex];
   const meta = GENDER_META[gender] || GENDER_META[""];
 
@@ -998,15 +981,8 @@ function renderCard(){
     backLabelEl.textContent = "Almanca";
     front = tr; back = de;
   }
-  if (fcDirection === "de-tr"){
-    // Almanca göster: öğrenme modu, artikel her zaman görünür
-    setWordDisplay($("#fc-de"), front);
-    setWordDisplay($("#fc-tr"), back);
-  } else {
-    // Türkçe göster: zorlayıcı mod, Almanca kelime (arka yüz) artikelsiz gösterilir
-    setWordDisplay($("#fc-de"), front);
-    setGermanWordDisplay($("#fc-tr"), back, articleRevealed);
-  }
+  setWordDisplay($("#fc-de"), front);
+  setWordDisplay($("#fc-tr"), back);
   // Türkçe tarafta renklendirme YOK (artikel rengi ipucu vermesin diye);
   // Almanca tarafta cinsiyet rengi her zaman korunur.
   if (fcDirection === "de-tr"){
@@ -1018,11 +994,11 @@ function renderCard(){
   }
 
   {
+    // Artikel rozeti artık gizlenmiyor; hangi yüzde olursa olsun her zaman açık gösterilir.
     const badgeEls = [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")];
     if (!meta.label){
       badgeEls.forEach(el=>{ el.style.display = "none"; el.onclick = null; });
-    } else if (fcDirection === "de-tr"){
-      // Almanca göster: öğrenme modu, rozet her iki yüzde de normal (açık) görünür
+    } else {
       badgeEls.forEach(el=>{
         el.style.display = "inline-block";
         el.style.cursor = "default";
@@ -1030,27 +1006,13 @@ function renderCard(){
         el.style.background = meta.hex;
         el.onclick = null;
       });
-    } else {
-      // Türkçe göster: her iki yüzde de "❔ Artikel" gösterilir,
-      // öğrenci tahmin etsin diye; tıklanınca ikisi birden açılır/kapanır (toggle)
-      badgeEls.forEach(el=>{
-        el.style.display = "inline-block";
-        el.style.cursor = "pointer";
-        if (articleRevealed){
-          el.textContent = meta.label;
-          el.style.background = meta.hex;
-        } else {
-          el.textContent = "❔ Artikel";
-          el.style.background = "#8a9992";
-        }
-        el.onclick = (e)=>{
-          e.stopPropagation();
-          articleRevealed = !articleRevealed;
-          renderCard();
-        };
-      });
     }
   }
+
+  // Ses ikonu (ön yüz) sadece Almanca ön yüzdeyken görünür.
+  // "Türkçe göster" modunda ön yüz Türkçe olduğu için bu ikon gizlenir;
+  // aksi halde öğrenci artikeli dinleyerek kolayca tahmin edebilirdi.
+  $("#audio-btn-front").style.display = (fcDirection === "de-tr") ? "flex" : "none";
 
   // Her yüz sadece kendi dilindeki cümleyi gösterir (çapraz dil karışmaz)
   if (fcDirection === "de-tr"){
@@ -1117,7 +1079,10 @@ function updateStats(){
   }
 }
 
+let swipeHandled = false;
+
 $("#flip-card").addEventListener("click", ()=>{
+  if (swipeHandled) { swipeHandled = false; return; }
   flipped = !flipped;
   $("#flip-card").classList.toggle("flipped", flipped);
 });
@@ -1149,7 +1114,6 @@ $("#fc-next").addEventListener("click", goNext);
 $("#fc-prev").addEventListener("click", goPrev);
 
 // ---- Telefonda parmakla kaydırarak kart değiştirme ----
-let swipeHandled = false;
 (function setupSwipe(){
   const el = $("#flip-card");
   let startX = 0, startY = 0;
@@ -1180,7 +1144,7 @@ function showCardCompletionBanner(count){
   const banner = document.createElement("div");
   banner.id = "card-complete-banner";
   banner.className = "resume-banner";
-  const waMsg = "Merhaba! Ben " + student.name + ". Essen/Trinken/Einkaufen kartlar bölümünü " + count + ". kez bitirdim. (" + student.date + ")";
+  const waMsg = "Merhaba! Ben " + student.name + ". \"" + CONFIG.THEMA + "\" konusundaki kartlar bölümünü " + count + ". kez bitirdim. (" + student.date + ")";
   banner.innerHTML = "🎉 Kartlar bölümünü <b>" + count + ". kez</b> bitirdin! " +
     '<a class="whatsapp-btn" style="margin-left:8px;padding:6px 14px;font-size:13px;" href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank">📤 Hocama Bildir</a>';
   const stage = document.querySelector(".card-stage");
@@ -1406,7 +1370,7 @@ function handleAnswer(chosenIdx, correctIdx, btnEl, dir){
 }
 
 function buildWhatsAppLink(pct, total, grade){
-  const msg = "Merhaba! Ben " + student.name + ". " + student.date + " tarihinde Quiz " + (activeQuizSet+1) +
+  const msg = "Merhaba! Ben " + student.name + ". \"" + CONFIG.THEMA + "\" konusunda, " + student.date + " tarihinde Quiz " + (activeQuizSet+1) +
     "'i çözdüm. Sonucum: " + quizScore + "/" + total + " doğru = " + pct + "/100 puan (" + grade.label + ").";
   return "https://wa.me/?text=" + encodeURIComponent(msg);
 }

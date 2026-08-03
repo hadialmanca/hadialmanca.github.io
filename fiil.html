@@ -349,8 +349,8 @@
 
     <div class="controls-row">
       <button class="btn btn-nav" id="fc-prev">← Önceki</button>
-      <button class="btn btn-unsure" id="fc-unsure">🔁 Tekrar Gerekli</button>
       <button class="btn btn-know" id="fc-know">✔ Biliyorum</button>
+      <button class="btn btn-unsure" id="fc-unsure">🔁 Tekrar Gerekli</button>
       <button class="btn btn-nav" id="fc-next">Sonraki →</button>
     </div>
     <div class="controls-row">
@@ -1222,7 +1222,7 @@ function showCardCompletionBanner(count){
   const banner = document.createElement("div");
   banner.id = "card-complete-banner";
   banner.className = "resume-banner";
-  const waMsg = "Merhaba! Ben " + student.name + ". Kartlar bölümünü " + count + ". kez bitirdim. (" + student.date + ")";
+  const waMsg = "Merhaba! Ben " + student.name + ". \"" + CONFIG.THEMA + "\" konusundaki kartlar bölümünü " + count + ". kez bitirdim. (" + student.date + ")";
   banner.innerHTML = "🎉 Kartlar bölümünü <b>" + count + ". kez</b> bitirdin! " +
     '<a class="whatsapp-btn" style="margin-left:8px;padding:6px 14px;font-size:13px;" href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank">📤 Hocama Bildir</a>';
   const stage = document.querySelector(".card-stage");
@@ -1449,7 +1449,7 @@ function handleAnswer(chosenIdx, correctIdx, btnEl, dir){
 }
 
 function buildWhatsAppLink(pct, total, grade){
-  const msg = "Merhaba! Ben " + student.name + ". " + student.date + " tarihinde Quiz " + (activeQuizSet+1) +
+  const msg = "Merhaba! Ben " + student.name + ". \"" + CONFIG.THEMA + "\" konusunda, " + student.date + " tarihinde Quiz " + (activeQuizSet+1) +
     "'i çözdüm. Sonucum: " + quizScore + "/" + total + " doğru = " + pct + "/100 puan (" + grade.label + ").";
   return "https://wa.me/?text=" + encodeURIComponent(msg);
 }
