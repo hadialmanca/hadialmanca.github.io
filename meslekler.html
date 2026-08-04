@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Hadi Almanca Kelime Sepeti – Arbeit und Beruf (Meslekler)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#1E3B2F;
+    --green-mid:#2F5D45;
+    --paper:#FBF3E1;
+    --paper-shadow:#E9DCBB;
+    --mustard:#E3A93A;
+    --tomato:#C1442C;
+    --leaf:#5C8C52;
+    --ink:#26332B;
+    --muted:#6b7568;
+    /* gender colors */
+    --der-blue:#2E5FA3;
+    --die-red:#C0392B;
+    --das-green:#1E8449;
+    --plural-orange:#D9791C;
+    --neutral-grey:#5A6B63;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Karla',sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,0.05), transparent 40%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 40px),
+      var(--green-deep);
+    color:var(--paper);
+    min-height:100vh;
+    padding:20px 14px 50px;
+    font-size:16px;
+  }
+  .wrap{max-width:1200px;margin:0 auto;}
+
+  /* ---- IDENTITY GATE ---- */
+  #identity-gate{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(15,30,25,0.96);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .gate-box{
+    background:var(--paper); color:var(--ink);
+    border-radius:20px; padding:34px 28px; max-width:380px; width:100%;
+    text-align:center;
+    box-shadow:0 16px 0 var(--paper-shadow);
+  }
+  .gate-box h2{
+    font-family:'Baloo 2',sans-serif; color:var(--green-mid); margin:8px 0 6px; font-size:24px;
+  }
+  .gate-box p{font-size:14px; color:var(--muted); margin:0 0 20px;}
+  .gate-field{text-align:left; margin-bottom:14px;}
+  .gate-field label{font-size:13px; font-weight:700; color:var(--green-mid); display:block; margin-bottom:5px;}
+  .gate-field input{
+    width:100%; padding:10px 12px; border-radius:10px; border:2px solid #DCCB9E;
+    font-size:15px; font-family:'Karla',sans-serif;
+  }
+  .gate-submit{
+    width:100%; margin-top:8px;
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
+    padding:12px; border-radius:12px; border:none;
+    background:var(--mustard); color:var(--green-deep); cursor:pointer;
+  }
+  .gate-note{font-size:11.5px; color:#9a9a8a; margin-top:14px; line-height:1.4;}
+
+  header{text-align:center;margin-bottom:14px;}
+  .basket{font-size:38px;line-height:1;}
+  h1{
+    font-family:'Baloo 2',sans-serif; font-weight:800;
+    font-size:clamp(24px,5vw,36px); margin:6px 0 4px; color:var(--mustard);
+  }
+  .subtitle{font-size:15px;color:#CFE3D4;font-style:italic;}
+  .topic-line{font-size:16px;font-weight:700;color:var(--mustard);margin-top:6px;}
+  .student-line{
+    margin-top:10px; font-size:13.5px; color:#CFE3D4;
+    display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+  }
+  .student-line button{
+    background:none;border:none;color:var(--mustard);text-decoration:underline;
+    font-size:12.5px;cursor:pointer;padding:0;
+  }
+  .topic-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .tag{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);padding:5px 13px;border-radius:999px;font-size:13px;color:var(--paper);}
+
+  nav.tabs{display:flex;justify-content:center;gap:10px;margin:24px 0 20px;flex-wrap:wrap;}
+  .tab-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:17px;
+    padding:11px 24px;border-radius:12px;border:2px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.04);color:var(--paper);cursor:pointer;
+  }
+  .tab-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+  section{display:none;}
+  section.active{display:block;}
+
+  /* legend */
+  .gender-legend{
+    display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+    margin-bottom:18px; font-size:12.5px; color:#CFE3D4;
+  }
+  .legend-chip{display:flex; align-items:center; gap:5px;}
+  .legend-dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+
+  .direction-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 16px;}
+  .dir-btn{
+    font-family:'Karla',sans-serif;font-weight:700;font-size:13.5px;
+    padding:8px 15px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.22);
+    background:rgba(255,255,255,0.05);color:var(--paper);cursor:pointer;
+  }
+  .dir-btn.active{background:var(--mustard);color:var(--green-deep);border-color:var(--mustard);}
+
+  .progress-row{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:760px;margin:0 auto 14px;font-size:16px;color:#CFE3D4;
+  }
+  .progress-bar{flex:1;height:7px;background:rgba(255,255,255,0.12);border-radius:4px;margin:0 10px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--mustard);width:0%;transition:width .3s ease;}
+
+  /* ---- FLASHCARD ---- */
+  .card-stage{perspective:1400px;max-width:760px;margin:0 auto;height:680px;}
+  .card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.3,1.1);cursor:pointer;}
+  .card.flipped{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;
+    background:var(--paper);color:var(--ink);display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-start;padding:26px 24px;text-align:center;
+    box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);
+    border:1px dashed rgba(38,51,43,0.25);
+    overflow-y:auto;
+  }
+  .face.front{justify-content:center;}
+  .face.back{transform:rotateY(180deg);}
+  .card-number{
+    position:absolute; top:12px; left:14px;
+    background:var(--green-deep); color:var(--mustard);
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:13px;
+    padding:3px 10px; border-radius:999px;
+  }
+  .audio-btn{
+    position:absolute; top:10px; right:12px;
+    background:var(--mustard); color:var(--green-deep);
+    border:none; border-radius:50%; width:38px; height:38px;
+    font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+  }
+  .audio-btn:active{transform:scale(0.92);}
+  .gender-badge{
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    padding:3px 11px; border-radius:999px; color:#fff; margin-bottom:10px; margin-top:30px;
+  }
+  .eyebrow{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700;}
+  .de-word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(30px,6vw,48px);line-height:1.2;}
+  .tr-word{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:clamp(26px,5vw,42px);color:var(--tomato);margin-bottom:12px;line-height:1.2;}
+  .word-sub{
+    display:block; font-family:'Karla',sans-serif; font-weight:600;
+    font-size:0.4em; color:var(--muted); margin-top:8px; line-height:1.35;
+    letter-spacing:0; text-transform:none;
+  }
+  .example{font-size:18.5px;line-height:1.6;color:var(--ink);}
+  .example b{color:#000; font-weight:800;}
+  .example-tr{font-size:15.5px; color:var(--muted); font-style:italic; margin-top:6px;}
+  .exam-qa-box{
+    margin-top:16px; padding-top:14px; border-top:2px dashed #DCCB9E;
+    width:100%; text-align:left;
+  }
+  .exam-qa-warning{
+    font-size:13.5px; font-weight:800; color:var(--tomato); text-transform:uppercase;
+    letter-spacing:0.5px; margin-bottom:9px; text-align:center;
+  }
+  .exam-qa-line{font-size:17.5px; color:var(--ink); margin-bottom:5px; line-height:1.5;}
+  .exam-qa-line b{color:var(--green-mid);}
+  .exam-qa-tr{font-size:14.5px; color:var(--muted); font-style:italic; margin-bottom:10px;}
+  .hint{margin-top:12px;font-size:13.5px;color:var(--muted);}
+
+  .controls-row{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .btn{font-family:'Karla',sans-serif;font-weight:700;font-size:15px;padding:11px 20px;border-radius:10px;border:none;cursor:pointer;transition:transform .12s ease, filter .15s ease;}
+  .btn:hover{transform:translateY(-2px); filter:brightness(1.08);}
+  .btn:active{transform:translateY(0);}
+  .btn-nav{background:rgba(255,255,255,0.12);color:var(--paper);}
+  .btn-know{background:var(--leaf);color:white;}
+  .btn-unsure{background:var(--tomato);color:white;}
+  .btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:var(--paper);}
+
+  .stat-row{display:flex;justify-content:center;gap:22px;margin-top:18px;font-size:14px;color:#CFE3D4;}
+  .stat-row b{color:var(--mustard);}
+
+  .mastery-panel .progress-row{max-width:760px;margin:16px auto 8px;}
+  .grade-badge{display:inline-block;margin-top:6px;padding:7px 20px;border-radius:999px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;}
+
+  /* ---- QUIZ ---- */
+  .quiz-select{max-width:760px;margin:0 auto;text-align:center;}
+  .quiz-select-label{font-size:14.5px;color:#CFE3D4;margin-bottom:14px;}
+  .quiz-set-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .quiz-set-btn{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:21px;padding:22px 10px;
+    border-radius:14px;border:2px solid var(--mustard);background:var(--paper);color:var(--green-mid);
+    cursor:pointer;box-shadow:0 8px 0 var(--paper-shadow);
+  }
+  .quiz-select-hint{margin-top:16px;font-size:12.5px;color:#9FB8A6;font-style:italic;}
+  .back-link{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;padding:0;}
+
+  .quiz-card{background:var(--paper);color:var(--ink);border-radius:18px;max-width:800px;margin:0 auto;padding:34px 30px;box-shadow:0 14px 0 var(--paper-shadow), 0 20px 30px rgba(0,0,0,0.35);}
+  .quiz-top{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:700;flex-wrap:wrap; gap:6px;}
+  .quiz-live-score{color:var(--leaf); font-weight:800;}
+  .quiz-question{text-align:center;margin-bottom:22px;}
+  .quiz-question .word{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:32px;color:var(--green-mid);}
+  .options{display:flex;flex-direction:column;gap:11px;}
+  .option{text-align:left;padding:13px 17px;border-radius:11px;border:2px solid #E3D6B4;background:#FFFDF8;font-size:16px;font-weight:500;cursor:pointer;transition:all .15s ease;color:var(--ink);}
+  .option:hover{border-color:var(--mustard);}
+  .option.correct{background:#DCEEDA;border-color:var(--leaf);color:#274423;font-weight:700;}
+  .option.wrong{background:#F6DCD6;border-color:var(--tomato);color:#6B231A;font-weight:700;}
+  .option[disabled]{cursor:default;}
+  .quiz-feedback{margin-top:16px;text-align:center;min-height:22px;font-weight:700;font-size:15px;}
+  .quiz-feedback.correct{color:var(--leaf);}
+  .quiz-feedback.wrong{color:var(--tomato);}
+  .quiz-next{display:flex;justify-content:center;margin-top:16px;}
+
+  .result-card{text-align:center; position:relative;}
+  .result-max-badge{
+    position:absolute; top:-14px; right:-10px;
+    background:var(--green-deep); color:var(--mustard);
+    font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px;
+  }
+  .result-card .big-score{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:56px;color:var(--tomato);margin:8px 0;}
+  .points-row{display:flex;justify-content:center;gap:26px;margin:10px 0 4px;font-size:15px;color:var(--muted);}
+  .points-row b{font-size:16px;}
+  .review-list{text-align:left;margin-top:18px;max-height:220px;overflow-y:auto;border-top:1px dashed #D8C79A;padding-top:12px;}
+  .review-item{display:flex;justify-content:space-between;font-size:14.5px;padding:6px 4px;border-bottom:1px solid #F0E6CC;}
+  .review-item b{color:var(--green-mid);}
+  .whatsapp-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:#25D366; color:#fff; font-weight:700; font-family:'Karla',sans-serif;
+    font-size:14.5px; padding:11px 20px; border-radius:10px; border:none; cursor:pointer; margin-top:6px;
+    text-decoration:none;
+  }
+  .resume-banner{
+    max-width:760px; margin:0 auto 14px; background:rgba(227,169,58,0.15);
+    border:1.5px solid var(--mustard); border-radius:12px; padding:12px 16px;
+    text-align:center; font-size:14px; color:var(--mustard);
+  }
+  .resume-banner button{margin-left:8px;}
+
+  footer{text-align:center;margin-top:40px;font-size:12.5px;color:#9FB8A6;}
+  .storage-note{
+    max-width:760px; margin:16px auto 0; font-size:11.5px; color:#7c9992;
+    text-align:center; line-height:1.5; font-style:italic;
+  }
+
+  @media (prefers-reduced-motion: reduce){.card{transition:none;} .btn,.option{transition:none;}}
+</style>
+</head>
+<body>
+
+<div id="identity-gate">
+  <div class="gate-box">
+    <div style="font-size:34px;">🧺</div>
+    <h2>Hoş Geldin!</h2>
+    <p>Kelime çalışmasına başlamadan önce adını ve tarihi gir.</p>
+    <div class="gate-field">
+      <label for="gate-name">Adın / Nickname</label>
+      <input type="text" id="gate-name" placeholder="örn. Ahmet Y.">
+    </div>
+    <div class="gate-field">
+      <label for="gate-date">Tarih</label>
+      <input type="date" id="gate-date">
+    </div>
+    <button class="gate-submit" id="gate-submit">Başla →</button>
+    <div class="gate-note">Adın ve tarihin, öğretmenine quiz sonuçlarını ve ilerlemeni kaydetmek için kullanılıyor. Böylece kaldığın yerden devam edebilir ve geçmiş sonuçlarını görebilirsin.</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="basket">🧺</div>
+    <h1>Hadi Almanca Kelime Sepeti</h1>
+    <div class="subtitle">Goethe A1 Kelime Çalışması</div>
+    <div class="topic-line">Konu: Arbeit und Beruf (Meslekler ve İş Hayatı)</div>
+    <div class="student-line" id="student-line"></div>
+    <div class="topic-tags">
+      <span class="tag">121 kelime</span>
+      <span class="tag">Goethe · Telc · Cornelsen</span>
+      <span class="tag">Kartlar + Quiz</span>
+    </div>
+  </header>
+
+  <div class="gender-legend">
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--der-blue);"></span>der</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--die-red);"></span>die</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--das-green);"></span>das</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--plural-orange);"></span>die (çoğul)</span>
+    <span class="legend-chip"><span class="legend-dot" style="background:var(--neutral-grey);"></span>fiil / sıfat</span>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="flash">🃏 Kartlar</button>
+    <button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+  </nav>
+
+  <!-- FLASHCARDS -->
+  <section id="flash" class="active">
+    <div class="direction-row" id="fc-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca göster</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe göster</button>
+    </div>
+    <div class="progress-row">
+      <span id="fc-count">1 / 121</span>
+      <div class="progress-bar"><div class="progress-fill" id="fc-progress"></div></div>
+      <span id="fc-mode-label">Tüm kartlar</span>
+    </div>
+    <div style="text-align:center; font-size:12px; color:#9FB8A6; margin-bottom:10px;">👉 Telefonda sağa/sola kaydırarak da kart değiştirebilirsin</div>
+
+    <div class="card-stage">
+      <div class="card" id="flip-card">
+        <div class="face front">
+          <div class="card-number" id="fc-number-front">#1</div>
+          <button class="audio-btn" id="audio-btn-front" title="Kelimeyi ve örnek cümleyi sırayla dinle">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-front"></div>
+          <div class="eyebrow" id="fc-front-label">Almanca</div>
+          <div class="de-word" id="fc-de"></div>
+          <div class="example" id="fc-ex-front"></div>
+          <div class="exam-qa-box" id="fc-examqa-front">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q-front"></span></div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a-front"></span></div>
+          </div>
+          <div class="hint">Çevirmek için karta dokun</div>
+        </div>
+        <div class="face back">
+          <div class="card-number" id="fc-number-back">#1</div>
+          <button class="audio-btn" id="audio-btn-back" title="Kelimeyi ve örnek cümleyi sırayla dinle">🔊</button>
+          <div class="gender-badge" id="fc-gender-badge-back"></div>
+          <div class="eyebrow" id="fc-back-label">Türkçe</div>
+          <div class="tr-word" id="fc-tr"></div>
+          <div class="example" id="fc-ex"></div>
+          <div class="exam-qa-box" id="fc-examqa">
+            <div class="exam-qa-warning">🎯 Sınavda böyle sorulabilir:</div>
+            <div class="exam-qa-line"><b>A:</b> <span id="fc-qa-q"></span></div>
+            <div class="exam-qa-line"><b>B:</b> <span id="fc-qa-a"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <button class="btn btn-nav" id="fc-prev">← Önceki</button>
+      <button class="btn btn-know" id="fc-know">✔ Biliyorum</button>
+      <button class="btn btn-unsure" id="fc-unsure">🔁 Tekrar Gerekli</button>
+      <button class="btn btn-nav" id="fc-next">Sonraki →</button>
+    </div>
+    <div class="controls-row">
+      <button class="btn btn-ghost" id="fc-shuffle">🔀 Karıştır</button>
+      <button class="btn btn-ghost" id="fc-review">🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)</button>
+      <button class="btn btn-ghost" id="fc-reset">↺ Sıfırla</button>
+    </div>
+
+    <div class="stat-row">
+      <span>✔ Biliyorum: <b id="stat-know">0</b></span>
+      <span>🔁 Tekrar: <b id="stat-unsure">0</b></span>
+    </div>
+
+    <div class="mastery-panel">
+      <div class="progress-row" style="max-width:760px; margin:16px auto 8px;">
+        <span>Değerlendirilen</span>
+        <div class="progress-bar"><div class="progress-fill" id="mastery-progress" style="background:var(--leaf);"></div></div>
+        <span id="mastery-count">0/121</span>
+      </div>
+      <div style="text-align:center;">
+        <div class="grade-badge" id="mastery-badge" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz">
+    <div class="direction-row" id="quiz-direction-row">
+      <button class="dir-btn active" data-dir="de-tr">🇩🇪 → 🇹🇷 Almanca sorulsun</button>
+      <button class="dir-btn" data-dir="tr-de">🇹🇷 → 🇩🇪 Türkçe sorulsun</button>
+      <button class="dir-btn" data-dir="mixed">🔀 Karışık</button>
+    </div>
+    <div class="quiz-select" id="quiz-select">
+      <div class="quiz-select-label">Bir quiz seçin (her biri 25 soru)</div>
+      <div class="quiz-set-grid">
+        <button class="quiz-set-btn" data-set="0">Quiz 1</button>
+        <button class="quiz-set-btn" data-set="1">Quiz 2</button>
+        <button class="quiz-set-btn" data-set="2">Quiz 3</button>
+        <button class="quiz-set-btn" data-set="3">Quiz 4</button>
+      </div>
+      <div class="quiz-select-hint">Türkçede de neredeyse aynı olan kelimeler (Radio, Kasse, Telefon, Firma, Chef, Chefin, Mathematik, Gitarre) quizlere dahil edilmedi.</div>
+    </div>
+    <div class="quiz-card" id="quiz-area" style="display:none;"></div>
+    <div class="storage-note" id="storage-note"></div>
+  </section>
+
+  <footer>Hadi Almanca — DTZ / Telc / ÖSD Sınav Hazırlık • youtube.com/@hadialmanca</footer>
+</div>
+
+<script>
+const WORDS = [["die Arbeit","iş","Mein Bruder sucht Arbeit.","Kardeşim iş arıyor.","f"],["arbeiten","çalışmak","Wo arbeitest du?","Nerede çalışıyorsun?",""],["arbeitslos","işsiz","Er ist seit drei Monaten arbeitslos.","Üç aydır işsiz.",""],["der Arbeitsplatz","iş yeri","An meinem Arbeitsplatz fehlt ein Drucker.","İş yerimde bir yazıcı eksik.","m"],["der Arbeitstag","iş günü","Mein Arbeitstag beginnt um acht Uhr.","İş günüm saat sekizde başlıyor.","m"],["der Beruf","meslek","Was sind Sie von Beruf?","Mesleğiniz nedir?","m"],["beruflich","mesleki olarak","Ich bin beruflich viel unterwegs.","Mesleki olarak çok seyahat ediyorum.",""],["der Traumberuf","hayal edilen meslek","Mein Traumberuf ist Ärztin.","Hayal ettiğim meslek doktorluk.","m"],["der Job","iş","Jenny hat einen neuen Job bei der Post.","Jenny'nin postanede yeni bir işi var.","m"],["die Stelle","pozisyon","Diese Stelle passt gut zu mir.","Bu pozisyon bana çok uyuyor.","f"],["der Chef","yönetici/şef","Wir haben eine neue Chefin.","Yeni bir yöneticimiz var.","m"],["die Kollegin","iş arkadaşı (kadın)","Wie heißt die neue Kollegin?","Yeni iş arkadaşının adı ne?","f"],["der Kollege","iş arkadaşı (erkek)","Mein Kollege hilft mir immer.","İş arkadaşım bana her zaman yardım ediyor.","m"],["verdienen","kazanmak","Ich verdiene 1500 Euro im Monat.","Ayda 1500 Euro kazanıyorum.",""],["die Firma","firma/şirket","Er arbeitet jetzt bei einer anderen Firma.","Şimdi başka bir şirkette çalışıyor.","f"],["die Pause","mola","Von zwölf bis halb eins haben wir Mittagspause.","On ikiden on iki buçuğa kadar öğle molamız var.","f"],["das Praktikum","staj","Ich mache ein Praktikum bei Siemens.","Siemens'te staj yapıyorum.","n"],["selbstständig","bağımsız/serbest çalışan","Er ist selbstständig.","Kendi işinin sahibi.",""],["der Urlaub","izin/tatil","Ich nehme im September Urlaub.","Eylülde izin alıyorum.","m"],["der Feierabend","iş günü sonu","Endlich Feierabend!","Sonunda mesai bitti!","m"],["der Nachtdienst","gece nöbeti","Diese Woche habe ich Nachtdienst.","Bu hafta gece nöbetim var.","m"],["halbtags","yarı zamanlı","Sie arbeitet nur halbtags.","O sadece yarı zamanlı çalışıyor.",""],["die Ausbildung","meslek eğitimi","Er macht eine Ausbildung als Elektriker.","Elektrikçi olmak için meslek eğitimi alıyor.","f"],["flexibel","esnek","Meine Arbeitszeiten sind sehr flexibel.","Çalışma saatlerim çok esnek.",""],["pünktlich","dakik","Bitte kommen Sie pünktlich zur Arbeit.","Lütfen işe dakik gelin.",""],["der Stress","stres","Der Job macht mir viel Stress.","İş bana çok stres yapıyor.","m"],["kreativ","yaratıcı","In diesem Beruf muss man kreativ sein.","Bu meslekte yaratıcı olmak gerekir.",""],["langweilig","sıkıcı","Meine Arbeit ist manchmal langweilig.","İşim bazen sıkıcı oluyor.",""],["organisieren","düzenlemek","Wer organisiert die Firmenfeier?","Şirket kutlamasını kim düzenliyor?",""],["der Lehrer","öğretmen (erkek)","Unser Deutschlehrer heißt Herr Müller.","Almanca öğretmenimizin adı Bay Müller.","m"],["die Lehrerin","öğretmen (kadın)","Unsere Deutschlehrerin heißt Frau Müller.","Almanca öğretmenimizin adı Bayan Müller.","f"],["der Schüler","öğrenci (ortaokul/lise)","Wie viele Schüler sind in der Klasse?","Sınıfta kaç öğrenci var?","m"],["der Student","öğrenci (üniversite)","Mein Sohn ist Student in Berlin.","Oğlum Berlin'de öğrenci.","m"],["die Studentin","öğrenci (üniversite, kadın)","Sie ist Studentin an der Uni München.","O, Münih Üniversitesi'nde öğrenci.","f"],["der Automechaniker","oto tamircisi","Mein Vater ist Automechaniker.","Babam oto tamircisi.","m"],["die Automechanikerin","oto tamircisi (kadın)","Sie arbeitet als Automechanikerin.","Oto tamircisi olarak çalışıyor.","f"],["der Bäcker","fırıncı","Der Bäcker macht sehr gutes Brot.","Fırıncı çok güzel ekmek yapıyor.","m"],["die Bäckerin","fırıncı (kadın)","Sie ist Bäckerin von Beruf.","Mesleği fırıncılık.","f"],["die Bürokauffrau","büro memuru (kadın)","Sie arbeitet als Bürokauffrau.","Büro memuru olarak çalışıyor.","f"],["der Bürokaufmann","büro memuru (erkek)","Er ist Bürokaufmann bei einer Bank.","Bir bankada büro memuru.","m"],["der Kassierer","kasiyer (erkek)","Der Kassierer im Supermarkt ist sehr freundlich.","Süpermarketteki kasiyer çok cana yakın.","m"],["die Kassiererin","kasiyer (kadın)","Die Kassiererin arbeitet seit fünf Jahren hier.","Kasiyer beş yıldır burada çalışıyor.","f"],["die Kauffrau","satış görevlisi (kadın)","Sie hat eine Ausbildung als Kauffrau gemacht.","Satış görevlisi olarak eğitim aldı.","f"],["der Kellner","garson (erkek)","Der Kellner bringt uns die Speisekarte.","Garson bize menüyü getiriyor.","m"],["die Kellnerin","garson (kadın)","Die Kellnerin ist sehr nett.","Garson çok nazik.","f"],["der Koch","aşçı (erkek)","Mein Onkel ist Koch in einem Hotel.","Amcam bir otelde aşçı.","m"],["die Köchin","aşçı (kadın)","Sie ist eine sehr gute Köchin.","O çok iyi bir aşçı.","f"],["der Krankenpfleger","hastabakıcı (erkek)","Der Krankenpfleger hilft den Patienten.","Hastabakıcı hastalara yardım ediyor.","m"],["die Krankenschwester","hemşire","Meine Frau ist Krankenschwester.","Eşim hemşire.","f"],["der Mechaniker","mekanikçi","Der Mechaniker repariert unser Auto.","Mekanikçi arabamızı tamir ediyor.","m"],["der Musiklehrer","müzik öğretmeni (erkek)","Der Musiklehrer spielt sehr gut Gitarre.","Müzik öğretmeni çok iyi gitar çalıyor.","m"],["die Musiklehrerin","müzik öğretmeni (kadın)","Die Musiklehrerin unterrichtet Klavier.","Müzik öğretmeni piyano dersi veriyor.","f"],["der Pizzafahrer","pizza kurye","Der Pizzafahrer bringt unser Essen.","Pizza kurye yemeğimizi getiriyor.","m"],["der Reporter","muhabir","Der Reporter stellt viele Fragen.","Muhabir birçok soru soruyor.","m"],["der Taxifahrer","taksi şoförü","Der Taxifahrer kennt die Stadt sehr gut.","Taksi şoförü şehri çok iyi biliyor.","m"],["die Taxifahrerin","taksi şoförü (kadın)","Sie ist seit zehn Jahren Taxifahrerin.","On yıldır taksi şoförlüğü yapıyor.","f"],["der Techniker","teknisyen","Der Techniker repariert den Computer.","Teknisyen bilgisayarı tamir ediyor.","m"],["der Fahrer","sürücü","Der Fahrer wartet vor dem Haus.","Sürücü evin önünde bekliyor.","m"],["der Fußballspieler","futbolcu","Mein Neffe möchte Fußballspieler werden.","Yeğenim futbolcu olmak istiyor.","m"],["die Hausfrau","ev kadını","Meine Mutter ist Hausfrau.","Annem ev kadını.","f"],["der Hausmann","ev erkeği","Er ist jetzt Hausmann und kümmert sich um die Kinder.","Artık ev erkeği ve çocuklarla ilgileniyor.","m"],["der Rentner","emekli","Mein Opa ist Rentner.","Dedem emekli.","m"],["der Verkäufer","satıcı (erkek)","Der Verkäufer zeigt mir die neuen Schuhe.","Satıcı bana yeni ayakkabıları gösteriyor.","m"],["die Verkäuferin","satıcı (kadın)","Die Verkäuferin ist sehr hilfsbereit.","Satıcı çok yardımsever.","f"],["der Ingenieur","mühendis","Mein Bruder ist Ingenieur bei Bosch.","Kardeşim Bosch'ta mühendis.","m"],["der Arbeiter","işçi (erkek)","Die Arbeiter beginnen um sechs Uhr.","İşçiler saat altıda başlıyor.","m"],["die Arbeiterin","işçi (kadın)","Sie ist Arbeiterin in einer Fabrik.","O bir fabrikada işçi.","f"],["der Kunde","müşteri (erkek)","Der Kunde wartet schon zehn Minuten.","Müşteri on dakikadır bekliyor.","m"],["der Mitarbeiter","çalışan/personel","Wir suchen neue Mitarbeiter.","Yeni personel arıyoruz.","m"],["der Beamte","memur","Mein Vater ist Beamte bei der Stadt.","Babam belediyede memur.","m"],["der Frisör","kuaför (kişi)","Mein Frisör schneidet mir immer gut die Haare.","Kuaförüm saçlarımı her zaman güzel kesiyor.","m"],["der Babysitter","bebek bakıcısı","Am Wochenende kommt der Babysitter.","Hafta sonu bebek bakıcısı geliyor.","m"],["die Chefin","yönetici (kadın)","Meine Chefin ist sehr freundlich.","Yöneticim çok cana yakın.","f"],["das Gehalt","maaş","Wie hoch ist Ihr Gehalt?","Maaşınız ne kadar?","n"],["die Sitzung","toplantı","Die Sitzung beginnt um zehn Uhr.","Toplantı saat onda başlıyor.","f"],["der Termin","randevu","Ich habe morgen einen wichtigen Termin.","Yarın önemli bir randevum var.","m"],["die Überstunde","fazla mesai","Diese Woche mache ich viele Überstunden.","Bu hafta çok fazla mesai yapıyorum.","f"],["die Arbeitszeit","çalışma saati","Meine Arbeitszeit ist von neun bis fünf.","Çalışma saatim dokuzdan beşe kadar.","f"],["die Arbeitswoche","çalışma haftası","Diese Arbeitswoche ist sehr kurz.","Bu çalışma haftası çok kısa.","f"],["angestellt","kadrolu (çalışan)","Er ist bei einer großen Firma angestellt.","Büyük bir şirkette kadrolu çalışıyor.",""],["die Branche","sektör","In welcher Branche arbeitest du?","Hangi sektörde çalışıyorsun?","f"],["verkaufen","satmak","Was verkaufen Sie hier?","Burada ne satıyorsunuz?",""],["der Kindergarten","anaokulu","Die kleine Laura geht schon in den Kindergarten.","Küçük Laura zaten anaokuluna gidiyor.","m"],["der Kurs","kurs","Der Deutschkurs geht bis zum Sommer.","Almanca kursu yaza kadar sürüyor.","m"],["studieren","üniversitede okumak","Wo studierst du?","Nerede okuyorsun?",""],["das Studium","öğrenim","Das Studium beginnt im Oktober.","Öğrenim ekimde başlıyor.","n"],["der Unterricht","ders","Wir haben Unterricht von acht bis zwölf Uhr.","Sekizden on ikiye kadar dersimiz var.","m"],["unterrichten","ders vermek","Sie unterrichtet seit zehn Jahren Englisch.","On yıldır İngilizce ders veriyor.",""],["die Sprache","dil","Welche Sprachen sprichst du?","Hangi dilleri konuşuyorsun?","f"],["die Hausaufgabe","ödev","Kannst du mir bei den Hausaufgaben helfen?","Ödevlerimde bana yardım edebilir misin?","f"],["die Prüfung","sınav","Die Prüfung ist am Montag um acht Uhr.","Sınav pazartesi saat sekizde.","f"],["das Ergebnis","sonuç","Das Ergebnis bekommen Sie in zwei Wochen.","Sonucu iki hafta içinde alacaksınız.","n"],["der Bleistift","kurşun kalem","Hast du einen Bleistift für mich?","Bende bir kurşun kalemin var mı?","m"],["buchstabieren","harf harf söylemek","Können Sie das bitte buchstabieren?","Bunu harf harf söyleyebilir misiniz?",""],["die Mathematik","matematik","Mathematik ist mein Lieblingsfach.","Matematik en sevdiğim ders.","f"],["die Leute","insanlar","Hier arbeiten sehr nette Leute.","Burada çok cana yakın insanlar çalışıyor.","p"],["der Mensch","insan","Jeder Mensch braucht Arbeit.","Her insanın işe ihtiyacı var.","m"],["der Kaufmann","satış görevlisi (erkek)","Er hat eine Ausbildung zum Kaufmann gemacht.","Satış görevlisi olarak eğitim aldı.","m"],["die Kantine","kantin","Wir essen mittags in der Kantine.","Öğlen kantinde yemek yiyoruz.","f"],["kaputt","bozuk","Der Drucker ist schon wieder kaputt.","Yazıcı yine bozuk.",""],["die Kasse","kasa","Bitte bezahlen Sie an der Kasse.","Lütfen kasada ödeyin.","f"],["die Pizzeria","pizzacı","Er arbeitet in einer Pizzeria.","Bir pizzacıda çalışıyor.","f"],["das Computerprogramm","bilgisayar programı","Ich lerne ein neues Computerprogramm.","Yeni bir bilgisayar programı öğreniyorum.","n"],["das Computersystem","bilgisayar sistemi","Das Computersystem ist heute sehr langsam.","Bilgisayar sistemi bugün çok yavaş.","n"],["installieren","kurmak (yazılım)","Kannst du mir das Programm installieren?","Bana programı kurabilir misin?",""],["das Kraftfahrzeug","motorlu araç","Er repariert alle Arten von Kraftfahrzeugen.","Her tür motorlu aracı tamir ediyor.","n"],["das Telefon","telefon","Das Telefon klingelt schon wieder.","Telefon yine çalıyor.","n"],["klingeln","çalmak (zil/telefon)","Es klingelt an der Tür.","Kapı zili çalıyor.",""],["das Radio","radyo","Bei der Arbeit hören wir Radio.","İşte radyo dinliyoruz.","n"],["die Gitarre","gitar","Er spielt in der Pause Gitarre.","Molada gitar çalıyor.","f"],["anfangen","başlamak","Wann fängst du mit der Arbeit an?","İşe ne zaman başlıyorsun?",""],["ausfüllen","doldurmak","Bitte füllen Sie das Formular aus.","Lütfen formu doldurun.",""],["backen","fırında pişirmek","Der Bäcker backt jeden Morgen frisches Brot.","Fırıncı her sabah taze ekmek pişiriyor.",""],["berichten","rapor vermek","Können Sie mir kurz berichten?","Bana kısaca rapor verebilir misiniz?",""],["fotografieren","fotoğraf çekmek","Er fotografiert gern für die Zeitung.","Gazete için fotoğraf çekmeyi seviyor.",""],["korrigieren","düzeltmek","Die Lehrerin korrigiert die Tests.","Öğretmen testleri düzeltiyor.",""],["prüfen","kontrol etmek/sınamak","Der Techniker prüft die Maschine.","Teknisyen makineyi kontrol ediyor.",""],["rechnen","hesaplamak","Kannst du das schnell rechnen?","Bunu hızlıca hesaplayabilir misin?",""],["reparieren","onarmak","Der Mechaniker repariert das Auto.","Mekanikçi arabayı onarıyor.",""],["die Reparatur","onarım","Die Reparatur dauert zwei Tage.","Onarım iki gün sürüyor.","f"],["servieren","servis yapmak","Der Kellner serviert das Essen.","Garson yemeği servis ediyor.",""]];
+
+const EXAM_QA = [["Was macht dein Bruder gerade?","Kardeşin şu an ne yapıyor?","Er sucht Arbeit.","İş arıyor."],["Wo arbeitest du?","Nerede çalışıyorsun?","Bei einer kleinen Firma.","Küçük bir şirkette."],["Ist er noch arbeitslos?","Hâlâ işsiz mi?","Ja, seit drei Monaten.","Evet, üç aydır."],["Was fehlt an deinem Arbeitsplatz?","İş yerinde ne eksik?","Ein Drucker.","Bir yazıcı."],["Wann beginnt dein Arbeitstag?","İş günün ne zaman başlıyor?","Um acht Uhr.","Saat sekizde."],["Was sind Sie von Beruf?","Mesleğiniz nedir?","Ich bin Lehrerin.","Öğretmenim."],["Bist du beruflich viel unterwegs?","Mesleki olarak çok mu seyahat ediyorsun?","Ja, sehr viel.","Evet, çok fazla."],["Was ist dein Traumberuf?","Hayal ettiğin meslek nedir?","Ärztin.","Doktorluk."],["Wo hat Jenny einen neuen Job?","Jenny'nin nerede yeni bir işi var?","Bei der Post.","Postanede."],["Passt diese Stelle zu dir?","Bu pozisyon sana uyuyor mu?","Ja, sehr gut.","Evet, çok iyi."],["Habt ihr eine neue Chefin?","Yeni bir yöneticiniz mi var?","Ja, seit letzter Woche.","Evet, geçen haftadan beri."],["Wie heißt die neue Kollegin?","Yeni iş arkadaşının adı ne?","Frau Schmidt.","Bayan Schmidt."],["Hilft dir dein Kollege?","İş arkadaşın sana yardım ediyor mu?","Ja, immer.","Evet, her zaman."],["Wie viel verdienst du im Monat?","Ayda ne kadar kazanıyorsun?","1500 Euro.","1500 Euro."],["Wo arbeitet er jetzt?","Şimdi nerede çalışıyor?","Bei einer anderen Firma.","Başka bir şirkette."],["Wann habt ihr Mittagspause?","Öğle molanız ne zaman?","Von zwölf bis halb eins.","On ikiden on iki buçuğa kadar."],["Wo machst du dein Praktikum?","Stajını nerede yapıyorsun?","Bei Siemens.","Siemens'te."],["Ist er selbstständig?","Kendi işinin sahibi mi?","Ja, genau.","Evet, aynen."],["Wann nimmst du Urlaub?","Ne zaman izin alıyorsun?","Im September.","Eylülde."],["Bist du froh, dass Feierabend ist?","Mesainin bittiğine sevindin mi?","Ja, sehr!","Evet, çok!"],["Hast du diese Woche Nachtdienst?","Bu hafta gece nöbetin var mı?","Ja, leider.","Evet, ne yazık ki."],["Arbeitet sie Vollzeit?","Tam zamanlı mı çalışıyor?","Nein, nur halbtags.","Hayır, sadece yarı zamanlı."],["Was für eine Ausbildung macht er?","Ne tür bir meslek eğitimi alıyor?","Eine Ausbildung als Elektriker.","Elektrikçi eğitimi."],["Sind deine Arbeitszeiten flexibel?","Çalışma saatlerin esnek mi?","Ja, sehr flexibel.","Evet, çok esnek."],["Kommst du immer pünktlich?","Her zaman dakik mi geliyorsun?","Ja, immer.","Evet, her zaman."],["Macht dir der Job viel Stress?","İş sana çok stres yapıyor mu?","Ja, manchmal schon.","Evet, bazen."],["Muss man in diesem Beruf kreativ sein?","Bu meslekte yaratıcı olmak gerekir mi?","Ja, sehr kreativ.","Evet, çok yaratıcı."],["Ist deine Arbeit manchmal langweilig?","İşin bazen sıkıcı oluyor mu?","Ja, manchmal.","Evet, bazen."],["Wer organisiert die Firmenfeier?","Şirket kutlamasını kim düzenliyor?","Meine Kollegin.","İş arkadaşım."],["Wie heißt euer Deutschlehrer?","Almanca öğretmeninizin adı ne?","Herr Müller.","Bay Müller."],["Wie heißt eure Deutschlehrerin?","Almanca öğretmeninizin adı ne?","Frau Müller.","Bayan Müller."],["Wie viele Schüler sind in der Klasse?","Sınıfta kaç öğrenci var?","Fünfundzwanzig.","Yirmi beş."],["Wo ist dein Sohn Student?","Oğlun nerede öğrenci?","In Berlin.","Berlin'de."],["Wo studiert sie?","O nerede okuyor?","An der Uni München.","Münih Üniversitesi'nde."],["Was ist dein Vater von Beruf?","Baban ne iş yapıyor?","Er ist Automechaniker.","Oto tamircisi."],["Als was arbeitet sie?","O ne olarak çalışıyor?","Als Automechanikerin.","Oto tamircisi olarak."],["Macht der Bäcker gutes Brot?","Fırıncı güzel ekmek yapıyor mu?","Ja, sehr gutes.","Evet, çok güzel."],["Was ist ihr Beruf?","Onun mesleği nedir?","Sie ist Bäckerin.","O bir fırıncı."],["Wo arbeitet sie als Bürokauffrau?","Büro memuru olarak nerede çalışıyor?","In einer kleinen Firma.","Küçük bir şirkette."],["Wo arbeitet er als Bürokaufmann?","Büro memuru olarak nerede çalışıyor?","Bei einer Bank.","Bir bankada."],["Wie ist der Kassierer im Supermarkt?","Süpermarketteki kasiyer nasıl?","Sehr freundlich.","Çok cana yakın."],["Wie lange arbeitet die Kassiererin schon hier?","Kasiyer burada ne zamandır çalışıyor?","Seit fünf Jahren.","Beş yıldır."],["Was für eine Ausbildung hat sie gemacht?","Ne tür bir eğitim aldı?","Eine Ausbildung als Kauffrau.","Satış görevlisi eğitimi."],["Was bringt uns der Kellner?","Garson bize ne getiriyor?","Die Speisekarte.","Menüyü."],["Wie ist die Kellnerin?","Garson nasıl?","Sehr nett.","Çok nazik."],["Wo arbeitet dein Onkel als Koch?","Amcan aşçı olarak nerede çalışıyor?","In einem Hotel.","Bir otelde."],["Ist sie eine gute Köchin?","O iyi bir aşçı mı?","Ja, sehr gut.","Evet, çok iyi."],["Was macht der Krankenpfleger?","Hastabakıcı ne yapıyor?","Er hilft den Patienten.","Hastalara yardım ediyor."],["Ist deine Frau Krankenschwester?","Eşin hemşire mi?","Ja, genau.","Evet, aynen."],["Was macht der Mechaniker?","Mekanikçi ne yapıyor?","Er repariert unser Auto.","Arabamızı tamir ediyor."],["Spielt der Musiklehrer gut Gitarre?","Müzik öğretmeni iyi gitar çalıyor mu?","Ja, sehr gut.","Evet, çok iyi."],["Was unterrichtet die Musiklehrerin?","Müzik öğretmeni ne dersi veriyor?","Klavier.","Piyano."],["Was bringt der Pizzafahrer?","Pizza kurye ne getiriyor?","Unser Essen.","Yemeğimizi."],["Was macht der Reporter?","Muhabir ne yapıyor?","Er stellt viele Fragen.","Birçok soru soruyor."],["Kennt der Taxifahrer die Stadt gut?","Taksi şoförü şehri iyi biliyor mu?","Ja, sehr gut.","Evet, çok iyi."],["Wie lange ist sie schon Taxifahrerin?","O ne zamandır taksi şoförü?","Seit zehn Jahren.","On yıldır."],["Was repariert der Techniker?","Teknisyen ne tamir ediyor?","Den Computer.","Bilgisayarı."],["Wo wartet der Fahrer?","Sürücü nerede bekliyor?","Vor dem Haus.","Evin önünde."],["Was möchte dein Neffe werden?","Yeğenin ne olmak istiyor?","Fußballspieler.","Futbolcu."],["Ist deine Mutter Hausfrau?","Annen ev kadını mı?","Ja, genau.","Evet, aynen."],["Was macht er jetzt als Hausmann?","Şimdi ev erkeği olarak ne yapıyor?","Er kümmert sich um die Kinder.","Çocuklarla ilgileniyor."],["Ist dein Opa Rentner?","Deden emekli mi?","Ja, seit fünf Jahren.","Evet, beş yıldır."],["Was zeigt dir der Verkäufer?","Satıcı sana ne gösteriyor?","Die neuen Schuhe.","Yeni ayakkabıları."],["Ist die Verkäuferin hilfsbereit?","Satıcı yardımsever mi?","Ja, sehr.","Evet, çok."],["Wo arbeitet dein Bruder als Ingenieur?","Kardeşin mühendis olarak nerede çalışıyor?","Bei Bosch.","Bosch'ta."],["Wann beginnen die Arbeiter?","İşçiler ne zaman başlıyor?","Um sechs Uhr.","Saat altıda."],["Wo arbeitet sie als Arbeiterin?","İşçi olarak nerede çalışıyor?","In einer Fabrik.","Bir fabrikada."],["Wie lange wartet der Kunde schon?","Müşteri ne zamandır bekliyor?","Schon zehn Minuten.","Zaten on dakikadır."],["Was sucht ihr gerade?","Şu an ne arıyorsunuz?","Neue Mitarbeiter.","Yeni personel."],["Wo arbeitet dein Vater als Beamte?","Baban memur olarak nerede çalışıyor?","Bei der Stadt.","Belediyede."],["Schneidet dein Frisör dir gut die Haare?","Kuaförün saçlarını güzel mi kesiyor?","Ja, immer sehr gut.","Evet, her zaman çok güzel."],["Wer kommt am Wochenende?","Hafta sonu kim geliyor?","Der Babysitter.","Bebek bakıcısı."],["Ist deine Chefin freundlich?","Yöneticin cana yakın mı?","Ja, sehr freundlich.","Evet, çok cana yakın."],["Wie hoch ist Ihr Gehalt?","Maaşınız ne kadar?","Das sage ich nicht so gern.","Bunu söylemeyi pek sevmem."],["Wann beginnt die Sitzung?","Toplantı ne zaman başlıyor?","Um zehn Uhr.","Saat onda."],["Hast du morgen einen Termin?","Yarın bir randevun var mı?","Ja, einen wichtigen.","Evet, önemli bir tane."],["Machst du diese Woche viele Überstunden?","Bu hafta çok fazla mesai mi yapıyorsun?","Ja, leider viele.","Evet, ne yazık ki çok."],["Wie ist deine Arbeitszeit?","Çalışma saatin nasıl?","Von neun bis fünf.","Dokuzdan beşe kadar."],["Ist diese Arbeitswoche kurz?","Bu çalışma haftası kısa mı?","Ja, sehr kurz.","Evet, çok kısa."],["Ist er bei einer großen Firma angestellt?","Büyük bir şirkette kadrolu mu?","Ja, seit zwei Jahren.","Evet, iki yıldır."],["In welcher Branche arbeitest du?","Hangi sektörde çalışıyorsun?","In der IT-Branche.","Bilişim sektöründe."],["Was verkaufen Sie hier?","Burada ne satıyorsunuz?","Schuhe und Taschen.","Ayakkabı ve çanta."],["Geht Laura schon in den Kindergarten?","Laura zaten anaokuluna gidiyor mu?","Ja, seit letztem Monat.","Evet, geçen aydan beri."],["Wie lange geht der Deutschkurs?","Almanca kursu ne kadar sürüyor?","Bis zum Sommer.","Yaza kadar."],["Wo studierst du?","Nerede okuyorsun?","In Hamburg.","Hamburg'da."],["Wann beginnt das Studium?","Öğrenim ne zaman başlıyor?","Im Oktober.","Ekimde."],["Wann habt ihr Unterricht?","Dersiniz ne zaman?","Von acht bis zwölf Uhr.","Sekizden on ikiye kadar."],["Was unterrichtet sie?","O ne dersi veriyor?","Englisch.","İngilizce."],["Welche Sprachen sprichst du?","Hangi dilleri konuşuyorsun?","Deutsch und Türkisch.","Almanca ve Türkçe."],["Kannst du mir bei den Hausaufgaben helfen?","Ödevlerimde bana yardım edebilir misin?","Ja, gerne.","Evet, memnuniyetle."],["Wann ist die Prüfung?","Sınav ne zaman?","Am Montag um acht Uhr.","Pazartesi saat sekizde."],["Wann bekomme ich das Ergebnis?","Sonucu ne zaman alacağım?","In zwei Wochen.","İki hafta içinde."],["Hast du einen Bleistift für mich?","Bende bir kurşun kalemin var mı?","Ja, hier bitte.","Evet, buyurun."],["Können Sie das bitte buchstabieren?","Bunu harf harf söyleyebilir misiniz?","Ja, natürlich.","Evet, tabii."],["Ist Mathematik dein Lieblingsfach?","Matematik en sevdiğin ders mi?","Ja, genau.","Evet, aynen."],["Arbeiten hier nette Leute?","Burada cana yakın insanlar mı çalışıyor?","Ja, sehr nette.","Evet, çok cana yakın."],["Braucht jeder Mensch Arbeit?","Her insanın işe ihtiyacı var mı?","Ja, meistens.","Evet, çoğunlukla."],["Was für eine Ausbildung hat er gemacht?","Ne tür bir eğitim aldı?","Eine Ausbildung zum Kaufmann.","Satış görevlisi eğitimi."],["Wo esst ihr mittags?","Öğlen nerede yemek yiyorsunuz?","In der Kantine.","Kantinde."],["Ist der Drucker wieder kaputt?","Yazıcı yine mi bozuk?","Ja, schon wieder.","Evet, yine."],["Wo bezahle ich?","Nerede ödüyorum?","An der Kasse.","Kasada."],["Wo arbeitet er?","Nerede çalışıyor?","In einer Pizzeria.","Bir pizzacıda."],["Was lernst du gerade?","Şu an ne öğreniyorsun?","Ein neues Computerprogramm.","Yeni bir bilgisayar programı."],["Ist das Computersystem heute langsam?","Bilgisayar sistemi bugün yavaş mı?","Ja, sehr langsam.","Evet, çok yavaş."],["Kannst du mir das Programm installieren?","Bana programı kurabilir misin?","Ja, sofort.","Evet, hemen."],["Was repariert er?","Ne tamir ediyor?","Alle Arten von Kraftfahrzeugen.","Her tür motorlu aracı."],["Klingelt das Telefon schon wieder?","Telefon yine mi çalıyor?","Ja, schon wieder.","Evet, yine."],["Klingelt es an der Tür?","Kapı zili mi çalıyor?","Ja, ich mache auf.","Evet, açıyorum."],["Hört ihr bei der Arbeit Radio?","İşte radyo mu dinliyorsunuz?","Ja, manchmal.","Evet, bazen."],["Spielt er in der Pause Gitarre?","Molada gitar mı çalıyor?","Ja, sehr gern.","Evet, çok severek."],["Wann fängst du mit der Arbeit an?","İşe ne zaman başlıyorsun?","Um neun Uhr.","Saat dokuzda."],["Was muss ich ausfüllen?","Ne doldurmam gerekiyor?","Bitte füllen Sie das Formular aus.","Lütfen formu doldurun."],["Backt der Bäcker jeden Morgen frisches Brot?","Fırıncı her sabah taze ekmek pişiriyor mu?","Ja, jeden Morgen.","Evet, her sabah."],["Können Sie mir kurz berichten?","Bana kısaca rapor verebilir misiniz?","Ja, gerne.","Evet, memnuniyetle."],["Fotografiert er gern für die Zeitung?","Gazete için fotoğraf çekmeyi seviyor mu?","Ja, sehr gern.","Evet, çok severek."],["Korrigiert die Lehrerin die Tests?","Öğretmen testleri düzeltiyor mu?","Ja, gerade jetzt.","Evet, şu anda."],["Prüft der Techniker die Maschine?","Teknisyen makineyi kontrol ediyor mu?","Ja, jetzt gerade.","Evet, şu anda."],["Kannst du das schnell rechnen?","Bunu hızlıca hesaplayabilir misin?","Ja, kein Problem.","Evet, sorun değil."],["Repariert der Mechaniker das Auto?","Mekanikçi arabayı onarıyor mu?","Ja, gerade jetzt.","Evet, şu anda."],["Wie lange dauert die Reparatur?","Onarım ne kadar sürüyor?","Zwei Tage.","İki gün."],["Serviert der Kellner das Essen?","Garson yemeği servis ediyor mu?","Ja, gleich.","Evet, hemen."]];
+
+const GENDER_META = {
+  m: { color: "var(--der-blue)", hex: "#2E5FA3", label: "der" },
+  f: { color: "var(--die-red)", hex: "#C0392B", label: "die" },
+  n: { color: "var(--das-green)", hex: "#1E8449", label: "das" },
+  p: { color: "var(--plural-orange)", hex: "#D9791C", label: "die (çoğul)" },
+  "": { color: "var(--neutral-grey)", hex: "#5A6B63", label: "" }
+};
+
+const $ = sel => document.querySelector(sel);
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+// ---------- WORD HIGHLIGHTING ----------
+const CORE_OVERRIDE = {};
+
+function coreForm(de){
+  if (CORE_OVERRIDE[de]) return CORE_OVERRIDE[de];
+  let w = de.replace(/^(der|die|das)\s+/, "");
+  w = w.split(" / ")[0];
+  w = w.replace(/[()–-]/g, " ").trim().split(" ")[0];
+  return w;
+}
+function stemOf(w){
+  if (w.length > 5 && w.endsWith("en")) return w.slice(0, -2);
+  if (w.length > 4 && w.endsWith("e")) return w.slice(0, -1);
+  if (w.length > 4 && w.endsWith("n")) return w.slice(0, -1);
+  return w;
+}
+function escapeHtml(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+// Eski telefon tarayıcılarıyla da uyumlu olsun diye lookbehind/\p{L} yerine
+// klasik bir "harf sınıfı" ile kelime kelime tarama yapılır (Almanca ö/ü/ä/ß dahil).
+const LETTER_CLASS = "A-Za-zÀ-ÖØ-öø-ÿ";
+const SPLIT_RE = new RegExp("([^" + LETTER_CLASS + "]+)");
+const HAS_LETTER_RE = new RegExp("[" + LETTER_CLASS + "]");
+
+function findTargetWord(de, gender, sentence){
+  const core = coreForm(de);
+  const st = stemOf(core);
+  const isNoun = gender === "m" || gender === "f" || gender === "n" || gender === "p";
+  const tokens = sentence.split(SPLIT_RE);
+  for (const t of tokens){
+    if (!t || !HAS_LETTER_RE.test(t)) continue;
+    // isimlerde büyük/küçük harf duyarlı arama (örn. "Ei" kelimesi "ein" ile karışmasın diye)
+    const matches = isNoun ? t.indexOf(st) === 0 : t.toLowerCase().indexOf(st.toLowerCase()) === 0;
+    if (matches) return t;
+  }
+  return null;
+}
+function highlightSentence(de, gender, sentence){
+  const target = findTargetWord(de, gender, sentence);
+  const safe = escapeHtml(sentence);
+  if (!target) return safe;
+  const escapedMatch = escapeHtml(target);
+  const idx = safe.indexOf(escapedMatch);
+  if (idx === -1) return safe;
+  return safe.slice(0, idx) + "<b>" + escapedMatch + "</b>" + safe.slice(idx + escapedMatch.length);
+}
+
+// ---------- AUDIO ----------
+let germanVoice = null;
+function pickGermanVoice(){
+  const voices = speechSynthesis.getVoices ? speechSynthesis.getVoices() : [];
+  germanVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("de")) || null;
+}
+if (typeof speechSynthesis !== "undefined") {
+  pickGermanVoice();
+  speechSynthesis.onvoiceschanged = pickGermanVoice;
+}
+function speakGerman(text){
+  try{
+    if (typeof speechSynthesis === "undefined") {
+      alert("Bu tarayıcı sesli okumayı desteklemiyor.");
+      return;
+    }
+    speechSynthesis.cancel();
+    // artikel (der/die/das) korunur, sadece alternatif yazımlar ve parantezler temizlenir
+    const clean = text.split(" / ")[0].replace(/[()]/g, "");
+    const utter = new SpeechSynthesisUtterance(clean);
+    utter.lang = "de-DE";
+    if (germanVoice) utter.voice = germanVoice;
+    utter.rate = 0.9;
+    speechSynthesis.speak(utter);
+  }catch(e){ console.warn("TTS error", e); }
+}
+
+// ---------- BACKEND (Google Apps Script + Google Sheets) ----------
+// Kurulum sonrası Apps Script "Web App URL"nizi aşağıya yapıştırın.
+// Örnek: "https://script.google.com/macros/s/AKfycb.../exec"
+const CONFIG = {
+  API_URL: "https://script.google.com/macros/s/AKfycbyGZWVGtjDukKHizQagXYXDJ8m4tNtrBiLMb8X5ootsy-WzkaNQHzew3k7wrUwkAnM4fA/exec",
+  THEMA: "Arbeit-und-Beruf-Meslekler"
+};
+
+function apiConfigured(){
+  return CONFIG.API_URL && CONFIG.API_URL.indexOf("script.google.com") !== -1;
+}
+
+async function apiCall(action, payload){
+  if (!apiConfigured()) return null;
+  try{
+    const res = await fetch(CONFIG.API_URL, {
+      method: "POST",
+      // "text/plain" kullanılır ki tarayıcı CORS ön-kontrolü (preflight) göndermesin;
+      // Apps Script Web App'ler OPTIONS isteklerine yanıt vermediği için bu şart.
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(Object.assign({ action: action }, payload))
+    });
+    return await res.json();
+  }catch(e){
+    console.warn("API error", e);
+    return null;
+  }
+}
+
+let storageAvailable = false; // apiConfigured() kontrolüyle çalışma anında güncellenir
+
+// ---------- IDENTITY ----------
+let student = { name: "", date: "" };
+
+function todayStr(){
+  const d = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate());
+}
+$("#gate-date").value = todayStr();
+
+$("#gate-submit").addEventListener("click", async ()=>{
+  const name = $("#gate-name").value.trim();
+  const date = $("#gate-date").value || todayStr();
+  if (!name) { $("#gate-name").focus(); return; }
+  student = { name, date };
+  $("#identity-gate").style.display = "none";
+  renderStudentLine();
+  await renderHistoryPanel();
+});
+
+function renderStudentLine(){
+  $("#student-line").innerHTML =
+    "👤 " + escapeHtml(student.name) + " · " + student.date +
+    ' <button id="change-student">Değiştir</button>';
+  $("#change-student").addEventListener("click", ()=>{
+    $("#identity-gate").style.display = "flex";
+  });
+}
+
+async function renderHistoryPanel(){
+  const existing = document.getElementById("history-panel");
+  if (existing) existing.remove();
+  if (!apiConfigured()) return;
+  const res = await apiCall("getHistory", { name: student.name, thema: CONFIG.THEMA });
+  if (!res || !res.records || !res.records.length) return;
+  const top = res.records.slice(0, 5);
+  const panel = document.createElement("div");
+  panel.id = "history-panel";
+  panel.className = "topic-tags";
+  panel.style.marginTop = "10px";
+  panel.innerHTML = '<span class="tag" style="background:rgba(227,169,58,0.18);">📊 Geçmiş sonuçların:</span>' +
+    top.map(r => '<span class="tag">Quiz ' + r.quizSet + ": " + r.score + "/" + r.total + " (%" + r.pct + ")</span>").join("");
+  $("#student-line").insertAdjacentElement("afterend", panel);
+}
+
+// allow Enter key to submit gate
+$("#gate-name").addEventListener("keydown", e=>{ if(e.key==="Enter") $("#gate-submit").click(); });
+
+// ---------- TABS ----------
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    if (btn.dataset.tab === "quiz") showQuizSelect();
+  });
+});
+
+// ---------- FLASHCARDS ----------
+let order = WORDS.map((_, i) => i);
+let idx = 0;
+let flipped = false;
+let knowSet = new Set();
+let unsureSet = new Set();
+let reviewOnly = false;
+let fcDirection = "de-tr";
+let articleRevealed = false;
+let lastWIndexForArticle = -1;
+
+function currentList(){
+  return reviewOnly ? order.filter(i => unsureSet.has(i)) : order;
+}
+
+// Uzun bir açıklama parantez içindeyse ("sahip olmak (benim ... var/yok)" gibi),
+// ana kelimeyi büyük satırda, parantez içini ayrı ve daha küçük bir alt satırda gösterir.
+function setWordDisplay(el, text){
+  const idx = text.indexOf("(");
+  if (idx > 0){
+    const main = text.slice(0, idx).trim();
+    const secondary = text.slice(idx).trim();
+    el.innerHTML = main + '<span class="word-sub">' + secondary + '</span>';
+  } else {
+    el.textContent = text;
+  }
+}
+
+function renderCard(){
+  const list = currentList();
+  if (list.length === 0){
+    $("#fc-de").textContent = "Tekrar listesi boş 🎉";
+    $("#fc-tr").textContent = "";
+    $("#fc-ex").textContent = "Tüm kelimeleri biliyorsun!";
+    $("#fc-ex-front").textContent = "";
+    $("#fc-examqa").style.display = "none";
+    $("#fc-examqa-front").style.display = "none";
+    $("#fc-count").textContent = "0 / 0";
+    return;
+  }
+  $("#fc-examqa").style.display = "block";
+  $("#fc-examqa-front").style.display = "block";
+  if (idx >= list.length) idx = 0;
+  if (idx < 0) idx = list.length - 1;
+  const wIndex = list[idx];
+  if (wIndex !== lastWIndexForArticle){
+    articleRevealed = false;
+    lastWIndexForArticle = wIndex;
+  }
+  const [de, tr, deS, trS, gender] = WORDS[wIndex];
+  const meta = GENDER_META[gender] || GENDER_META[""];
+
+  const frontLabelEl = $("#fc-front-label");
+  const backLabelEl = $("#fc-back-label");
+  let front, back;
+  if (fcDirection === "de-tr"){
+    frontLabelEl.textContent = "Almanca";
+    backLabelEl.textContent = "Türkçe";
+    front = de; back = tr;
+  } else {
+    frontLabelEl.textContent = "Türkçe";
+    backLabelEl.textContent = "Almanca";
+    front = tr; back = de;
+  }
+  setWordDisplay($("#fc-de"), front);
+  setWordDisplay($("#fc-tr"), back);
+  // Türkçe tarafta renklendirme YOK (artikel rengi ipucu vermesin diye);
+  // Almanca tarafta cinsiyet rengi her zaman korunur.
+  if (fcDirection === "de-tr"){
+    $("#fc-de").style.color = meta.hex;      // Almanca (ön yüz)
+    $("#fc-tr").style.color = "var(--ink)";  // Türkçe (arka yüz) - renksiz
+  } else {
+    $("#fc-de").style.color = "var(--ink)";  // Türkçe (ön yüz) - renksiz
+    $("#fc-tr").style.color = meta.hex;      // Almanca (arka yüz)
+  }
+
+  {
+    const frontBadgeEl = $("#fc-gender-badge-front");
+    const backBadgeEl = $("#fc-gender-badge-back");
+    if (!meta.label){
+      frontBadgeEl.style.display = "none"; frontBadgeEl.onclick = null;
+      backBadgeEl.style.display = "none"; backBadgeEl.onclick = null;
+    } else if (fcDirection === "de-tr"){
+      // Almanca göster: öğrenme modu, her iki yüzde de rozet her zaman açık
+      [frontBadgeEl, backBadgeEl].forEach(el=>{
+        el.style.display = "inline-block";
+        el.style.cursor = "default";
+        el.textContent = meta.label;
+        el.style.background = meta.hex;
+        el.onclick = null;
+      });
+    } else {
+      // Türkçe göster: ön yüz (Türkçe, çevirmeden önce) "❔ Artikel" ile gizli kalır,
+      // öğrenci tahmin etsin diye; tıklanınca açılır/kapanır (toggle).
+      // Arka yüz (kartı çevirince görülen Almanca taraf) artık her zaman açık gösterilir,
+      // çünkü kartı çevirmek zaten cevabı gösteriyor.
+      backBadgeEl.style.display = "inline-block";
+      backBadgeEl.style.cursor = "default";
+      backBadgeEl.textContent = meta.label;
+      backBadgeEl.style.background = meta.hex;
+      backBadgeEl.onclick = null;
+
+      frontBadgeEl.style.display = "inline-block";
+      frontBadgeEl.style.cursor = "pointer";
+      if (articleRevealed){
+        frontBadgeEl.textContent = meta.label;
+        frontBadgeEl.style.background = meta.hex;
+      } else {
+        frontBadgeEl.textContent = "❔ Artikel";
+        frontBadgeEl.style.background = "#8a9992";
+      }
+      frontBadgeEl.onclick = (e)=>{
+        e.stopPropagation();
+        articleRevealed = !articleRevealed;
+        renderCard();
+      };
+    }
+  }
+
+  // Ses ikonu (ön yüz) sadece Almanca ön yüzdeyken görünür.
+  // "Türkçe göster" modunda ön yüz Türkçe olduğu için bu ikon gizlenir;
+  // aksi halde öğrenci artikeli dinleyerek kolayca tahmin edebilirdi.
+  $("#audio-btn-front").style.display = (fcDirection === "de-tr") ? "flex" : "none";
+
+  // Her yüz sadece kendi dilindeki cümleyi gösterir (çapraz dil karışmaz)
+  if (fcDirection === "de-tr"){
+    $("#fc-ex-front").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex-front").style.color = meta.hex;
+    $("#fc-ex").textContent = trS;
+    $("#fc-ex").style.color = "var(--ink)";
+  } else {
+    $("#fc-ex-front").textContent = trS;
+    $("#fc-ex-front").style.color = "var(--ink)";
+    $("#fc-ex").innerHTML = highlightSentence(de, gender, deS);
+    $("#fc-ex").style.color = meta.hex;
+  }
+
+  const qa = EXAM_QA[wIndex];
+  if (qa){
+    if (fcDirection === "de-tr"){
+      $("#fc-qa-q-front").textContent = qa[0];
+      $("#fc-qa-a-front").textContent = qa[2];
+      $("#fc-qa-q").textContent = qa[1];
+      $("#fc-qa-a").textContent = qa[3];
+    } else {
+      $("#fc-qa-q-front").textContent = qa[1];
+      $("#fc-qa-a-front").textContent = qa[3];
+      $("#fc-qa-q").textContent = qa[0];
+      $("#fc-qa-a").textContent = qa[2];
+    }
+  }
+
+  const numLabel = "#" + (wIndex + 1);
+  $("#fc-number-front").textContent = numLabel;
+  $("#fc-number-back").textContent = numLabel;
+
+  $("#fc-count").textContent = (idx+1) + " / " + list.length;
+  $("#fc-progress").style.width = (((idx+1)/list.length)*100) + "%";
+  $("#fc-mode-label").textContent = reviewOnly ? "Tekrar listesi" : "Tüm kartlar";
+  const card = $("#flip-card");
+  card.classList.remove("flipped");
+  flipped = false;
+  updateStats();
+}
+
+function updateStats(){
+  $("#stat-know").textContent = knowSet.size;
+  $("#stat-unsure").textContent = unsureSet.size;
+  $("#fc-review-count").textContent = unsureSet.size;
+
+  const total = WORDS.length;
+  const reviewed = knowSet.size + unsureSet.size;
+  $("#mastery-count").textContent = reviewed + "/" + total;
+  $("#mastery-progress").style.width = ((reviewed/total)*100) + "%";
+
+  const badge = $("#mastery-badge");
+  if (reviewed === 0){
+    badge.style.display = "none";
+  } else {
+    const pct = Math.round((knowSet.size/total)*100);
+    const grade = gradeFor(pct);
+    badge.style.display = "inline-block";
+    badge.textContent = "Öğrenme Oranı: %" + pct + " — " + grade.label;
+    badge.style.background = grade.color + "22";
+    badge.style.color = grade.color;
+    badge.style.border = "2px solid " + grade.color;
+  }
+}
+
+let swipeHandled = false;
+
+$("#flip-card").addEventListener("click", ()=>{
+  if (swipeHandled) { swipeHandled = false; return; }
+  flipped = !flipped;
+  $("#flip-card").classList.toggle("flipped", flipped);
+});
+$("#audio-btn-front").addEventListener("click", e=>{ e.stopPropagation(); speakWordThenSentence(); });
+$("#audio-btn-back").addEventListener("click", e=>{ e.stopPropagation(); speakWordThenSentence(); });
+// Önce kelimeyi (artikeliyle), bitince hemen ardından Almanca örnek cümleyi okur.
+function speakWordThenSentence(){
+  const list = currentList();
+  if (list.length === 0) return;
+  const wIndex = list[idx];
+  const wordText = WORDS[wIndex][0];       // artikel + kelime, örn. "die Wohnung"
+  const sentenceText = WORDS[wIndex][2];   // sadece Almanca örnek cümle (deS)
+  try{
+    if (typeof speechSynthesis === "undefined") {
+      alert("Bu tarayıcı sesli okumayı desteklemiyor.");
+      return;
+    }
+    speechSynthesis.cancel();
+    const cleanWord = wordText.split(" / ")[0].replace(/[()]/g, "");
+    const cleanSentence = sentenceText.split(" / ")[0].replace(/[()]/g, "");
+    const utterWord = new SpeechSynthesisUtterance(cleanWord);
+    utterWord.lang = "de-DE";
+    if (germanVoice) utterWord.voice = germanVoice;
+    utterWord.rate = 0.9;
+    const utterSentence = new SpeechSynthesisUtterance(cleanSentence);
+    utterSentence.lang = "de-DE";
+    if (germanVoice) utterSentence.voice = germanVoice;
+    utterSentence.rate = 0.9;
+    utterWord.onend = () => { speechSynthesis.speak(utterSentence); };
+    speechSynthesis.speak(utterWord);
+  }catch(e){ console.warn("TTS error", e); }
+}
+
+function goNext(){
+  const list = currentList();
+  const wasFullPassEnd = !reviewOnly && list.length > 0 && idx === list.length - 1;
+  idx++;
+  renderCard();
+  if (wasFullPassEnd) handleFullPassComplete();
+}
+function goPrev(){ idx--; renderCard(); }
+
+$("#fc-next").addEventListener("click", goNext);
+$("#fc-prev").addEventListener("click", goPrev);
+
+// ---- Telefonda parmakla kaydırarak kart değiştirme ----
+(function setupSwipe(){
+  const el = $("#flip-card");
+  let startX = 0, startY = 0;
+  el.addEventListener("touchstart", (e)=>{
+    const t = e.changedTouches[0];
+    startX = t.screenX; startY = t.screenY;
+  }, { passive: true });
+  el.addEventListener("touchend", (e)=>{
+    const t = e.changedTouches[0];
+    const dx = t.screenX - startX;
+    const dy = t.screenY - startY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4){
+      swipeHandled = true;
+      if (dx < 0) goNext(); else goPrev();
+    }
+  }, { passive: true });
+})();
+
+async function handleFullPassComplete(){
+  if (!apiConfigured() || !student.name) return;
+  const res = await apiCall("completeCardPass", { name: student.name, thema: CONFIG.THEMA });
+  if (res && res.count) showCardCompletionBanner(res.count);
+}
+
+function showCardCompletionBanner(count){
+  const existing = document.getElementById("card-complete-banner");
+  if (existing) existing.remove();
+  const banner = document.createElement("div");
+  banner.id = "card-complete-banner";
+  banner.className = "resume-banner";
+  const waMsg = "Merhaba! Ben " + student.name + ". \"" + CONFIG.THEMA + "\" konusundaki kartlar bölümünü " + count + ". kez bitirdim. (" + student.date + ")";
+  banner.innerHTML = "🎉 Kartlar bölümünü <b>" + count + ". kez</b> bitirdin! " +
+    '<a class="whatsapp-btn" style="margin-left:8px;padding:6px 14px;font-size:13px;" href="https://wa.me/?text=' + encodeURIComponent(waMsg) + '" target="_blank">📤 Hocama Bildir</a>';
+  const stage = document.querySelector(".card-stage");
+  stage.parentNode.insertBefore(banner, stage);
+  setTimeout(()=>{ if (banner.parentNode) banner.remove(); }, 15000);
+}
+
+$("#fc-know").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; knowSet.add(wIndex); unsureSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-unsure").addEventListener("click", ()=>{
+  const list = currentList(); if (!list.length) return;
+  const wIndex = list[idx]; unsureSet.add(wIndex); knowSet.delete(wIndex);
+  idx++; renderCard();
+});
+$("#fc-shuffle").addEventListener("click", ()=>{ order = shuffle(order); idx = 0; renderCard(); });
+$("#fc-review").addEventListener("click", ()=>{
+  reviewOnly = !reviewOnly; idx = 0;
+  $("#fc-review").innerHTML = reviewOnly
+    ? "⬅ Tüm Kartlara Dön"
+    : '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">' + unsureSet.size + '</span>)';
+  renderCard();
+});
+$("#fc-reset").addEventListener("click", ()=>{
+  knowSet.clear(); unsureSet.clear(); reviewOnly = false;
+  order = WORDS.map((_,i)=>i); idx = 0;
+  $("#fc-review").innerHTML = '🔁 Sadece Tekrar Listesi (<span id="fc-review-count">0</span>)';
+  renderCard();
+});
+document.querySelectorAll("#fc-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#fc-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    fcDirection = btn.dataset.dir;
+    renderCard();
+  });
+});
+
+renderCard();
+
+// ---------- QUIZ ----------
+const COGNATE_EXCLUDE = new Set([
+  "das Radio", "die Kasse", "das Telefon", "die Firma", "der Chef", "die Chefin", "die Mathematik", "die Gitarre"
+]);
+
+const ELIGIBLE_POOL = WORDS.map((_, i) => i).filter(i => !COGNATE_EXCLUDE.has(WORDS[i][0]));
+// Havuzu tam olarak QUIZ_COUNT parçaya böler; bölünemeyen kalan kelimeler
+// otomatik olarak son quize eklenir.
+const QUIZ_COUNT = 4;
+const baseSize = Math.floor(ELIGIBLE_POOL.length / QUIZ_COUNT);
+const QUIZ_SETS = [];
+for (let i = 0; i < QUIZ_COUNT; i++) {
+  const start = i * baseSize;
+  const end = (i === QUIZ_COUNT - 1) ? ELIGIBLE_POOL.length : start + baseSize;
+  QUIZ_SETS.push(ELIGIBLE_POOL.slice(start, end));
+}
+
+let activeQuizSet = null;
+let quizDirection = "de-tr";
+let quizOrder = [];
+let quizDirs = [];
+let quizIdx = 0;
+let quizScore = 0;
+let quizWrong = [];
+let answered = false;
+
+const GRADE_BANDS = [
+  { min: 90, label: "Pekiyi 🏆", color: "#2E7D46" },
+  { min: 75, label: "İyi 👍", color: "#5C8C52" },
+  { min: 60, label: "Orta 🙂", color: "#E3A93A" },
+  { min: 45, label: "Geçer 📘", color: "#D98C2B" },
+  { min: 0,  label: "Tekrar Çalış 💪", color: "#C1442C" },
+];
+function gradeFor(pct){ return GRADE_BANDS.find(b => pct >= b.min); }
+
+document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("#quiz-direction-row .dir-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    quizDirection = btn.dataset.dir;
+    if (activeQuizSet !== null) startQuiz();
+  });
+});
+document.querySelectorAll(".quiz-set-btn").forEach(btn=>{
+  btn.addEventListener("click", async ()=>{
+    activeQuizSet = parseInt(btn.dataset.set, 10);
+    $("#quiz-select").style.display = "none";
+    $("#quiz-area").style.display = "block";
+    const resumed = await tryResumeQuiz();
+    if (!resumed) startQuiz();
+  });
+});
+
+function showQuizSelect(){
+  activeQuizSet = null;
+  $("#quiz-select").style.display = "block";
+  $("#quiz-area").style.display = "none";
+  storageAvailable = apiConfigured();
+  $("#storage-note").textContent = storageAvailable
+    ? "✔ Sonuçların ve ilerlemen kaydediliyor — istediğin zaman kaldığın yerden devam edebilirsin."
+    : "Not: Öğretmenin henüz sonuç kaydını aktif etmedi; quiz'i tek oturumda bitirmen gerekiyor. Sonucu bitince WhatsApp butonuyla gönderebilirsin.";
+}
+
+async function saveQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("saveProgress", {
+    name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection,
+    quizOrder, quizDirs, quizIdx, quizScore, quizWrong
+  });
+}
+async function clearQuizProgress(){
+  if (!apiConfigured()) return;
+  await apiCall("clearProgress", { name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection });
+}
+async function tryResumeQuiz(){
+  if (!apiConfigured()) return false;
+  const res = await apiCall("getProgress", { name: student.name, thema: CONFIG.THEMA, quizSet: activeQuizSet+1, direction: quizDirection });
+  if (!res || !res.found) return false;
+  if (!res.quizOrder || res.quizIdx >= res.quizOrder.length) return false;
+  quizOrder = res.quizOrder; quizDirs = res.quizDirs;
+  quizIdx = res.quizIdx; quizScore = res.quizScore; quizWrong = res.quizWrong;
+  renderResumeBanner(res.quizIdx, res.quizScore);
+  renderQuizQuestion();
+  return true;
+}
+function renderResumeBanner(qIdx, score){
+  const area = $("#quiz-area");
+  const banner = document.createElement("div");
+  banner.className = "resume-banner";
+  banner.innerHTML = "📌 Kaldığın yerden devam ediyorsun: Soru " + (qIdx+1) + ", şu ana kadar " + score + " doğru. " +
+    '<button class="btn btn-ghost" id="resume-restart-instead" style="padding:4px 10px;font-size:12px;">Baştan Başla</button>';
+  area.parentNode.insertBefore(banner, area);
+  $("#resume-restart-instead").addEventListener("click", ()=>{
+    banner.remove();
+    startQuiz();
+  });
+  setTimeout(()=>{ if(banner.parentNode) banner.remove(); }, 6000);
+}
+
+function buildQuizOrder(){ return shuffle(QUIZ_SETS[activeQuizSet]); }
+
+function startQuiz(){
+  quizOrder = buildQuizOrder();
+  quizDirs = quizOrder.map(()=> quizDirection === "mixed" ? (Math.random()<0.5 ? "de-tr" : "tr-de") : quizDirection);
+  quizIdx = 0; quizScore = 0; quizWrong = [];
+  renderQuizQuestion();
+}
+
+function pickDistractors(correctIndex, count){
+  const pool = WORDS.map((_,i)=>i).filter(i => i !== correctIndex);
+  return shuffle(pool).slice(0, count);
+}
+
+function renderQuizQuestion(){
+  answered = false;
+  const area = $("#quiz-area");
+  if (quizIdx >= quizOrder.length){ renderQuizResult(); return; }
+  const wIndex = quizOrder[quizIdx];
+  const dir = quizDirs[quizIdx];
+  const [de, tr] = WORDS[wIndex];
+  const askWord = dir === "de-tr" ? de : tr;
+  const questionLabel = dir === "de-tr" ? "Bu kelimenin Türkçesi ne?" : "Bu kelimenin Almancası ne?";
+  const dirTag = dir === "de-tr" ? "🇩🇪 → 🇹🇷" : "🇹🇷 → 🇩🇪";
+
+  const distractorIdx = pickDistractors(wIndex, 3);
+  const optionsIdx = shuffle([wIndex, ...distractorIdx]);
+
+  area.innerHTML =
+    '<div class="quiz-top">' +
+      '<span><button class="back-link" id="quiz-back-link">◀ Quiz ' + (activeQuizSet+1) + '</button> &nbsp; Soru ' + (quizIdx+1) + ' / ' + quizOrder.length + ' &nbsp; ' + dirTag + '</span>' +
+      '<span class="quiz-live-score">Puan: ' + quizScore + ' / ' + quizOrder.length + '</span>' +
+    '</div>' +
+    '<div class="quiz-question">' +
+      '<div class="eyebrow">' + questionLabel + '</div>' +
+      '<div class="word">' + escapeHtml(askWord) + '</div>' +
+    '</div>' +
+    '<div class="options" id="quiz-options"></div>' +
+    '<div class="quiz-feedback" id="quiz-feedback"></div>' +
+    '<div class="quiz-next" id="quiz-next-wrap"></div>';
+
+  $("#quiz-back-link").addEventListener("click", ()=>{ saveQuizProgress(); showQuizSelect(); });
+
+  const optsWrap = $("#quiz-options");
+  optionsIdx.forEach(oi=>{
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = dir === "de-tr" ? WORDS[oi][1] : WORDS[oi][0];
+    btn.addEventListener("click", ()=> handleAnswer(oi, wIndex, btn, dir));
+    optsWrap.appendChild(btn);
+  });
+
+  saveQuizProgress();
+}
+
+function handleAnswer(chosenIdx, correctIdx, btnEl, dir){
+  if (answered) return;
+  answered = true;
+  const correctText = dir === "de-tr" ? WORDS[correctIdx][1] : WORDS[correctIdx][0];
+  document.querySelectorAll(".option").forEach(opt=>{
+    opt.setAttribute("disabled","true");
+    if (opt.textContent === correctText) opt.classList.add("correct");
+  });
+  const feedback = $("#quiz-feedback");
+  if (chosenIdx === correctIdx){
+    quizScore++;
+    feedback.textContent = "✔ Doğru!";
+    feedback.className = "quiz-feedback correct";
+  } else {
+    btnEl.classList.add("wrong");
+    feedback.textContent = "✘ Doğrusu: " + correctText;
+    feedback.className = "quiz-feedback wrong";
+    quizWrong.push(correctIdx);
+  }
+  const nextWrap = $("#quiz-next-wrap");
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "btn btn-know";
+  nextBtn.textContent = (quizIdx === quizOrder.length - 1) ? "Sonuçları Gör →" : "Sonraki Soru →";
+  nextBtn.addEventListener("click", ()=>{ quizIdx++; renderQuizQuestion(); });
+  nextWrap.appendChild(nextBtn);
+  saveQuizProgress();
+}
+
+function buildWhatsAppLink(pct, total, grade){
+  const msg = "Merhaba! Ben " + student.name + ". \"" + CONFIG.THEMA + "\" konusunda, " + student.date + " tarihinde Quiz " + (activeQuizSet+1) +
+    "'i çözdüm. Sonucum: " + quizScore + "/" + total + " doğru = " + pct + "/100 puan (" + grade.label + ").";
+  return "https://wa.me/?text=" + encodeURIComponent(msg);
+}
+
+function renderQuizResult(){
+  clearQuizProgress();
+  const area = $("#quiz-area");
+  const total = quizOrder.length;
+  const pct = Math.round((quizScore/total)*100);
+  const grade = gradeFor(pct);
+
+  let reviewHtml = "";
+  if (quizWrong.length){
+    reviewHtml = '<div class="review-list">' + quizWrong.map(i=>{
+      const [de,tr] = WORDS[i];
+      return '<div class="review-item"><b>' + escapeHtml(de) + '</b><span>' + escapeHtml(tr) + '</span></div>';
+    }).join("") + '</div>';
+  }
+
+  area.innerHTML =
+    '<div class="result-card">' +
+      '<div class="result-max-badge">100 puan üzerinden</div>' +
+      '<div class="eyebrow">Quiz ' + (activeQuizSet+1) + ' Sonucu</div>' +
+      '<div class="big-score">' + pct + '<span style="font-size:22px;">/100 puan</span></div>' +
+      '<div class="points-row">' +
+        '<span>Doğru: <b>' + quizScore + '</b> / ' + total + '</span>' +
+        '<span>Yanlış: <b>' + quizWrong.length + '</b></span>' +
+      '</div>' +
+      '<div class="grade-badge" style="background:' + grade.color + '22; color:' + grade.color + '; border:2px solid ' + grade.color + ';">' + grade.label + '</div>' +
+      (reviewHtml ? '<div style="margin-top:16px; font-size:13px; color:var(--muted); text-align:left;">Tekrar edilmesi gerekenler:</div>' + reviewHtml : '') +
+      '<div class="controls-row" style="margin-top:20px;">' +
+        '<button class="btn btn-know" id="quiz-restart">🔄 Bu Quizi Tekrarla</button>' +
+        '<button class="btn btn-nav" id="quiz-back-to-select">◀ Başka Quiz Seç</button>' +
+      '</div>' +
+      '<div style="margin-top:14px;">' +
+        '<a class="whatsapp-btn" id="whatsapp-share" href="#" target="_blank" rel="noopener">📤 Sonucu WhatsApp\'tan Gönder</a>' +
+      '</div>' +
+    '</div>';
+
+  $("#quiz-restart").addEventListener("click", startQuiz);
+  $("#quiz-back-to-select").addEventListener("click", showQuizSelect);
+  $("#whatsapp-share").addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.open(buildWhatsAppLink(pct, total, grade), "_blank");
+  });
+
+  logAttempt(pct, total, grade);
+}
+
+async function logAttempt(pct, total, grade){
+  const wrongWords = quizWrong.map(i => WORDS[i][0] + " (" + WORDS[i][1] + ")").join(", ");
+  await apiCall("completeQuiz", {
+    name: student.name, thema: CONFIG.THEMA, date: student.date, quizSet: activeQuizSet+1,
+    direction: quizDirection, score: quizScore, total, pct, grade: grade.label,
+    wrongWords
+  });
+}
+</script>
+</body>
+</html>
