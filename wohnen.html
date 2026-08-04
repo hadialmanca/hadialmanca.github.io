@@ -320,7 +320,7 @@
       <div class="card" id="flip-card">
         <div class="face front">
           <div class="card-number" id="fc-number-front">#1</div>
-          <button class="audio-btn" id="audio-btn-front" title="Kelimeyi artikeliyle dinle (der/die/das + kelime)">🔊</button>
+          <button class="audio-btn" id="audio-btn-front" title="Kelimeyi ve örnek cümleyi sırayla dinle">🔊</button>
           <div class="gender-badge" id="fc-gender-badge-front"></div>
           <div class="eyebrow" id="fc-front-label">Almanca</div>
           <div class="de-word" id="fc-de"></div>
@@ -334,7 +334,7 @@
         </div>
         <div class="face back">
           <div class="card-number" id="fc-number-back">#1</div>
-          <button class="audio-btn" id="audio-btn-back" title="Örnek cümleyi (Almanca) dinle">🔊</button>
+          <button class="audio-btn" id="audio-btn-back" title="Kelimeyi ve örnek cümleyi sırayla dinle">🔊</button>
           <div class="gender-badge" id="fc-gender-badge-back"></div>
           <div class="eyebrow" id="fc-back-label">Türkçe</div>
           <div class="tr-word" id="fc-tr"></div>
@@ -1089,6 +1089,9 @@ let knowSet = new Set();
 let unsureSet = new Set();
 let reviewOnly = false;
 let fcDirection = "de-tr";
+let articleRevealed = false;
+let lastWIndexForArticle = -1;
+
 function currentList(){
   return reviewOnly ? order.filter(i => unsureSet.has(i)) : order;
 }
@@ -1123,6 +1126,10 @@ function renderCard(){
   if (idx >= list.length) idx = 0;
   if (idx < 0) idx = list.length - 1;
   const wIndex = list[idx];
+  if (wIndex !== lastWIndexForArticle){
+    articleRevealed = false;
+    lastWIndexForArticle = wIndex;
+  }
   const [de, tr, deS, trS, gender] = WORDS[wIndex];
   const meta = GENDER_META[gender] || GENDER_META[""];
 
@@ -1151,18 +1158,45 @@ function renderCard(){
   }
 
   {
-    // Artikel rozeti artık gizlenmiyor; hangi yüzde olursa olsun her zaman açık gösterilir.
-    const badgeEls = [$("#fc-gender-badge-front"), $("#fc-gender-badge-back")];
+    const frontBadgeEl = $("#fc-gender-badge-front");
+    const backBadgeEl = $("#fc-gender-badge-back");
     if (!meta.label){
-      badgeEls.forEach(el=>{ el.style.display = "none"; el.onclick = null; });
-    } else {
-      badgeEls.forEach(el=>{
+      frontBadgeEl.style.display = "none"; frontBadgeEl.onclick = null;
+      backBadgeEl.style.display = "none"; backBadgeEl.onclick = null;
+    } else if (fcDirection === "de-tr"){
+      // Almanca göster: öğrenme modu, her iki yüzde de rozet her zaman açık
+      [frontBadgeEl, backBadgeEl].forEach(el=>{
         el.style.display = "inline-block";
         el.style.cursor = "default";
         el.textContent = meta.label;
         el.style.background = meta.hex;
         el.onclick = null;
       });
+    } else {
+      // Türkçe göster: ön yüz (Türkçe, çevirmeden önce) "❔ Artikel" ile gizli kalır,
+      // öğrenci tahmin etsin diye; tıklanınca açılır/kapanır (toggle).
+      // Arka yüz (kartı çevirince görülen Almanca taraf) artık her zaman açık gösterilir,
+      // çünkü kartı çevirmek zaten cevabı gösteriyor.
+      backBadgeEl.style.display = "inline-block";
+      backBadgeEl.style.cursor = "default";
+      backBadgeEl.textContent = meta.label;
+      backBadgeEl.style.background = meta.hex;
+      backBadgeEl.onclick = null;
+
+      frontBadgeEl.style.display = "inline-block";
+      frontBadgeEl.style.cursor = "pointer";
+      if (articleRevealed){
+        frontBadgeEl.textContent = meta.label;
+        frontBadgeEl.style.background = meta.hex;
+      } else {
+        frontBadgeEl.textContent = "❔ Artikel";
+        frontBadgeEl.style.background = "#8a9992";
+      }
+      frontBadgeEl.onclick = (e)=>{
+        e.stopPropagation();
+        articleRevealed = !articleRevealed;
+        renderCard();
+      };
     }
   }
 
@@ -1243,19 +1277,34 @@ $("#flip-card").addEventListener("click", ()=>{
   flipped = !flipped;
   $("#flip-card").classList.toggle("flipped", flipped);
 });
-$("#audio-btn-front").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentWord(); });
-$("#audio-btn-back").addEventListener("click", e=>{ e.stopPropagation(); speakCurrentSentence(); });
-function speakCurrentWord(){
+$("#audio-btn-front").addEventListener("click", e=>{ e.stopPropagation(); speakWordThenSentence(); });
+$("#audio-btn-back").addEventListener("click", e=>{ e.stopPropagation(); speakWordThenSentence(); });
+// Önce kelimeyi (artikeliyle), bitince hemen ardından Almanca örnek cümleyi okur.
+function speakWordThenSentence(){
   const list = currentList();
   if (list.length === 0) return;
   const wIndex = list[idx];
-  speakGerman(WORDS[wIndex][0]); // artikel + kelime, örn. "der Apfel"
-}
-function speakCurrentSentence(){
-  const list = currentList();
-  if (list.length === 0) return;
-  const wIndex = list[idx];
-  speakGerman(WORDS[wIndex][2]); // sadece Almanca örnek cümle (deS), Türkçesi okunmaz
+  const wordText = WORDS[wIndex][0];       // artikel + kelime, örn. "die Wohnung"
+  const sentenceText = WORDS[wIndex][2];   // sadece Almanca örnek cümle (deS)
+  try{
+    if (typeof speechSynthesis === "undefined") {
+      alert("Bu tarayıcı sesli okumayı desteklemiyor.");
+      return;
+    }
+    speechSynthesis.cancel();
+    const cleanWord = wordText.split(" / ")[0].replace(/[()]/g, "");
+    const cleanSentence = sentenceText.split(" / ")[0].replace(/[()]/g, "");
+    const utterWord = new SpeechSynthesisUtterance(cleanWord);
+    utterWord.lang = "de-DE";
+    if (germanVoice) utterWord.voice = germanVoice;
+    utterWord.rate = 0.9;
+    const utterSentence = new SpeechSynthesisUtterance(cleanSentence);
+    utterSentence.lang = "de-DE";
+    if (germanVoice) utterSentence.voice = germanVoice;
+    utterSentence.rate = 0.9;
+    utterWord.onend = () => { speechSynthesis.speak(utterSentence); };
+    speechSynthesis.speak(utterWord);
+  }catch(e){ console.warn("TTS error", e); }
 }
 
 function goNext(){

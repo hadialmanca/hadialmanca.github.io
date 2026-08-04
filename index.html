@@ -54,6 +54,14 @@
     display:flex;
     flex-direction:column;
     align-items:center;
+    position:relative;
+  }
+  .card-num{
+    position:absolute; top:14px; left:14px;
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:12px;
+    color:#fff; background:var(--green-mid);
+    width:26px; height:26px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
   }
   .card-icon{font-size:42px; margin-bottom:10px;}
   .card-title{
@@ -99,6 +107,7 @@
   <div class="grid">
 
     <div class="card">
+      <div class="card-num">1</div>
       <div class="card-icon">🍽️</div>
       <div class="card-title">Essen · Trinken<br>Einkaufen</div>
       <div class="card-count">135 kelime</div>
@@ -106,6 +115,7 @@
     </div>
 
     <div class="card">
+      <div class="card-num">2</div>
       <div class="card-icon">👋</div>
       <div class="card-title">Selamlaşma · Kişisel Bilgiler<br>Aile · Arkadaşlar</div>
       <div class="card-count">209 kelime</div>
@@ -113,6 +123,7 @@
     </div>
 
     <div class="card">
+      <div class="card-num">3</div>
       <div class="card-icon">🔤</div>
       <div class="card-title">A1 Seviyesinde Bilinmesi<br>Gereken En Önemli Fiiller</div>
       <div class="card-count">209 fiil</div>
@@ -120,6 +131,7 @@
     </div>
 
     <div class="card">
+      <div class="card-num">4</div>
       <div class="card-icon">🏠</div>
       <div class="card-title">Wohnen<br>(Ev / Konut)</div>
       <div class="card-count">242 kelime</div>
@@ -127,10 +139,35 @@
     </div>
 
     <div class="card">
+      <div class="card-num">5</div>
       <div class="card-icon">🔢</div>
       <div class="card-title">Sayılar, Tarih<br>ve Saat</div>
       <div class="card-count">152 kelime</div>
       <a class="card-btn" href="zahlen.html">Başla →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-num">6</div>
+      <div class="card-icon">🚗</div>
+      <div class="card-title">Ulaşım Araçları<br>ve Trafik Kuralları</div>
+      <div class="card-count">92 kelime</div>
+      <a class="card-btn" href="ulasim-trafik.html">Başla →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-num">7</div>
+      <div class="card-icon">🧭</div>
+      <div class="card-title">Şehirde Yön Tarifi<br>ve Mekanlar</div>
+      <div class="card-count">108 kelime</div>
+      <a class="card-btn" href="sehir-yon-tarifi.html">Başla →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-num">8</div>
+      <div class="card-icon">✈️</div>
+      <div class="card-title">Tren, Uçak, Bilet<br>ve Seyahat/Otel</div>
+      <div class="card-count">78 kelime</div>
+      <a class="card-btn" href="tren-ucak-seyahat-otel.html">Başla →</a>
     </div>
 
   </div>
