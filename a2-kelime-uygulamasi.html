@@ -127,6 +127,16 @@
   <div style="text-align:center; margin-bottom:10px;">
     <a href="a2.html" style="color:#7B1FA2; font-size:13px; font-weight:700; text-decoration:none;">⬅ A2 Konu Listesine Dön</a>
   </div>
+
+  <div id="nameGate" style="display:flex; min-height:70vh; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:20px;">
+    <div style="font-size:44px; margin-bottom:10px;">🧺</div>
+    <div style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:26px; color:var(--purple); margin-bottom:6px;">Merhaba!</div>
+    <div style="font-size:15px; color:#666; margin-bottom:22px;">Devam edebilmek için adını yaz</div>
+    <input id="nameInput" placeholder="Adın Soyadın" style="font-family:'Karla',sans-serif; font-size:16px; padding:12px 18px; border-radius:10px; border:1.5px solid #E1BEE7; width:260px; max-width:80vw; text-align:center; margin-bottom:14px;">
+    <button onclick="submitName()" style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:16px; background:var(--pink); color:#fff; padding:12px 32px; border:none; border-radius:10px; cursor:pointer;">Başla →</button>
+  </div>
+
+  <div id="appRoot" style="display:none;">
   <h1>🇩🇪 Goethe A2 Kelime Çalışması</h1>
   <div class="subtitle">Hadi Almanca — Sınav Hazırlık Aracı</div>
 
@@ -134,6 +144,7 @@
     <select id="catSelect"></select>
     <button class="modebtn active" id="btnFlash" onclick="setMode('flash')">🃏 Kelime Kartı</button>
     <button class="modebtn" id="btnQuiz" onclick="setMode('quiz')">📝 Quiz</button>
+    <button class="modebtn" style="background:#eee; color:#333;" onclick="changeStudent()" id="studentBadge">👤 —</button>
   </div>
 
   <div class="stats">
@@ -146,6 +157,7 @@
   <div id="stage"></div>
 
   <div class="resetlink"><a onclick="resetProgress()">İlerlemeyi sıfırla</a></div>
+  </div>
 </div>
 
 <script>
@@ -191,18 +203,37 @@ function markAnswer(key, correct){
   updateStats();
 }
 
+let studentName = null;
+
 function saveProgress(){
   try {
-    window.storage.set('a2_progress', JSON.stringify(progress), false);
+    localStorage.setItem('kelime_sepeti__' + studentName + '__a2_progress', JSON.stringify(progress));
   } catch(e){ console.error('storage error', e); }
 }
 
-async function loadProgress(){
+function loadProgress(){
   try {
-    const res = await window.storage.get('a2_progress', false);
-    if(res && res.value) progress = JSON.parse(res.value);
+    const raw = localStorage.getItem('kelime_sepeti__' + studentName + '__a2_progress');
+    if(raw) progress = JSON.parse(raw);
   } catch(e){ progress = {}; }
 }
+
+function submitName(){
+  const val = document.getElementById('nameInput').value.trim();
+  if(!val) return;
+  studentName = val;
+  localStorage.setItem('kelime_sepeti_student_name', val);
+  document.getElementById('nameGate').style.display = 'none';
+  document.getElementById('appRoot').style.display = '';
+  bootApp();
+}
+function changeStudent(){
+  if(!confirm('Öğrenci değiştirilsin mi? "'+studentName+'" adındaki ilerleme kayıtlı kaldı, aynı isimle tekrar girince kaldığı yerden devam eder.')) return;
+  localStorage.removeItem('kelime_sepeti_student_name');
+  location.reload();
+}
+document.getElementById('nameInput')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter') submitName(); });
+
 
 function buildQueue(){
   const words = allWords();
@@ -364,12 +395,26 @@ function applyHashCategory(){
   }
 }
 
-async function init(){
+async function bootApp(){
+  document.getElementById('studentBadge').textContent = '👤 ' + studentName;
   populateCatSelect();
   applyHashCategory();
-  await loadProgress();
+  loadProgress();
   buildQueue();
   render();
+}
+
+function init(){
+  const saved = localStorage.getItem('kelime_sepeti_student_name');
+  if(saved){
+    studentName = saved;
+    document.getElementById('nameGate').style.display = 'none';
+    document.getElementById('appRoot').style.display = '';
+    bootApp();
+  } else {
+    document.getElementById('nameGate').style.display = 'flex';
+    document.getElementById('appRoot').style.display = 'none';
+  }
 }
 init();
 </script>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goethe A1 Kelime Soru-Cevap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#1E3B2F;
+    --green-mid:#2F5D45;
+    --paper:#FBF3E1;
+    --mustard:#E3A93A;
+    --tomato:#C1442C;
+    --muted:#9FB8A6;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Karla',sans-serif;
+    background:var(--green-deep);
+    color:var(--paper);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 20px;
+    background:rgba(0,0,0,0.18);
+    flex-wrap:wrap; gap:10px;
+    z-index:5;
+  }
+  .title{
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:19px; color:var(--mustard);
+  }
+  .controls{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  select, button{
+    font-family:'Karla',sans-serif; font-weight:700; font-size:13px;
+    border-radius:8px; border:none; padding:8px 12px; cursor:pointer;
+  }
+  select{ background:var(--paper); color:var(--green-deep); max-width:260px; }
+  button.modebtn{ background:var(--mustard); color:var(--green-deep); }
+  button.modebtn.alt{ background:var(--tomato); color:var(--paper); }
+  button.smallbtn{ background:rgba(255,255,255,0.15); color:var(--paper); }
+  .progress{ font-size:13px; color:var(--muted); white-space:nowrap; }
+
+  #stage{
+    flex:1; overflow:hidden; position:relative;
+    display:flex; flex-direction:column;
+    cursor:pointer;
+  }
+  #log{
+    flex:1; overflow-y:auto; padding:26px 6vw 90px;
+    scroll-behavior:smooth;
+  }
+  .row{
+    display:flex; align-items:baseline; gap:18px;
+    padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    opacity:0.55;
+    transition:opacity .25s ease;
+  }
+  .row.active{ opacity:1; }
+  .row .num{
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px;
+    color:var(--muted); min-width:42px; text-align:right; flex-shrink:0;
+  }
+  .row .q{
+    font-family:'Baloo 2',sans-serif; font-weight:800;
+    font-size:clamp(20px, 3.4vw, 34px);
+    color:var(--paper);
+    flex:1;
+  }
+  .row .a{
+    font-family:'Baloo 2',sans-serif; font-weight:700;
+    font-size:clamp(18px, 2.8vw, 28px);
+    color:var(--mustard);
+    opacity:0; transform:translateX(-6px);
+    transition:opacity .3s ease, transform .3s ease;
+    flex:1;
+  }
+  .row .a.show{ opacity:1; transform:translateX(0); }
+  .cat-divider{
+    font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:1px;
+    padding:18px 0 6px; border-bottom:2px solid rgba(255,255,255,0.15); margin-top:6px;
+  }
+  .hint{
+    text-align:center; padding:12px 14px 16px; font-size:13px; color:var(--muted);
+    flex-shrink:0;
+  }
+  .done-state{
+    display:flex; align-items:center; justify-content:center; height:100%;
+    flex-direction:column; text-align:center;
+  }
+  .done-state .big{
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:44px; color:var(--mustard); margin-bottom:12px;
+  }
+
+  .tally{
+    display:flex; gap:14px; font-size:14px; font-weight:700; align-items:center;
+  }
+  .tally .ok{ color:#8BD4A0; }
+  .tally .bad{ color:#F09A8C; }
+
+  .markbtns{
+    display:flex; gap:22px; justify-content:center; padding:22px 6vw 26px;
+    flex-wrap:wrap;
+  }
+  .markbtn{
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(18px,2.6vw,26px);
+    padding:16px 40px; border-radius:16px; border:none; cursor:pointer;
+    box-shadow:0 6px 0 rgba(0,0,0,0.25);
+  }
+  .markbtn:active{ transform:translateY(4px); box-shadow:none; }
+  .markbtn.ok{ background:#3FA85C; color:#fff; }
+  .markbtn.bad{ background:var(--tomato); color:#fff; }
+
+  .results{
+    max-width:720px; margin:0 auto; text-align:center; padding:20px;
+  }
+  .results .scoreline{
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(30px,5vw,52px);
+    margin-bottom:6px;
+  }
+  .results .scoreline .ok{ color:#8BD4A0; }
+  .results .scoreline .bad{ color:#F09A8C; }
+  .results .pct{
+    font-size:22px; color:var(--mustard); font-weight:700; margin-bottom:18px;
+  }
+  .results .verdict{
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:24px;
+    padding:14px 20px; border-radius:14px; margin-bottom:22px; display:inline-block;
+  }
+  .verdict.hazir{ background:rgba(63,168,92,0.25); color:#8BD4A0; }
+  .verdict.orta{ background:rgba(227,169,58,0.25); color:var(--mustard); }
+  .verdict.dusuk{ background:rgba(193,68,44,0.25); color:#F09A8C; }
+  .missed-title{ font-size:15px; color:var(--muted); margin-bottom:10px; text-align:left; }
+  .missed-list{
+    text-align:left; max-height:240px; overflow-y:auto;
+    background:rgba(0,0,0,0.15); border-radius:12px; padding:14px 18px;
+    margin-bottom:22px; font-size:16px; line-height:1.9;
+  }
+  .missed-list b{ color:var(--mustard); }
+  .results-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .results-actions button{
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px;
+    background:var(--mustard); color:var(--green-deep); padding:12px 22px; border-radius:10px;
+  }
+  .results-actions button.secondary{ background:rgba(255,255,255,0.15); color:var(--paper); }
+
+  @media (max-width:600px){
+    .title{font-size:15px;}
+    select, button{font-size:11px; padding:7px 9px;}
+    select{max-width:150px;}
+    .row .num{min-width:30px; font-size:12px;}
+  }
+</style>
+</head>
+<body>
+
+<div style="text-align:center; padding:8px 0 0; background:rgba(0,0,0,0.18);"><a href="a1.html" style="color:#CFE3D4; font-size:13px; font-weight:700; text-decoration:none;">⬅ A1 Konu Listesine Dön</a></div>
+
+<div id="nameGate" style="display:flex; min-height:90vh; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:20px;">
+  <div style="font-size:44px; margin-bottom:10px;">🧺</div>
+  <div style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:26px; color:var(--mustard); margin-bottom:6px;">Merhaba!</div>
+  <div style="font-size:15px; color:var(--muted); margin-bottom:22px;">Devam edebilmek için adını yaz</div>
+  <input id="nameInput" placeholder="Adın Soyadın" style="font-family:'Karla',sans-serif; font-size:16px; padding:12px 18px; border-radius:10px; border:none; width:260px; max-width:80vw; text-align:center; margin-bottom:14px;">
+  <button onclick="submitName()" style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:16px; background:var(--mustard); color:var(--green-deep); padding:12px 32px; border:none; border-radius:10px; cursor:pointer;">Başla →</button>
+</div>
+
+<div id="appRoot" style="display:none;">
+<header>
+  <div class="title">🇩🇪 Goethe A1 Kelime Soru-Cevap</div>
+  <div class="controls">
+    <select id="catSelect"></select>
+    <button class="modebtn" id="modeBtn" onclick="toggleMode()">Almanca ➜ Türkçe</button>
+    <button class="smallbtn" onclick="prevStep()">◀ Geri</button>
+    <button class="smallbtn" onclick="resetAll()">Baştan Başlat</button>
+    <button class="smallbtn" onclick="changeStudent()" id="studentBadge">👤 —</button>
+  </div>
+  <div class="tally" id="tally">✅ <span id="tallyOk" class="ok">0</span> &nbsp; ❌ <span id="tallyBad" class="bad">0</span></div>
+  <div class="progress" id="progress">0 / 0</div>
+</header>
+
+<div id="stage">
+  <div id="log" onclick="stageClick()"></div>
+  <div id="markArea"></div>
+  <div class="hint" id="hintText">Ekrana veya boşluk tuşuna basarak ilerleyin · Geri almak için ← tuşu</div>
+</div>
+</div>
+
+<script>
+const DATA = [{"title":"1. Kişisel Bilgiler, Aile, Arkadaşlık, Selamlaşma","words":[{"de":"die Adresse, -n","tr":"adres"},{"de":"das Alter (Sg.)","tr":"yaş"},{"de":"der Familienname, -n","tr":"soyadı"},{"de":"der Vorname, -n","tr":"ad"},{"de":"der Name, -n","tr":"isim"},{"de":"heißen","tr":"isim taşımak"},{"de":"geboren","tr":"doğmuş"},{"de":"der Geburtstag, -e","tr":"doğum günü"},{"de":"die Familie, -n","tr":"aile"},{"de":"der Freund, -e","tr":"erkek arkadaş"},{"de":"die Freundin, -nen","tr":"kız arkadaş"},{"de":"hallo","tr":"merhaba"},{"de":"der Herr, -en","tr":"bay"},{"de":"die Frau, -en","tr":"bayan, kadın"},{"de":"herzlich","tr":"içten, samimi"},{"de":"tschüss","tr":"hoşça kal"},{"de":"willkommen","tr":"hoş geldin"},{"de":"der Glückwunsch, ü, -e","tr":"tebrik"},{"de":"sich vorstellen","tr":"kendini tanıtmak"},{"de":"der/die Jugendliche, -n","tr":"genç"},{"de":"der/die Erwachsene, -n","tr":"yetişkin"},{"de":"der Junge, -n","tr":"erkek çocuk"},{"de":"das Mädchen, -","tr":"kız çocuk"},{"de":"jung","tr":"genç"},{"de":"der Mann, ä, -er","tr":"erkek, adam"},{"de":"heiraten","tr":"evlenmek"},{"de":"die Hochzeit, -en","tr":"düğün"},{"de":"kennen","tr":"tanımak"},{"de":"kennenlernen","tr":"tanışmak"},{"de":"der Vater, ä, -","tr":"baba"},{"de":"die Mutter, ü, -","tr":"anne"},{"de":"die Eltern (Pl.)","tr":"ebeveyn"},{"de":"das Kind, -er","tr":"çocuk"},{"de":"der Bruder, ü, -","tr":"erkek kardeş"},{"de":"die Schwester, -n","tr":"kız kardeş"},{"de":"die Geschwister (Pl.)","tr":"kardeşler"},{"de":"die Tante, -n","tr":"teyze, hala"},{"de":"der Onkel, -","tr":"amca, dayı"},{"de":"die Großmutter, ü, -","tr":"büyükanne"},{"de":"der Großvater, ä, -","tr":"büyükbaba"},{"de":"die Großeltern (Pl.)","tr":"büyükanne ve büyükbaba"},{"de":"das Taschengeld (Sg.)","tr":"harçlık"}]},{"title":"2. Meslekler ve Çalışma Hayatı","words":[{"de":"der Architekt, -en / die Architektin, -nen","tr":"mimar"},{"de":"der Hausmann, ä / die Hausfrau, -en","tr":"ev erkeği / ev hanımı"},{"de":"der Techniker, - / die Technikerin, -nen","tr":"tekniker"},{"de":"der/die Angestellte, -n","tr":"memur, personel"},{"de":"der Lehrer, - / die Lehrerin, -nen","tr":"öğretmen"},{"de":"der Künstler, - / die Künstlerin, -nen","tr":"sanatçı"},{"de":"der Ingenieur, -e / die Ingenieurin, -nen","tr":"mühendis"},{"de":"der Kaufmann, ä / die Kauffrau, -en","tr":"tüccar"},{"de":"der Arzt, ä, -e / die Ärztin, -nen","tr":"doktor"},{"de":"der Schauspieler, - / die Schauspielerin, -nen","tr":"aktör, aktris"},{"de":"der Sekretär, -e / die Sekretärin, -nen","tr":"sekreter"},{"de":"die Arbeit, -en","tr":"iş, sınav kağıdı"},{"de":"arbeiten","tr":"çalışmak"},{"de":"arbeitslos","tr":"işsiz"},{"de":"der Beruf, -e","tr":"meslek"},{"de":"verdienen","tr":"kazanmak (para)"},{"de":"werden","tr":"olmak"}]},{"title":"3. Ev, Ev Eşyaları ve Ev İşleri","words":[{"de":"das Bad, ä, -er","tr":"banyo"},{"de":"das Bett, -en","tr":"yatak"},{"de":"das Fenster, -","tr":"pencere"},{"de":"aufmachen","tr":"açmak"},{"de":"aufräumen","tr":"toplamak"},{"de":"auf sein","tr":"açık olmak"},{"de":"der Garten, ä, -","tr":"bahçe"},{"de":"das Haus, ä, -er","tr":"ev"},{"de":"das Heft, -e","tr":"defter"},{"de":"die Küche, -n","tr":"mutfak"},{"de":"der Kühlschrank, ä, -e","tr":"buzdolabı"},{"de":"die Lampe, -n","tr":"lamba"},{"de":"offen","tr":"açık"},{"de":"die Tür, -en","tr":"kapı"},{"de":"zumachen","tr":"kapatmak"},{"de":"die Toilette, -n","tr":"tuvalet"},{"de":"der Tisch, -e","tr":"masa"},{"de":"die Wohnung, -en","tr":"ev, daire"},{"de":"das Wohnzimmer, -","tr":"oturma odası"},{"de":"das Zimmer, -","tr":"oda"},{"de":"wohnen","tr":"oturmak, ikamet etmek"},{"de":"waschen","tr":"yıkamak"},{"de":"duschen","tr":"duş almak"},{"de":"gemütlich","tr":"rahat, konforlu"}]},{"title":"4. Yiyecek ve İçecekler","words":[{"de":"der Appetit (Sg.)","tr":"iştah"},{"de":"der Apfel, ä, -","tr":"elma"},{"de":"die Banane, -n","tr":"muz"},{"de":"das Brot, -e","tr":"ekmek"},{"de":"das Brötchen, -","tr":"küçük ekmek, sandviç ekmeği"},{"de":"der Durst (Sg.)","tr":"susuzluk"},{"de":"das Ei, -er","tr":"yumurta"},{"de":"das Eis (Sg.)","tr":"dondurma"},{"de":"essen","tr":"yemek yemek"},{"de":"das Essen, -","tr":"yemek"},{"de":"der Fisch, -e","tr":"balık"},{"de":"die Flasche, -n","tr":"şişe"},{"de":"das Fleisch (Sg.)","tr":"et"},{"de":"das Frühstück (Sg.)","tr":"kahvaltı"},{"de":"frühstücken","tr":"kahvaltı yapmak"},{"de":"das Gemüse (Sg.)","tr":"sebze"},{"de":"das Glas, ä, -er","tr":"bardak"},{"de":"der Hunger (Sg.)","tr":"açlık"},{"de":"der Kaffee (Sg.)","tr":"kahve"},{"de":"der Kakao (Sg.)","tr":"kakao"},{"de":"die Kartoffel, -n","tr":"patates"},{"de":"der Käse (Sg.)","tr":"peynir"},{"de":"kochen","tr":"yemek pişirmek"},{"de":"der Kuchen, -","tr":"pasta, kek"},{"de":"die Marmelade, -n","tr":"reçel"},{"de":"die Milch (Sg.)","tr":"süt"},{"de":"das Mineralwasser, ä, -","tr":"maden suyu"},{"de":"das Obst (Sg.)","tr":"meyve"},{"de":"die Pizza, -en","tr":"pizza"},{"de":"das Restaurant, -s","tr":"restoran"},{"de":"der Saft, ä, -e","tr":"meyve suyu"},{"de":"der Salat, -e","tr":"salata"},{"de":"schmecken","tr":"tadı olmak"},{"de":"die Schokolade (Sg.)","tr":"çikolata"},{"de":"die Suppe, -n","tr":"çorba"},{"de":"süß","tr":"tatlı"},{"de":"die Süßigkeiten (Pl.)","tr":"şekerlemeler, tatlılar"},{"de":"die Tasse, -n","tr":"fincan"},{"de":"der Tee, -s","tr":"çay"},{"de":"trinken","tr":"içmek"},{"de":"die Wurst, ü, -e","tr":"sosis, sucuk"},{"de":"das Wasser (Sg.)","tr":"su"}]},{"title":"5. Alışveriş, Giyim ve Para","words":[{"de":"billig","tr":"ucuz"},{"de":"die Bluse, -n","tr":"bluz"},{"de":"einkaufen","tr":"alışveriş yapmak"},{"de":"das Geld (Sg.)","tr":"para"},{"de":"das Geschäft, -e","tr":"dükkan, mağaza"},{"de":"das Geschenk, -e","tr":"hediye"},{"de":"die Jacke, -n","tr":"ceket"},{"de":"die Jeans (Pl.)","tr":"kot pantolon"},{"de":"kaufen","tr":"satın almak"},{"de":"das Kleid, -er","tr":"elbise"},{"de":"kosten","tr":"mal olmak, ücreti olmak"},{"de":"der Mantel, ä, -","tr":"manto, palto"},{"de":"der Markt, ä, -e","tr":"pazar"},{"de":"der Ohrring, -e","tr":"küpe"},{"de":"das Paket, -e","tr":"paket"},{"de":"der Pullover, -","tr":"kazak"},{"de":"der Ring, -e","tr":"yüzük"},{"de":"schenken","tr":"hediye etmek"},{"de":"die Sache, -n","tr":"eşya, şey"},{"de":"die Tasche, -n","tr":"çanta"},{"de":"teuer","tr":"pahalı"},{"de":"tragen","tr":"giymek, taşımak"},{"de":"das T-Shirt, -s","tr":"tişört"},{"de":"bezahlen","tr":"ödemek"}]},{"title":"6. Sağlık ve Vücut","words":[{"de":"die Apotheke, -n","tr":"eczane"},{"de":"der Arm, -e","tr":"kol"},{"de":"das Auge, -n","tr":"göz"},{"de":"der Bauch, ä, -e","tr":"karın"},{"de":"das Haar, -e","tr":"saç"},{"de":"der Hals, ä, -e","tr":"boyun"},{"de":"krank","tr":"hasta"},{"de":"das Krankenhaus, ä, -er","tr":"hastane"},{"de":"der Kopf, ö, -e","tr":"baş, kafa"},{"de":"müde","tr":"yorgun"},{"de":"der Schmerz, -en","tr":"ağrı"},{"de":"schlecht","tr":"kötü, fena"},{"de":"weh tun","tr":"acımak (ağrımak)"},{"de":"der Zahn, ä, -e","tr":"diş"},{"de":"der Fuß, ü, -e","tr":"ayak"}]},{"title":"7. Okul, Öğrenme ve Sınav Talimat Dili","words":[{"de":"die Grundschule / Hauptschule","tr":"ilkokul / ortaokul"},{"de":"das Gymnasium, -ien","tr":"lise"},{"de":"die Sprachenschule, -n","tr":"dil okulu"},{"de":"Deutsch","tr":"Almanca"},{"de":"Mathematik","tr":"matematik"},{"de":"Englisch","tr":"İngilizce"},{"de":"Geografie","tr":"coğrafya"},{"de":"Kunst(erziehung)","tr":"resim dersi"},{"de":"Sozialkunde","tr":"sosyal bilgiler"},{"de":"Sport (Fach)","tr":"beden eğitimi"},{"de":"Physik","tr":"fizik"},{"de":"Chemie","tr":"kimya"},{"de":"Geschichte","tr":"tarih"},{"de":"die Antwort, -en","tr":"cevap"},{"de":"antworten","tr":"cevap vermek"},{"de":"der Artikel, -","tr":"makale, tanımlık"},{"de":"das Buch, ü, -er","tr":"kitap"},{"de":"denken","tr":"düşünmek"},{"de":"einfach","tr":"kolay, basit"},{"de":"erklären","tr":"açıklamak"},{"de":"das Fach, ä, -er","tr":"ders"},{"de":"der Fehler, -","tr":"hata"},{"de":"die Frage, -n","tr":"soru"},{"de":"fragen","tr":"sormak"},{"de":"die Hausaufgabe, -n","tr":"ödev"},{"de":"die Idee, -n","tr":"fikir"},{"de":"die Klasse, -n","tr":"sınıf"},{"de":"die Klassenarbeit, -en","tr":"sınav"},{"de":"der Kugelschreiber, -","tr":"tükenmez kalem"},{"de":"der Kurs, -e","tr":"kurs"},{"de":"lernen","tr":"öğrenmek, ders çalışmak"},{"de":"lesen","tr":"okumak"},{"de":"leicht","tr":"kolay"},{"de":"der Name, -n","tr":"(tekrar bkz. kişisel) ad"},{"de":"die Note, -n","tr":"not"},{"de":"der Radiergummi, -s","tr":"silgi"},{"de":"das Rätsel, -","tr":"bulmaca"},{"de":"richtig","tr":"doğru"},{"de":"schreiben","tr":"yazmak"},{"de":"schwer","tr":"zor, ağır"},{"de":"die Sprache, -n","tr":"dil"},{"de":"sprechen","tr":"konuşmak"},{"de":"suchen","tr":"aramak"},{"de":"üben","tr":"alıştırma yapmak"},{"de":"das Thema, Themen","tr":"konu"},{"de":"das Wort, ö, -er","tr":"kelime"},{"de":"vergessen","tr":"unutmak"},{"de":"verstehen","tr":"anlamak"},{"de":"wissen","tr":"bilmek"},{"de":"wiederholen","tr":"tekrarlamak"},{"de":"der Unterricht (Sg.)","tr":"ders"},{"de":"das Wörterbuch, ü, -er","tr":"sözlük"},{"de":"der Antwortbogen, -","tr":"cevap kağıdı"},{"de":"die Aufgabe, -n","tr":"görev, alıştırma"},{"de":"ankreuzen","tr":"işaretlemek (çarpı ile)"},{"de":"das Beispiel, -e","tr":"örnek"},{"de":"erlaubt","tr":"izinli, serbest"},{"de":"falsch","tr":"yanlış"},{"de":"formulieren","tr":"ifade etmek"},{"de":"das Gespräch, -e","tr":"konuşma, görüşme"},{"de":"die Lösung, -en","tr":"çözüm"},{"de":"markieren","tr":"işaretlemek"},{"de":"der Partner, - / die Partnerin, -nen","tr":"partner"},{"de":"der Teil, -e","tr":"bölüm"},{"de":"der Test, -s","tr":"test"},{"de":"der Text, -e","tr":"metin"}]},{"title":"8. Seyahat, Ulaşım ve Yön Tarifi","words":[{"de":"abfahren","tr":"hareket etmek"},{"de":"abholen","tr":"almaya gitmek"},{"de":"ankommen","tr":"varmak"},{"de":"der Ausflug, ü, -e","tr":"gezi"},{"de":"das Ausland (Sg.)","tr":"yurt dışı"},{"de":"aussteigen","tr":"inmek (araçtan)"},{"de":"das Auto, -s","tr":"araba"},{"de":"der Automat, -en","tr":"otomat, makine"},{"de":"der Bahnhof, ö, -e","tr":"tren istasyonu"},{"de":"der Bahnsteig, -e","tr":"peron"},{"de":"einsteigen","tr":"binmek (araca)"},{"de":"fahren","tr":"gitmek (araçla)"},{"de":"die Fahrkarte, -n","tr":"bilet"},{"de":"der Fahrplan, ä, -e","tr":"sefer tarifesi"},{"de":"das Fahrrad, ä, -er","tr":"bisiklet"},{"de":"fliegen","tr":"uçmak"},{"de":"der Flughafen, ä, -","tr":"havaalanı"},{"de":"das Flugzeug, -e","tr":"uçak"},{"de":"der Fluss, ü, -e","tr":"nehir"},{"de":"das Gepäck (Sg.)","tr":"bagaj"},{"de":"geradeaus","tr":"dosdoğru"},{"de":"das Gleis, -e","tr":"peron hattı"},{"de":"die Haltestelle, -n","tr":"durak"},{"de":"halten","tr":"durmak"},{"de":"die Insel, -n","tr":"ada"},{"de":"links","tr":"sol"},{"de":"rechts","tr":"sağ"},{"de":"das Land, ä, -er","tr":"ülke"},{"de":"laufen","tr":"koşmak, yürümek"},{"de":"der Marktplatz, ä, -e","tr":"pazar meydanı"},{"de":"nehmen","tr":"almak, binmek"},{"de":"der Platz, ä, -e","tr":"yer, meydan"},{"de":"das Rad, ä, -er","tr":"bisiklet"},{"de":"reisen","tr":"seyahat etmek"},{"de":"die Reise, -n","tr":"seyahat"},{"de":"reparieren","tr":"tamir etmek"},{"de":"der Rucksack, ä, -e","tr":"sırt çantası"},{"de":"das Schiff, -e","tr":"gemi"},{"de":"der See, -n","tr":"göl"},{"de":"der Strand, ä, -e","tr":"plaj"},{"de":"die Straße, -n","tr":"sokak, cadde"},{"de":"die Stadt, ä, -e","tr":"şehir"},{"de":"die U-Bahn, -en","tr":"metro"},{"de":"über","tr":"üzerinden, karşıdan"},{"de":"weit","tr":"uzak"},{"de":"wandern","tr":"yürüyüş yapmak (doğada)"},{"de":"woher","tr":"nereden"},{"de":"wohin","tr":"nereye"},{"de":"der Zug, ü, -e","tr":"tren"}]},{"title":"9. Serbest Zaman, Hobiler ve Eğlence","words":[{"de":"der Ball, ä, -e","tr":"top"},{"de":"der Basketball, ä, -e","tr":"basketbol"},{"de":"basteln","tr":"el işi yapmak"},{"de":"die Disco, -s","tr":"disko"},{"de":"die Ferien (Pl.)","tr":"tatil"},{"de":"fernsehen","tr":"televizyon izlemek"},{"de":"das Fernsehen (Sg.)","tr":"televizyon (yayın)"},{"de":"der Film, -e","tr":"film"},{"de":"der Fotoapparat, -e","tr":"fotoğraf makinesi"},{"de":"das Foto, -s","tr":"fotoğraf"},{"de":"froh","tr":"mutlu, sevinçli"},{"de":"der Fußball, ä, -e","tr":"futbol"},{"de":"gewinnen","tr":"kazanmak (yarışma)"},{"de":"das Hobby, -s","tr":"hobi"},{"de":"hören","tr":"dinlemek"},{"de":"das Kino, -s","tr":"sinema"},{"de":"das Klavier, -e","tr":"piyano"},{"de":"lachen","tr":"gülmek"},{"de":"lustig","tr":"komik, eğlenceli"},{"de":"die Musik (Sg.)","tr":"müzik"},{"de":"der Park, -s","tr":"park"},{"de":"die Pause, -n","tr":"mola, teneffüs"},{"de":"das Quiz (Sg.)","tr":"bilgi yarışması"},{"de":"das Radio, -s","tr":"radyo"},{"de":"raten","tr":"tahmin etmek"},{"de":"reiten","tr":"ata binmek"},{"de":"der Spaß (Sg.)","tr":"eğlence, keyif"},{"de":"spazieren gehen","tr":"yürüyüşe çıkmak"},{"de":"das Spiel, -e","tr":"oyun"},{"de":"spielen","tr":"oynamak"},{"de":"der Spielplatz, ä, -e","tr":"oyun alanı"},{"de":"der Sport (Sg.)","tr":"spor"},{"de":"tanzen","tr":"dans etmek"},{"de":"Tennis spielen","tr":"tenis oynamak"},{"de":"das Theater, -","tr":"tiyatro"},{"de":"das Tier, -e","tr":"hayvan"},{"de":"toll","tr":"harika"},{"de":"treffen","tr":"buluşmak"}]},{"title":"10. Doğa, Çevre ve Hayvanlar","words":[{"de":"der Baum, ä, -e","tr":"ağaç"},{"de":"das Pferd, -e","tr":"at"},{"de":"der Hund, -e","tr":"köpek"},{"de":"die Katze, -n","tr":"kedi"},{"de":"der Regen (Sg.)","tr":"yağmur"},{"de":"regnen","tr":"yağmur yağmak"},{"de":"warm","tr":"sıcak, ılık"},{"de":"kalt","tr":"soğuk"},{"de":"schwimmen","tr":"yüzmek"},{"de":"das Schwimmbad, ä, -er","tr":"yüzme havuzu"}]},{"title":"11. Zaman İfadeleri (Takvim, Saat, Mevsimler)","words":[{"de":"Januar","tr":"ocak"},{"de":"Februar","tr":"şubat"},{"de":"März","tr":"mart"},{"de":"April","tr":"nisan"},{"de":"Mai","tr":"mayıs"},{"de":"Juni","tr":"haziran"},{"de":"Juli","tr":"temmuz"},{"de":"August","tr":"ağustos"},{"de":"September","tr":"eylül"},{"de":"Oktober","tr":"ekim"},{"de":"November","tr":"kasım"},{"de":"Dezember","tr":"aralık"},{"de":"der Sonntag, -e","tr":"pazar"},{"de":"der Montag, -e","tr":"pazartesi"},{"de":"der Dienstag, -e","tr":"salı"},{"de":"der Mittwoch, -e","tr":"çarşamba"},{"de":"der Donnerstag, -e","tr":"perşembe"},{"de":"der Freitag, -e","tr":"cuma"},{"de":"der Samstag, -e","tr":"cumartesi"},{"de":"das Wochenende, -n","tr":"hafta sonu"},{"de":"der Frühling (Sg.)","tr":"ilkbahar"},{"de":"der Sommer (Sg.)","tr":"yaz"},{"de":"der Herbst (Sg.)","tr":"sonbahar"},{"de":"der Winter (Sg.)","tr":"kış"},{"de":"Ostern","tr":"paskalya"},{"de":"Weihnachten","tr":"noel"},{"de":"Karneval","tr":"karnaval"},{"de":"der Morgen, -","tr":"sabah"},{"de":"der Vormittag, -e","tr":"öğleden önce"},{"de":"der Mittag, -e","tr":"öğlen"},{"de":"der Nachmittag, -e","tr":"öğleden sonra"},{"de":"der Abend, -e","tr":"akşam"},{"de":"die Nacht, ä, -","tr":"gece"},{"de":"die Minute, -n","tr":"dakika"},{"de":"die Stunde, -n","tr":"saat (süre)"},{"de":"der Tag, -e","tr":"gün"},{"de":"die Woche, -n","tr":"hafta"},{"de":"das Jahr, -e","tr":"yıl"},{"de":"7:03 Uhr = sieben Uhr drei","tr":"07:03"},{"de":"15:30 Uhr = fünfzehn Uhr dreißig","tr":"15:30"},{"de":"11:30 Uhr = halb zwölf","tr":"on bir buçuk"},{"de":"13:00 Uhr = ein Uhr","tr":"saat bir"},{"de":"die Uhr, -en","tr":"saat (nesne)"},{"de":"pünktlich","tr":"tam vaktinde"},{"de":"gestern","tr":"dün"},{"de":"heute","tr":"bugün"},{"de":"morgen","tr":"yarın"},{"de":"jetzt","tr":"şimdi"},{"de":"früh","tr":"erken"},{"de":"spät","tr":"geç"},{"de":"bald","tr":"yakında"},{"de":"endlich","tr":"nihayet"},{"de":"schon","tr":"bile, zaten"},{"de":"immer","tr":"her zaman"},{"de":"manchmal","tr":"bazen"},{"de":"nie","tr":"hiçbir zaman"}]},{"title":"12. Sayılar, Renkler ve Ölçüler","words":[{"de":"eins, zwei, drei ... zehn","tr":"1, 2, 3 ... 10"},{"de":"elf, zwölf ... zwanzig","tr":"11, 12 ... 20"},{"de":"einundzwanzig","tr":"21"},{"de":"dreißig, vierzig ... neunzig","tr":"30, 40 ... 90"},{"de":"(ein)hundert","tr":"100"},{"de":"hunderteins","tr":"101"},{"de":"zweihundert","tr":"200"},{"de":"(ein)tausend","tr":"1000"},{"de":"zweitausendeins","tr":"2001"},{"de":"1 Euro = 100 Cent","tr":"1 Euro = 100 Cent"},{"de":"1 m = ein Meter","tr":"1 metre"},{"de":"2 km = zwei Kilometer","tr":"2 kilometre"},{"de":"1 L = ein Liter","tr":"1 litre"},{"de":"1 kg = ein Kilo(gramm)","tr":"1 kilogram"},{"de":"schwarz","tr":"siyah"},{"de":"grau","tr":"gri"},{"de":"blau","tr":"mavi"},{"de":"grün","tr":"yeşil"},{"de":"weiß","tr":"beyaz"},{"de":"rot","tr":"kırmızı"},{"de":"gelb","tr":"sarı"},{"de":"braun","tr":"kahverengi"},{"de":"blond","tr":"sarışın"}]},{"title":"13. Ülkeler, Milliyetler ve Yön","words":[{"de":"Deutschland","tr":"Almanya"},{"de":"der/die Deutsche, -n","tr":"Alman"},{"de":"deutsch","tr":"Almanca (sıfat)"},{"de":"Europa","tr":"Avrupa"},{"de":"der/die Europäer(-in)","tr":"Avrupalı"},{"de":"europäisch","tr":"Avrupaya ait"},{"de":"Italien","tr":"İtalya"},{"de":"der/die Italiener(-in)","tr":"İtalyan"},{"de":"italienisch","tr":"İtalyanca"},{"de":"England","tr":"İngiltere"},{"de":"der/die Engländer(-in)","tr":"İngiliz"},{"de":"englisch","tr":"İngilizce (sıfat)"},{"de":"die Türkei","tr":"Türkiye"},{"de":"der Türke, -n / die Türkin, -nen","tr":"Türk"},{"de":"türkisch","tr":"Türkçe"},{"de":"der Norden","tr":"kuzey"},{"de":"der Süden","tr":"güney"},{"de":"der Westen","tr":"batı"},{"de":"der Osten","tr":"doğu"}]},{"title":"14. Duygular, Kişilik Özellikleri ve İlişkiler","words":[{"de":"die Angst, ä, -e","tr":"korku"},{"de":"besser","tr":"daha iyi"},{"de":"beste","tr":"en iyi"},{"de":"blöd","tr":"aptalca"},{"de":"dick","tr":"şişman"},{"de":"doch","tr":"tabii ki (aksine)"},{"de":"dumm","tr":"aptal"},{"de":"einverstanden sein","tr":"hemfikir olmak"},{"de":"das Ende (Sg.)","tr":"son"},{"de":"die Entschuldigung, -en","tr":"özür"},{"de":"entschuldigen","tr":"özür dilemek"},{"de":"finden","tr":"bulmak, düşünmek"},{"de":"frei","tr":"boş, serbest"},{"de":"freundlich","tr":"kibar, samimi"},{"de":"gefallen","tr":"hoşuna gitmek"},{"de":"glauben","tr":"düşünmek, inanmak"},{"de":"gleich","tr":"hemen, aynı"},{"de":"das Glück (Sg.)","tr":"şans, mutluluk"},{"de":"glücklich","tr":"mutlu"},{"de":"groß","tr":"büyük"},{"de":"klein","tr":"küçük"},{"de":"der Gruß, ü, -e","tr":"selam"},{"de":"gut","tr":"iyi"},{"de":"hübsch","tr":"güzel, hoş"},{"de":"hoffen","tr":"umut etmek"},{"de":"hoffentlich","tr":"inşallah"},{"de":"klar","tr":"tabii, açık"},{"de":"lieb","tr":"sevimli, sevgili"},{"de":"lieben","tr":"sevmek"},{"de":"die Lust (Sg.)","tr":"istek, keyif"},{"de":"lustig","tr":"komik"},{"de":"möglich","tr":"mümkün"},{"de":"nett","tr":"kibar, hoş"},{"de":"normal","tr":"normal"},{"de":"die Ordnung (Sg.)","tr":"düzen"},{"de":"das Problem, -e","tr":"sorun"},{"de":"ruhig","tr":"sakin, sessiz"},{"de":"schade","tr":"yazık"},{"de":"schön","tr":"güzel"},{"de":"sicher","tr":"emin, güvenli"},{"de":"der Spaß (Sg.)","tr":"eğlence, keyif"},{"de":"sympathisch","tr":"sempatik"},{"de":"traurig","tr":"üzgün"},{"de":"verrückt","tr":"çılgın, deli"},{"de":"wichtig","tr":"önemli"},{"de":"wunderbar","tr":"harika"},{"de":"wünschen","tr":"dilemek"}]},{"title":"15. Teknoloji ve İletişim","words":[{"de":"das Baby, -s","tr":"bebek"},{"de":"die (Schüler-)Band, -s","tr":"grup"},{"de":"der Blog, -s","tr":"blog"},{"de":"die CD, -s","tr":"CD"},{"de":"der CD-Player, -","tr":"CD çalar"},{"de":"chatten","tr":"sohbet etmek (yazışarak)"},{"de":"das/die Cola, -s","tr":"kola"},{"de":"der/das Comic, -s","tr":"çizgi roman"},{"de":"der Computer, -","tr":"bilgisayar"},{"de":"cool","tr":"harika, süper"},{"de":"die DVD, -s","tr":"DVD"},{"de":"faxen","tr":"faks çekmek"},{"de":"das Fax, -e","tr":"faks"},{"de":"googeln","tr":"google'da aramak"},{"de":"die Homepage, -s","tr":"ana sayfa, web sitesi"},{"de":"das Internet (Sg.)","tr":"internet"},{"de":"der Laptop, -s","tr":"dizüstü bilgisayar"},{"de":"der Link, -s","tr":"bağlantı, link"},{"de":"mailen","tr":"e-posta göndermek"},{"de":"die Mail, -s","tr":"e-posta"},{"de":"die Mailbox, -en","tr":"sesli mesaj kutusu"},{"de":"online","tr":"çevrimiçi"},{"de":"das Poster, -","tr":"poster"},{"de":"das Smartphone, -s","tr":"akıllı telefon"},{"de":"surfen","tr":"internette gezinmek"},{"de":"das Handy, -s","tr":"cep telefonu"},{"de":"anrufen","tr":"aramak (telefonla)"},{"de":"der Anruf, -e","tr":"arama"},{"de":"der Anrufbeantworter, -","tr":"telesekreter"},{"de":"der Brief, -e","tr":"mektup"},{"de":"die Postkarte, -n","tr":"kartpostal"},{"de":"die Post (Sg.)","tr":"postane"},{"de":"telefonieren","tr":"telefonda konuşmak"},{"de":"die Zeitung, -en","tr":"gazete"},{"de":"die Nachricht, -en","tr":"haber, mesaj"}]},{"title":"16. Zamirler, Bağlaçlar, Edatlar ve Zarflar","words":[{"de":"ab","tr":"-den itibaren"},{"de":"aber","tr":"ama"},{"de":"also","tr":"yani, öyleyse"},{"de":"an","tr":"-de, -e (edat)"},{"de":"ander-","tr":"diğer"},{"de":"auch","tr":"de, da"},{"de":"auf","tr":"üzerinde"},{"de":"aus","tr":"-den, dışarı"},{"de":"bei","tr":"yanında, esnasında"},{"de":"bis","tr":"-e kadar"},{"de":"bisschen","tr":"biraz"},{"de":"da","tr":"orada"},{"de":"dann","tr":"sonra"},{"de":"dein, -e","tr":"senin"},{"de":"der, die, das","tr":"o (işaret)"},{"de":"durch","tr":"içinden, boyunca"},{"de":"ein, eine","tr":"bir"},{"de":"er","tr":"o (erkek)"},{"de":"es","tr":"o (nötr)"},{"de":"etwas","tr":"bir şey"},{"de":"euer, eure","tr":"sizin"},{"de":"für","tr":"için"},{"de":"gerade","tr":"şu anda, tam"},{"de":"hier","tr":"burada"},{"de":"ich","tr":"ben"},{"de":"ihr, -e","tr":"onun (kadın) / siz"},{"de":"immer","tr":"her zaman"},{"de":"in","tr":"içinde"},{"de":"ja","tr":"evet"},{"de":"jeder, -e, -s","tr":"her"},{"de":"kein, -e","tr":"hiç, hiçbir"},{"de":"man","tr":"insan (genel özne)"},{"de":"mehr","tr":"daha fazla"},{"de":"mein, -e","tr":"benim"},{"de":"mit","tr":"ile"},{"de":"nach","tr":"-e (yön), -den sonra"},{"de":"nein","tr":"hayır"},{"de":"nicht","tr":"değil"},{"de":"nichts","tr":"hiçbir şey"},{"de":"niemand","tr":"hiç kimse"},{"de":"noch","tr":"hâlâ, daha"},{"de":"nur","tr":"sadece"},{"de":"oder","tr":"yoksa, veya"},{"de":"ohne","tr":"-siz"},{"de":"sehr","tr":"çok"},{"de":"sein, -e","tr":"onun (erkek)"},{"de":"sie","tr":"o (kadın) / onlar"},{"de":"Sie","tr":"siz (resmi)"},{"de":"so","tr":"öyle, bu kadar"},{"de":"über","tr":"üzerinden"},{"de":"überall","tr":"her yerde"},{"de":"um","tr":"saat -de"},{"de":"und","tr":"ve"},{"de":"unser, -e","tr":"bizim"},{"de":"viel, -e","tr":"çok"},{"de":"vielleicht","tr":"belki"},{"de":"von","tr":"-den"},{"de":"vor","tr":"önünde, önce"},{"de":"wann","tr":"ne zaman"},{"de":"warum","tr":"neden"},{"de":"was","tr":"ne"},{"de":"welch-, -er, -e, -s","tr":"hangi"},{"de":"wenig, -e","tr":"az"},{"de":"wer","tr":"kim"},{"de":"wie","tr":"nasıl"},{"de":"wieder","tr":"tekrar"},{"de":"wir","tr":"biz"},{"de":"wo","tr":"nerede"},{"de":"zu","tr":"-e, çok"},{"de":"zuerst","tr":"önce, ilk olarak"},{"de":"zusammen","tr":"birlikte"},{"de":"deshalb","tr":"bu nedenle"},{"de":"weiter","tr":"devam ederek, ileri"},{"de":"wie viel","tr":"ne kadar"}]},{"title":"17. Genel Fiiller, Sıfatlar ve İsimler","words":[{"de":"abgeben","tr":"teslim etmek"},{"de":"die Achtung (Sg.)","tr":"dikkat"},{"de":"die Ahnung, -en","tr":"fikir, önsezi"},{"de":"alle","tr":"hepsi"},{"de":"allein","tr":"yalnız"},{"de":"alt","tr":"yaşlı, eski"},{"de":"der Anfang, ä, -e","tr":"başlangıç"},{"de":"anfangen","tr":"başlamak"},{"de":"die Anzeige, -n","tr":"ilan"},{"de":"bedeuten","tr":"anlamına gelmek"},{"de":"bekommen","tr":"almak, elde etmek"},{"de":"besetzt","tr":"meşgul, dolu"},{"de":"besonders","tr":"özellikle"},{"de":"besuchen","tr":"ziyaret etmek"},{"de":"bleiben","tr":"kalmak"},{"de":"der Bleistift, -e","tr":"kurşun kalem"},{"de":"die Blume, -n","tr":"çiçek"},{"de":"brauchen","tr":"ihtiyacı olmak"},{"de":"bringen","tr":"getirmek"},{"de":"danken","tr":"teşekkür etmek"},{"de":"der Dank (Sg.)","tr":"teşekkür"},{"de":"dort","tr":"orada"},{"de":"du","tr":"sen"},{"de":"einladen","tr":"davet etmek"},{"de":"die Einladung, -en","tr":"davetiye"},{"de":"einmal","tr":"bir kere"},{"de":"die Eins (Sg.)","tr":"bir (not)"},{"de":"erzählen","tr":"anlatmak"},{"de":"fertig sein","tr":"hazır olmak, bitmiş olmak"},{"de":"geben","tr":"vermek"},{"de":"gehen","tr":"gitmek"},{"de":"genug","tr":"yeterli"},{"de":"geschlossen sein","tr":"kapalı olmak"},{"de":"haben","tr":"sahip olmak"},{"de":"helfen","tr":"yardım etmek"},{"de":"die Information, -en","tr":"bilgi"},{"de":"interessant","tr":"ilginç"},{"de":"die Kamera, -s","tr":"kamera"},{"de":"kaputt","tr":"bozuk, arızalı"},{"de":"die Karte, -n","tr":"kart"},{"de":"der Kiosk, -e","tr":"büfe"},{"de":"kommen","tr":"gelmek"},{"de":"können","tr":"yapabilmek"},{"de":"kurz","tr":"kısa"},{"de":"lang","tr":"uzun"},{"de":"lange","tr":"uzun süre"},{"de":"langsam","tr":"yavaş"},{"de":"langweilig","tr":"sıkıcı"},{"de":"lassen","tr":"bırakmak"},{"de":"leben","tr":"yaşamak"},{"de":"leid tun","tr":"üzülmek"},{"de":"leider","tr":"maalesef"},{"de":"die Leute (Pl.)","tr":"insanlar"},{"de":"machen","tr":"yapmak"},{"de":"das Mal, -e","tr":"kere, kez"},{"de":"mindestens","tr":"en azından"},{"de":"mitbringen","tr":"yanında getirmek"},{"de":"mitkommen","tr":"birlikte gelmek"},{"de":"mitmachen","tr":"katılmak"},{"de":"mitnehmen","tr":"yanına almak"},{"de":"mögen","tr":"hoşlanmak, sevmek"},{"de":"müssen","tr":"zorunda olmak, gerekmek"},{"de":"nächste","tr":"bir sonraki"},{"de":"neu","tr":"yeni"},{"de":"die Nummer, -n","tr":"numara"},{"de":"oft","tr":"sık sık"},{"de":"passieren","tr":"olmak, meydana gelmek"},{"de":"der Quatsch (Sg.)","tr":"saçmalık"},{"de":"recht haben","tr":"haklı olmak"},{"de":"sagen","tr":"söylemek"},{"de":"schlafen","tr":"uyumak"},{"de":"schnell","tr":"hızlı"},{"de":"sehen","tr":"görmek"},{"de":"sein","tr":"olmak"},{"de":"die Seite, -n","tr":"sayfa"},{"de":"sofort","tr":"hemen"},{"de":"das Stück, -e","tr":"parça, dilim"},{"de":"der Supermarkt, ä, -e","tr":"süpermarket"},{"de":"wahr","tr":"doğru, gerçek"},{"de":"der Wald, ä, -er","tr":"orman"},{"de":"warten","tr":"beklemek"},{"de":"wecken","tr":"uyandırmak"},{"de":"das Wiedersehen, -","tr":"tekrar görüşme"},{"de":"wirklich","tr":"gerçekten"},{"de":"wollen","tr":"istemek"},{"de":"zeigen","tr":"göstermek"},{"de":"die Zeit, -en","tr":"zaman"},{"de":"zum Beispiel","tr":"örneğin"},{"de":"zu sein","tr":"kapalı olmak"},{"de":"die Bibliothek, -en","tr":"kütüphane"}]}];
+
+let flat = [];
+DATA.forEach((cat, ci)=>{
+  cat.words.forEach(w=> flat.push({de:w.de, tr:w.tr, cat:cat.title, catIndex:ci}));
+});
+
+let mode = 'de-tr';        // 'de-tr' or 'tr-de'
+let currentCatIndex = 0;   // which theme is active
+let sessionList = [];      // the ordered list of words for the CURRENT round
+let roundNumber = 1;       // which round of this theme we're on
+let themeTotal = 0;        // how many words the theme started with (round 1 size)
+let missCounts = {};       // wordKey -> how many times marked wrong across all rounds of this theme
+let roundMissed = null;    // set once the current round finishes: words missed this round (null while round in progress)
+let pos = 0;                // position within sessionList currently being built
+let started = false;        // question for sessionList[pos] shown yet?
+let phase = 0;               // 0 = question only, 1 = question+answer
+let markOrder = [];          // [{correct:boolean}] in order, one per completed word (index == its pos)
+let history = [];            // undo stack: {pos, started, phase, isMark}
+
+function wordKey(w){ return w.de + '||' + w.tr; }
+function catWords(ci){ return ci===DATA.length ? flat.slice() : flat.filter(w=>w.catIndex===ci); }
+
+let studentName = null;
+
+function stateKey(){ return 'kelime_sepeti__' + studentName + '__a1_presenter_state_v4'; }
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(stateKey());
+    if(raw){
+      const s = JSON.parse(raw);
+      if(s.mode) mode = s.mode;
+      if(typeof s.currentCatIndex === 'number') currentCatIndex = s.currentCatIndex;
+      if(typeof s.pos === 'number') pos = s.pos;
+      if(typeof s.started === 'boolean') started = s.started;
+      if(typeof s.phase === 'number') phase = s.phase;
+      if(Array.isArray(s.markOrder)) markOrder = s.markOrder;
+      if(typeof s.roundNumber === 'number') roundNumber = s.roundNumber;
+      if(typeof s.themeTotal === 'number') themeTotal = s.themeTotal;
+      if(s.missCounts) missCounts = s.missCounts;
+      if(Array.isArray(s.sessionList) && s.sessionList.length) sessionList = s.sessionList;
+      if(s.roundMissed !== undefined) roundMissed = s.roundMissed;
+    }
+  }catch(e){ /* first run for this student */ }
+  if(!sessionList.length){ sessionList = catWords(currentCatIndex); themeTotal = sessionList.length; }
+}
+function saveState(){
+  try{
+    localStorage.setItem(stateKey(), JSON.stringify({
+      mode, currentCatIndex, pos, started, phase, markOrder,
+      roundNumber, themeTotal, missCounts, sessionList, roundMissed
+    }));
+  }catch(e){}
+}
+
+function submitName(){
+  const val = document.getElementById('nameInput').value.trim();
+  if(!val) return;
+  studentName = val;
+  localStorage.setItem('kelime_sepeti_student_name', val);
+  document.getElementById('nameGate').style.display = 'none';
+  document.getElementById('appRoot').style.display = '';
+  bootApp();
+}
+function changeStudent(){
+  if(!confirm('Öğrenci değiştirilsin mi? "'+studentName+'" adındaki ilerleme kayıtlı kaldı, aynı isimle tekrar girince kaldığı yerden devam eder.')) return;
+  localStorage.removeItem('kelime_sepeti_student_name');
+  location.reload();
+}
+
+document.getElementById('nameInput')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter') submitName(); });
+
+
+function startTheme(ci){
+  currentCatIndex = ci;
+  sessionList = catWords(ci);
+  themeTotal = sessionList.length;
+  roundNumber = 1; missCounts = {}; roundMissed = null;
+  pos = 0; started = false; phase = 0; markOrder = []; history = [];
+  saveState();
+  render();
+}
+
+function populateCatSelect(){
+  const sel = document.getElementById('catSelect');
+  sel.innerHTML = DATA.map((c,i)=>`<option value="${i}">${c.title} (${c.words.length} kelime)</option>`).join('');
+  sel.innerHTML += `<option value="${DATA.length}">📚 Tüm Temalar — Toplam ${flat.length} kelime</option>`;
+  sel.value = currentCatIndex;
+  sel.onchange = ()=> startTheme(parseInt(sel.value,10));
+}
+
+function toggleMode(){
+  mode = mode==='de-tr' ? 'tr-de' : 'de-tr';
+  updateModeBtn();
+  saveState();
+  render();
+}
+function updateModeBtn(){
+  const btn = document.getElementById('modeBtn');
+  btn.textContent = mode==='de-tr' ? 'Almanca ➜ Türkçe' : 'Türkçe ➜ Almanca';
+  btn.classList.toggle('alt', mode==='tr-de');
+}
+
+function resetAll(){
+  if(!confirm('Bu temayı baştan başlatmak istediğine emin misin? Tüm turlar ve skor sıfırlanacak.')) return;
+  startTheme(currentCatIndex);
+}
+
+function snapshot(isMark){ return {pos, started, phase, isMark}; }
+
+function stageClick(){
+  if(roundMissed !== null) return; // round finished, waiting for "next round" action
+  if(pos >= sessionList.length) return;
+  if(phase === 1) return; // must mark, not just click through
+  history.push(snapshot(false));
+  if(!started){ started = true; phase = 0; }
+  else { phase = 1; }
+  saveState();
+  render();
+}
+
+function mark(correct){
+  if(roundMissed !== null) return;
+  if(pos >= sessionList.length || phase !== 1) return;
+  history.push(snapshot(true));
+  markOrder.push({correct});
+  pos++; started = false; phase = 0;
+  if(pos === sessionList.length){ finishRound(); }
+  saveState();
+  render();
+}
+
+function finishRound(){
+  const missed = [];
+  markOrder.forEach((m,i)=>{ if(!m.correct) missed.push(sessionList[i]); });
+  missed.forEach(w=>{ const k = wordKey(w); missCounts[k] = (missCounts[k]||0) + 1; });
+  roundMissed = missed;
+}
+
+function nextRound(){
+  if(!roundMissed || roundMissed.length === 0) return;
+  sessionList = roundMissed;
+  roundNumber++;
+  roundMissed = null;
+  pos = 0; started = false; phase = 0; markOrder = []; history = [];
+  saveState();
+  render();
+}
+
+function prevStep(){
+  if(roundMissed !== null) return; // no step-back once a round has finished; use "Bu Temayı Yeniden Başlat" instead
+  const h = history.pop();
+  if(!h) return;
+  if(h.isMark) markOrder.pop();
+  pos = h.pos; started = h.started; phase = h.phase;
+  saveState();
+  render();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(roundMissed !== null) return;
+  if(e.code === 'Space'){ e.preventDefault(); stageClick(); }
+  if(e.code === 'ArrowLeft'){ e.preventDefault(); prevStep(); }
+  if(phase === 1 && pos < sessionList.length){
+    if(e.key === 'y' || e.key === 'Y' || e.code === 'ArrowRight'){ e.preventDefault(); mark(true); }
+    if(e.key === 'n' || e.key === 'N' || e.code === 'ArrowDown'){ e.preventDefault(); mark(false); }
+  }
+});
+
+function firstRoundMessage(pct){
+  if(pct >= 90) return '🌟 Harika bir başlangıç! Bu kelimeleri gerçekten çok iyi biliyorsun.';
+  if(pct >= 70) return '👍 Güzel gidiyorsun! Birkaç kelimeyi bir kez daha görelim, hemen oturacak.';
+  if(pct >= 40) return '💪 Fena değil! Şimdi sadece bilemediklerin üzerinde duracağız, birazdan çok daha rahat olacaksın.';
+  return '🌱 Bu kelimeler senin için yeni, hiç sorun değil! Birkaç tur tekrar ettikçe hepsi kalıcı olacak.';
+}
+function laterRoundMessage(testedCount, correctCount, remaining){
+  let msg = `👏 Az önce ${testedCount} kelimeyi tekrar sorduk, ${correctCount} tanesini bu kez doğru bildin!`;
+  if(remaining <= 3) msg += ` Sadece ${remaining} kelime kaldı, neredeyse tamamsın! 🚀`;
+  else if(remaining < testedCount) msg += ` Yanlış sayın azalıyor, böyle devam! 💪`;
+  return msg;
+}
+function masteryVerdict(rounds){
+  if(rounds <= 1) return '🎉 Muhteşem! İlk turda tüm kelimeleri bildin — bu temaya tamamen hazırsın.';
+  if(rounds <= 3) return `🎉 Harika iş çıkardın! ${rounds} turda tüm kelimeleri öğrendin. Birkaç gün sonra bir kez daha gözden geçirmen bunu iyice kalıcı hale getirir.`;
+  return `🎉 Sonunda hepsini öğrendin, tebrikler! Bu tema biraz zaman aldı — önümüzdeki günlerde 1-2 kez daha tekrar edersen tamamen kalıcı olacak.`;
+}
+
+function renderRoundResults(){
+  const log = document.getElementById('log');
+  document.getElementById('markArea').innerHTML = '';
+  document.getElementById('hintText').style.display = 'none';
+  const correct = markOrder.filter(m=>m.correct).length;
+  const wrong = roundMissed.length;
+  const pct = markOrder.length ? Math.round((correct/markOrder.length)*100) : 0;
+
+  if(wrong === 0){
+    // fully mastered: show final summary across all rounds
+    const toughEntries = Object.entries(missCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const toughHtml = toughEntries.length
+      ? toughEntries.map(([k,c])=>{ const [de,tr] = k.split('||'); return `<div><b>${de}</b> — ${tr} <span style="color:var(--muted)">(${c} kez yanlış)</span></div>`; }).join('')
+      : '';
+    log.innerHTML = `
+      <div class="results">
+        <div class="scoreline"><span class="ok">✅ ${themeTotal} / ${themeTotal}</span></div>
+        <div class="pct">${roundNumber}. turda tamamlandı</div>
+        <div class="verdict ${roundNumber<=1?'hazir':'orta'}">${masteryVerdict(roundNumber)}</div>
+        ${toughHtml ? `<div class="missed-title">Biraz daha zaman alan kelimeler (artık bunları da biliyorsun 👏):</div><div class="missed-list">${toughHtml}</div>` : ''}
+        <div class="results-actions">
+          <button class="secondary" onclick="resetAll()">Bu Temayı Yeniden Başlat</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const encourage = roundNumber === 1 ? firstRoundMessage(pct) : laterRoundMessage(sessionList.length, correct, wrong);
+  const missedHtml = roundMissed.map(w=>`<div><b>${mode==='de-tr'?w.de:w.tr}</b> — ${mode==='de-tr'?w.tr:w.de}</div>`).join('');
+  log.innerHTML = `
+    <div class="results">
+      <div class="scoreline"><span class="ok">✅ ${correct}</span> &nbsp;/&nbsp; <span class="bad">❌ ${wrong}</span></div>
+      <div class="pct">${roundNumber}. tur · %${pct} başarı</div>
+      <div class="verdict orta">${encourage}</div>
+      <div class="missed-title">Şimdi sadece şu kelimelere bakacağız:</div>
+      <div class="missed-list">${missedHtml}</div>
+      <div class="results-actions">
+        <button onclick="nextRound()">▶ ${roundNumber+1}. Tur: Kalan ${wrong} Kelimeyi Tekrar Sor</button>
+        <button class="secondary" onclick="resetAll()">Bu Temayı Yeniden Başlat</button>
+      </div>
+    </div>`;
+}
+
+function render(){
+  document.getElementById('tallyOk').textContent = markOrder.filter(m=>m.correct).length;
+  document.getElementById('tallyBad').textContent = markOrder.filter(m=>!m.correct).length;
+  document.getElementById('progress').textContent = roundNumber===1
+    ? `${markOrder.length} / ${sessionList.length}`
+    : `Tur ${roundNumber} · ${markOrder.length} / ${sessionList.length}`;
+  if(document.getElementById('catSelect').value != currentCatIndex){
+    document.getElementById('catSelect').value = currentCatIndex;
+  }
+
+  const markArea = document.getElementById('markArea');
+  const hint = document.getElementById('hintText');
+
+  if(roundMissed !== null){
+    renderRoundResults();
+    return;
+  }
+  hint.style.display = '';
+
+  const log = document.getElementById('log');
+  let html = roundNumber > 1 ? `<div class="cat-divider">🔁 Tur ${roundNumber} — Sadece Bilinemeyenler</div>` : '';
+  for(let i = 0; i < pos; i++){
+    const w = sessionList[i];
+    const q = mode==='de-tr' ? w.de : w.tr;
+    const a = mode==='de-tr' ? w.tr : w.de;
+    const mk = markOrder[i];
+    const icon = mk && mk.correct ? '✅' : '❌';
+    html += `
+      <div class="row">
+        <div class="num">${i+1}.</div>
+        <div class="q">${q}</div>
+        <div class="a show">${a} &nbsp;${icon}</div>
+      </div>`;
+  }
+  if(pos < sessionList.length && started){
+    const w = sessionList[pos];
+    const q = mode==='de-tr' ? w.de : w.tr;
+    const a = mode==='de-tr' ? w.tr : w.de;
+    html += `
+      <div class="row active">
+        <div class="num">${pos+1}.</div>
+        <div class="q">${q}</div>
+        <div class="a ${phase===1?'show':''}">${phase===1 ? a : ''}</div>
+      </div>`;
+  }
+  log.innerHTML = html;
+  log.scrollTop = log.scrollHeight;
+
+  if(phase === 1 && pos < sessionList.length){
+    markArea.innerHTML = `
+      <div class="markbtns">
+        <button class="markbtn ok" onclick="mark(true)">✅ Bildi (Y)</button>
+        <button class="markbtn bad" onclick="mark(false)">❌ Bilemedi (N)</button>
+      </div>`;
+    hint.textContent = 'Öğrenci doğru bildi mi? İşaretleyin (veya Y / N tuşu)';
+  } else {
+    markArea.innerHTML = '';
+    hint.textContent = !started ? 'Kelimeyi görmek için ekrana tıklayın (veya boşluk tuşu)' : 'Cevabı görmek için ekrana tıklayın (veya boşluk tuşu)';
+  }
+}
+
+async function bootApp(){
+  document.getElementById('studentBadge').textContent = '👤 ' + studentName;
+  loadState();
+  populateCatSelect();
+  updateModeBtn();
+  render();
+}
+
+function init(){
+  const saved = localStorage.getItem('kelime_sepeti_student_name');
+  if(saved){
+    studentName = saved;
+    document.getElementById('nameGate').style.display = 'none';
+    document.getElementById('appRoot').style.display = '';
+    bootApp();
+  } else {
+    document.getElementById('nameGate').style.display = 'flex';
+    document.getElementById('appRoot').style.display = 'none';
+  }
+}
+init();
+</script>
+</body>
+</html>
