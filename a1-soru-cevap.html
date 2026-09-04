@@ -184,8 +184,8 @@
   <div class="progress" id="progress">0 / 0</div>
 </header>
 
-<div id="stage">
-  <div id="log" onclick="stageClick()"></div>
+<div id="stage" onclick="stageClick(event)">
+  <div id="log"></div>
   <div id="markArea"></div>
   <div class="hint" id="hintText">Ekrana veya boşluk tuşuna basarak ilerleyin · Geri almak için ← tuşu</div>
 </div>
@@ -303,7 +303,8 @@ function resetAll(){
 
 function snapshot(isMark){ return {pos, started, phase, isMark}; }
 
-function stageClick(){
+function stageClick(e){
+  if(e && e.target.closest && e.target.closest('button, select, input, a')) return;
   if(roundMissed !== null) return; // round finished, waiting for "next round" action
   if(pos >= sessionList.length) return;
   if(phase === 1) return; // must mark, not just click through
